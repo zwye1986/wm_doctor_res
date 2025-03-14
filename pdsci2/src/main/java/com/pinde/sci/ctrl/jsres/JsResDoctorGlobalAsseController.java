@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.alibaba.fastjson.JSON;
 import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
@@ -22,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/jsres/asseGlobal")
@@ -202,6 +204,10 @@ public class JsResDoctorGlobalAsseController extends GeneralController {
         System.err.println(JSON.toJSON(param));
 //        List<Map<String,Object>> list=graduationApplyBiz.chargeQueryList(param);
         List<Map<String,Object>> list=graduationApplyBiz.chargeQueryApplyList(param);
+        Set<String> doctorFlowSet = list.stream().map(kv -> kv.get("doctorFlow").toString()).collect(Collectors.toSet());
+        Map<String,List<ResRec>> nonComplianceRecordsMap= new HashMap<String, List<ResRec>>();
+        Map<String, List<ResRec>> doctorFlowMap = graduationApplyBiz.getNonComplianceRecords(new ArrayList<>(doctorFlowSet));
+        nonComplianceRecordsMap.putAll(doctorFlowMap);
         model.addAttribute("list",list);
         String f = com.pinde.core.common.GlobalConstant.FLAG_N;
         List<ResTestConfig> resTestConfigList = resTestConfigBiz.findGlobalEffective(DateUtil.getCurrDateTime2());
@@ -222,7 +228,7 @@ public class JsResDoctorGlobalAsseController extends GeneralController {
                                    String educationId,String trainYear,String materialName,String qualificationMaterialCode, String qualificationMaterialUrl,
                                    String schMonthSearch, String schMonth, String proveFileUrl, String AfterEvaluation,String skillScoreSearch,String skillScore,
                                    String avgCompleteSearch,String avgComplete,String avgAuditSearch,String avgAudit,String completeTime,String qualificationName,
-                                   String AfterEvaluationSearch,String AfterEvaluationScale,String passFile,String tabTag,String joinOrgFlow,String isPostpone
+                                   String AfterEvaluationSearch,String AfterEvaluationScale,String passFile,String tabTag,String joinOrgFlow,String isPostpone, String tempDoctorFlag
     ){
         //查询条件
         Map<String,Object> param=new HashMap<>();
@@ -301,6 +307,7 @@ public class JsResDoctorGlobalAsseController extends GeneralController {
         param.put("roleFlag",roleFlag);
         param.put("jointOrgFlow",joinOrgFlow);
         param.put("isPostpone",isPostpone);
+        param.put("tempDoctorFlag", tempDoctorFlag);
         // stzyy 该省厅账号特殊处理 不允许查看审核全科和助理全科专业的学员  禅道需求316 提出人：徐开宏 2020年6月23日15:20:40
         // stqky 该省厅账号特殊处理 只允许查看审核全科和助理全科专业的学员
         List<String> speIds = getSpeIds(sysuser);
@@ -311,7 +318,12 @@ public class JsResDoctorGlobalAsseController extends GeneralController {
   //      System.err.println(JSON.toJSON(param));
 //        List<Map<String,Object>> list=graduationApplyBiz.chargeQueryList(param);
         List<Map<String,Object>> list=graduationApplyBiz.chargeQueryApplyList(param);
+        Set<String> doctorFlowSet = list.stream().map(kv -> kv.get("doctorFlow").toString()).collect(Collectors.toSet());
+        Map<String,List<ResRec>> nonComplianceRecordsMap= new HashMap<String, List<ResRec>>();
+        Map<String, List<ResRec>> doctorFlowMap = graduationApplyBiz.getNonComplianceRecords(new ArrayList<>(doctorFlowSet));
+        nonComplianceRecordsMap.putAll(doctorFlowMap);
         model.addAttribute("list",list);
+        model.addAttribute("nonComplianceRecordsMap",nonComplianceRecordsMap);
         String f = com.pinde.core.common.GlobalConstant.FLAG_N;
         List<ResTestConfig> resTestConfigList = resTestConfigBiz.findGlobalEffective(DateUtil.getCurrDateTime2());
         if (resTestConfigList.size() > 0) {
@@ -422,7 +434,7 @@ public class JsResDoctorGlobalAsseController extends GeneralController {
                             String educationId,String trainYear,String materialName,String qualificationMaterialCode, String qualificationMaterialUrl,
                             String schMonthSearch, String schMonth, String proveFileUrl, String AfterEvaluation,String skillScoreSearch,String skillScore,
                             String avgCompleteSearch,String avgComplete,String avgAuditSearch,String avgAudit,String completeTime,String qualificationName,
-                            String AfterEvaluationSearch,String AfterEvaluationScale,String passFile,String tabTag,String joinOrgFlow,String isPostpone
+                            String AfterEvaluationSearch,String AfterEvaluationScale,String passFile,String tabTag,String joinOrgFlow,String isPostpone, String tempDoctorFlag
     ){
         //查询条件
         Map<String,Object> param=new HashMap<>();
@@ -504,6 +516,7 @@ public class JsResDoctorGlobalAsseController extends GeneralController {
         param.put("AfterEvaluationSearch",AfterEvaluationSearch);
         param.put("AfterEvaluationScale",AfterEvaluationScale);
         param.put("isPostpone",isPostpone);
+        param.put("tempDoctorFlag", tempDoctorFlag);
 //        if(StringUtil.isNotBlank(AfterEvaluation)) {
 //            param.put("AfterEvaluation", DateUtil.getDate(AfterEvaluation));
 //        }

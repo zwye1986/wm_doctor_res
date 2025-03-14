@@ -2,6 +2,7 @@ package com.pinde.core.common.enums;
 
 import com.pinde.core.common.GeneralEnum;
 import com.pinde.core.util.EnumUtil;
+import org.apache.commons.lang3.StringUtils;
 
 public enum RecStatusEnum implements GeneralEnum<String> {
 	
@@ -39,6 +40,9 @@ public enum RecStatusEnum implements GeneralEnum<String> {
 		return name;
 	}
 	public static String getNameById(String id) {
+		if(StringUtils.	isEmpty(id)){
+			return "";
+		}
 		return EnumUtil.getById(id, RecStatusEnum.class).getName();
 	}
 }

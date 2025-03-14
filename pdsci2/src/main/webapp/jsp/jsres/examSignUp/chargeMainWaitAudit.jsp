@@ -135,6 +135,7 @@
                 //改变协同医院状态
                 $("select[name=trainingSpeId] option[value != '']").remove();
                 $("select[name=trainingTypeId] option[value = '']").attr('selected','selected');
+                changeTrainSpes();
                 var orgFlag=$("#trainOrg").val();
                 var orgFlow=$("#orgFlow").val();
                 if(orgFlag.replace(/(^\s*)|(\s*$)/g, "")==""){
@@ -502,16 +503,26 @@
                 <%--</td>--%>
             </tr>
             <tr>
+                <td class="td_left">异常报考：</td>
+                <td>
+                    <select class="select" name="tempDoctorFlag" style="width: 128px;">
+                        <option value="">全部</option>
+                        <option <c:if test="${param.tempDoctorFlag eq GlobalConstant.FLAG_Y}">selected="selected"</c:if>
+                                value="${GlobalConstant.FLAG_Y}">是
+                        </option>
+                        <option <c:if test="${param.tempDoctorFlag eq GlobalConstant.FLAG_N}">selected="selected"</c:if>
+                                value="${GlobalConstant.FLAG_N}">否
+                        </option>
+                    </select>
+                </td>
                 <td class="td_left">人员类型：</td>
-                <td colspan="3" style="text-align: left">
+                <td colspan="5" style="text-align: left">
                     <c:forEach items="${resDocTypeEnumList}" var="type">
                         <label><input type="checkbox" id="${type.id}" value="${type.id}" checked class="docType"
                                       name="datas"/>${type.name}&nbsp;</label>
                     </c:forEach>
-                </td>
-                <td colspan="8" style="text-align: left">
-                    <input class="btn_green" type="button" value="查&#12288;询" onclick="toPage();"/>&#12288;
-                    <input class="btn_green" type="button" value="批量审核" onclick="batchApply();"/>&#12288;
+                    <input class="btn_green" style="margin-left: 10px;" type="button" value="查&#12288;询" onclick="toPage();"/>
+                    <input class="btn_green" type="button" value="批量审核" onclick="batchApply();"/>
                     <input class="btn_green" type="button" value="导&#12288;出" onclick="exportInfo();"/>
                 </td>
             </tr>

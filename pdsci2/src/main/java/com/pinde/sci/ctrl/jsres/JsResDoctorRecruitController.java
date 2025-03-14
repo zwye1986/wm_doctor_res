@@ -12,10 +12,9 @@ import com.pinde.core.common.sci.dao.ResScoreMapper;
 import com.pinde.core.common.sci.dao.SchRotationDeptMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
+import com.pinde.core.util.*;
 import com.pinde.core.util.DateUtil;
-import com.pinde.core.util.PkUtil;
-import com.pinde.core.util.StringUtil;
-import com.pinde.core.util.ZipUtil;
+import com.pinde.sci.biz.sch.ISchArrangeResultBiz;
 import com.pinde.sci.biz.jsres.IJsResDoctorBiz;
 import com.pinde.sci.biz.jsres.IJsResDoctorRecruitBiz;
 import com.pinde.sci.biz.jsres.IJsResPowerCfgBiz;
@@ -461,26 +460,8 @@ public class JsResDoctorRecruitController extends GeneralController {
 			SchRotationDept schRotationDept=readStandardRotationDept(resultFlow);
 			if (result != null&&StringUtil.isNotBlank(result.getDoctorFlow())&&schRotationDept!=null&&StringUtil.isNotBlank(schRotationDept.getRecordFlow())) {
 //				ResRec rec =resRecBiz.queryResRec(schRotationDept.getRecordFlow(),result.getDoctorFlow(),AfterRecTypeEnum.AfterSummary.getId());
-				ResSchProcessExpress rec = expressBiz.queryResRec(schRotationDept.getRecordFlow(),result.getDoctorFlow(),AfterRecTypeEnum.AfterSummary.getId());
-				String content = null == rec ? "" : rec.getRecContent();
-				if (StringUtil.isNotBlank(content)) {
-					Document doc = DocumentHelper.parseText(content);
-					Element root = doc.getRootElement();
-					List<Element> imageEles = root.elements();
-					if (imageEles != null && imageEles.size() > 0) {
-						for (Element image : imageEles) {
-							Map<String, Object> recContent = new HashMap<String, Object>();
-							String imageFlow = image.attributeValue("imageFlow");
-							List<Element> elements = image.elements();
-							for (Element attr : elements) {
-								String attrName = attr.getName();
-								String attrValue = attr.getText();
-								recContent.put(attrName, attrValue);
-							}
-							imagelist.add(recContent);
-						}
-					}
-				}
+				List<ResSchProcessExpress> rec = expressBiz.queryResRec(schRotationDept.getRecordFlow(),result.getDoctorFlow(),AfterRecTypeEnum.AfterSummary.getId());
+				BusinessUtil.getImageList(rec, imagelist);
 			}
 			model.addAttribute("imagelist",imagelist);
 		}else {
@@ -1467,12 +1448,18 @@ public class JsResDoctorRecruitController extends GeneralController {
 				SchRotationDept schRotationDept = schRotationDeptBiz.searchGroupFlowAndStandardDeptIdQuery(standardGroupFlow, standardDeptId);
 				String recordFlow = schRotationDept.getRecordFlow();
 //				ResRec resRec = resRecBiz.queryResRec(recordFlow, doctorFlow, recTypeId);
-				ResSchProcessExpress resRec = expressBiz.queryResRec(recordFlow, doctorFlow, recTypeId);
-				if(resRec!=null) {
-					String content = resRec.getRecContent();
-					List<Map<String, String>> imageList = resRecBiz.parseImageXml(content);
-					model.addAttribute("imageList", imageList);
-				}
+				List<ResSchProcessExpress> resRec = expressBiz.queryResRec(recordFlow, doctorFlow, recTypeId);
+				List<Map<String, String>> imageList = new ArrayList<Map<String, String>>();
+				resRec.stream().filter(r -> StringUtils.isNotEmpty(r.getRecContent()))
+						.forEach(r ->{
+							String content = r.getRecContent();
+                            try {
+                                imageList.addAll(resRecBiz.parseImageXml(content));
+                            } catch (DocumentException e) {
+                                logger.error("parse xml error,content={}", content, e);
+                            }
+                        });
+				model.addAttribute("imageList", imageList);
 			}
 		}else {
 			ResDoctorSchProcess resDoctorSchProcess = resDoctorProcessBiz.searchByResultFlow(resultFlow);
@@ -2234,7 +2221,7 @@ public class JsResDoctorRecruitController extends GeneralController {
 			//第一行 列宽自适应
 			HSSFRow rowDep = sheet.createRow(0);
 			//合并单元格
-			CellRangeAddress cellRowOne = new CellRangeAddress(0, 0, 0, 37);
+			CellRangeAddress cellRowOne = new CellRangeAddress(0, 0, 0, 39);
 			sheet.addMergedRegion(cellRowOne);
 			// 给合并单元格设置边框
 			excelSetBorderForMergeCell(wb, sheet, cellRowOne);
@@ -2244,31 +2231,31 @@ public class JsResDoctorRecruitController extends GeneralController {
 			//第二行
 			HSSFRow rowTwo = sheet.createRow(1);
 			//合并单元格
-			CellRangeAddress cellRowTwo = new CellRangeAddress(1, 1, 11, 25);
+			CellRangeAddress cellRowTwo = new CellRangeAddress(1, 1, 13, 27);
 			sheet.addMergedRegion(cellRowTwo);
 			// 给合并单元格设置边框
 			excelSetBorderForMergeCell(wb, sheet, cellRowOne);
-			HSSFCell secCellZero = rowTwo.createCell(11);
+			HSSFCell secCellZero = rowTwo.createCell(13);
 			secCellZero.setCellStyle(styleCenter);
 			secCellZero.setCellValue("DOPS");
 			//合并单元格
-			CellRangeAddress cellFiveRowTwo = new CellRangeAddress(1, 1, 26, 36);
+			CellRangeAddress cellFiveRowTwo = new CellRangeAddress(1, 1, 28, 38);
 			sheet.addMergedRegion(cellFiveRowTwo);
 			// 给合并单元格设置边框
 			excelSetBorderForMergeCell(wb, sheet, cellRowOne);
-			HSSFCell cellFive = rowTwo.createCell(26);
+			HSSFCell cellFive = rowTwo.createCell(28);
 			cellFive.setCellStyle(styleCenter);
 			cellFive.setCellValue("Mini-Cex");
 			//第三行
 			HSSFRow rowThree = sheet.createRow(2);
 			String[] titles = new String[]{
-					"姓名","基地","人员类型","专业","年级","轮转科室","轮转时间","带教老师","理论成绩","技能名称","技能成绩",
+					"姓名","证件类型","证件号码","基地","人员类型","专业","年级","轮转科室","轮转时间","带教老师","理论成绩","技能名称","技能成绩",
 					"操作例数","复杂程度","1","2","3","4","5","6","7","8","9","10","11",
 					"满意度","评语","严重情况","诊治重点","1","2","3","4","5","6","7",
 					"满意度","评语","出科考核表材料" };
 			HSSFCell cellTitle = null;
 			for (int i = 0; i < titles.length; i++) {
-				if (i < 11 || i == 37){
+				if (i < 13 || i == 39){
 					// 合并单元格
 					CellRangeAddress cellRangePlanNo = new CellRangeAddress(1, 2, i, i);
 					sheet.addMergedRegion(cellRangePlanNo);
@@ -2394,6 +2381,8 @@ public class JsResDoctorRecruitController extends GeneralController {
 							HSSFRow rowFour = sheet.createRow(rowNum);
 							resultList = new String[]{
 									docResultsList.get(i).get("userName"),
+									docResultsList.get(i).get("cretTypeName"),
+									docResultsList.get(i).get("idNo"),
 									docResultsList.get(i).get("orgNameAll"),
 									docResultsList.get(i).get("doctorTypeName"),
 									docResultsList.get(i).get("trainingSpeName"),

@@ -21,8 +21,10 @@
     <!--<include file="classpath:db/changelog/2024/xyh-res_score-0705.xml" relativeToChangelogFile="false"></include>
     <include file="classpath:db/changelog/2024/xyh-update-cretTypeName-0709.xml" relativeToChangelogFile="false"></include>-->
 
-    <includeAll path="classpath:db/changelog/2024/" relativeToChangelogFile="false"/>
-    <includeAll path="classpath:db/changelog/2025/" relativeToChangelogFile="false"/>
+<!--    <includeAll path="classpath:db/changelog/2024/" relativeToChangelogFile="false"/>-->
+<!--    <includeAll path="classpath:db/changelog/2025/" relativeToChangelogFile="false"/>-->
+    <includeAll path="classpath:db/changelog/2025/02/" relativeToChangelogFile="false"/>
+    <includeAll path="classpath:db/changelog/2025/03/" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>
 

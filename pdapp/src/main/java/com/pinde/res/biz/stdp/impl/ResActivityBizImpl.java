@@ -13,7 +13,7 @@ import com.pinde.res.biz.stdp.ICfgBiz;
 import com.pinde.res.biz.stdp.IResActivityBiz;
 import com.pinde.res.biz.stdp.IResActivityTargetBiz;
 import com.pinde.res.ctrl.hbres.ActivityImageFileForm;
-import com.pinde.res.dao.stdp.ext.TeachingActivityInfoExtMapper;
+import com.pinde.core.common.sci.dao.TeachingActivityInfoExtMapper;
 import org.dom4j.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -93,21 +93,6 @@ public class ResActivityBizImpl implements IResActivityBiz {
 		}
 		return map;
 	}
-	@Override
-	public Map<String, Object> getTeacherActivityStatisticsMap(String deptFlow,String teacherFlow,String startTime,String endTime) {
-
-		Map<String, Object> map=new HashMap<>();
-		List<Map<String,String>> datas=activityInfoExtMapper.getTeacherActivityStatisticsMap(deptFlow,teacherFlow,startTime,endTime);
-		if(datas!=null)
-		{
-			for(Map<String,String> d:datas)
-			{
-				map.put(d.get("typeId"),d.get("qty"));
-			}
-		}
-		return map;
-	}
-
 
 	@Override
 	public int countByActivity(String activityFlow) {
@@ -131,13 +116,6 @@ public class ResActivityBizImpl implements IResActivityBiz {
 			return list.get(0);
 		}
 		return null;
-	}
-
-	@Override
-	public List<Map<String, Object>> getTeacherActivityStatistics(Map<String,Object> param) {
-
-		return activityInfoExtMapper.getTeacherActivityStatistics(param);
-
 	}
 	@Override
 	public List<Map<String, Object>> readActivityResults(String activityFlow, String searchStr) {
@@ -167,10 +145,6 @@ public class ResActivityBizImpl implements IResActivityBiz {
 		return resultMapper.selectByPrimaryKey(resultFlow);
 	}
 
-	@Override
-	public int checkJoin(String activityFlow, String userFlow) {
-		return activityInfoExtMapper.checkJoin(activityFlow,userFlow);
-	}
 
 	@Override
 	public int checkJoin2(String activityFlow, String userFlow) {
@@ -278,16 +252,6 @@ public class ResActivityBizImpl implements IResActivityBiz {
 	}
 
 	@Override
-	public List<Map<String, Object>> readActivityRegists(String activityFlow) {
-		return activityInfoExtMapper.readActivityRegists(activityFlow);
-	}
-
-	@Override
-	public List<Map<String, Object>> getDoctorActivityStatistics(Map<String, Object> parMp) {
-		return activityInfoExtMapper.getDoctorActivityStatistics(parMp);
-	}
-
-	@Override
 	public int saveActivityInfo2(TeachingActivityInfo info,SysUser user) {
 		Map<String,String> param = new HashMap<>();
 		param.put("orgFlow",user.getOrgFlow());
@@ -302,6 +266,10 @@ public class ResActivityBizImpl implements IResActivityBiz {
 				userRoleList.add("res_teacher_role_flow");
 			} else if ("Seretary".equals(roleId)) {
 				userRoleList.add("res_secretary_role_flow");
+			} else if ("TeachingHead".equals(roleId)) {
+				userRoleList.add("res_teaching_head_role_flow");
+			} else if ("TeachingSeretary".equals(roleId)) {
+				userRoleList.add("res_teaching_secretary_role_flow");
 			}
 			criteria.andCfgCodeIn(userRoleList);
 			SysCfg sysCfg = sysCfgMapper.selectByExample(example).get(0);     //获取该用户当前角色信息
@@ -330,6 +298,10 @@ public class ResActivityBizImpl implements IResActivityBiz {
 					subName=subName+"Head";
 				}else if("科秘角色".equals(actCfg.getSubRoleName())){
 					subName=subName+"Seretary";
+				}else if("教学秘书角色".equals(actCfg.getSubRoleName())){
+					subName=subName+"TeachingSeretary";
+				}else if("教学主任角色".equals(actCfg.getSubRoleName())){
+					subName=subName+"TeachingHead";
 				}
 			}
 			if(("undefined".equals(info.getSubmitRole())||StringUtil.isBlank(info.getSubmitRole()))&&(!subName.contains(roleId))){
@@ -470,6 +442,10 @@ public class ResActivityBizImpl implements IResActivityBiz {
 				userRoleList.add("res_teacher_role_flow");
 			} else if ("Seretary".equals(roleId)) {
 				userRoleList.add("res_secretary_role_flow");
+			} else if ("TeachingHead".equals(roleId)) {
+				userRoleList.add("res_teaching_head_role_flow");
+			} else if ("TeachingSeretary".equals(roleId)) {
+				userRoleList.add("res_teaching_secretary_role_flow");
 			}
 			criteria.andCfgCodeIn(userRoleList);
 			SysCfg sysCfg = sysCfgMapper.selectByExample(example).get(0);     //获取该用户当前角色信息
@@ -498,6 +474,10 @@ public class ResActivityBizImpl implements IResActivityBiz {
 				subName=subName+"Head";
 			}else if("科秘角色".equals(actCfg.getSubRoleName())){
 				subName=subName+"Seretary";
+			}else if("教学秘书角色".equals(actCfg.getSubRoleName())){
+				subName=subName+"TeachingSeretary";
+			}else if("教学主任角色".equals(actCfg.getSubRoleName())){
+				subName=subName+"TeachingHead";
 			}
 		}
 		if(("undefined".equals(info.getSubmitRole())||StringUtil.isBlank(info.getSubmitRole()))&&(!subName.contains(roleId))){

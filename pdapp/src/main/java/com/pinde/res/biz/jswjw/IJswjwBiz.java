@@ -32,7 +32,7 @@ public interface IJswjwBiz {
 
 	public void addData(String dataType, String userFlow, String deptFlow, String cataFlow, Map<String, Object> paramMap, boolean isChargeOrg, String json);
 
-	public void addData2(String dataType, String userFlow, String deptFlow, String cataFlow, JsResDataExt dataExt, boolean isChargeOrg);
+	public void addData2(String dataType, String userFlow, String deptFlow, String cataFlow, JsResDataExt dataExt, boolean isChargeOrg) throws Exception;
 
 	public Map<String, Object> viewData(String dataType, String userFlow,String deptFlow, String dataFlow);
 
@@ -574,13 +574,13 @@ public interface IJswjwBiz {
 
 	List<ResSchProcessExpress> searchByUserFlowAndTypeIdTwo(String operUserFlow,String recTypeId);
 
-	List<JsresDoctorDeptDetail> deptDoctorAllWorkDetailByNow(String recruitFlow, String doctorFlow, String applyYear);
+	List<JsresDoctorDeptDetail> deptDoctorAllWorkDetailByNow(String recruitFlow, String doctorFlow, String applyYear, String rotationFlow);
 
 	Map<String,Object> doctorDeptAvgWorkDetail(String recruitFlow, String applyYear);
 
 	ResDoctor readDoctor(String recordFlow);
 
-	int editGraduationApply2(JsresGraduationApply jsresGraduationApply, String recruitFlow, String changeSpeId, String doctorFlow, String applyYear, Map<String, String> practicingMap,SysUser user) throws DocumentException;
+	int editGraduationApply2(JsresGraduationApply jsresGraduationApply, String recruitFlow, String changeSpeId, String doctorFlow, String applyYear, Map<String, String> practicingMap, SysUser user, String rotationFlow, String reSubmitFlag) throws DocumentException;
 
 	ResDoctorRecruit readResDoctorRecruitBySessionNumber(String doctorFlow, String sessionNumber);
 
@@ -822,4 +822,17 @@ public interface IJswjwBiz {
 	 * @Date 2025/1/6
 	 */
 	SysUser getUserByUserPhone(String userPhone);
+
+	// 查询算好的数据比例信息
+	List<JsresDoctorDeptDetail> deptDoctorAllWorkDetail(String rotationFlow, String doctorFlow, String applyYear);
+
+	/**
+	 * @Department：研发部
+	 * @Description 查询计算好的学员培训数据统计信息
+	 * @Author fengxf
+	 * @Date 2025/2/18
+	 */
+	List<JsresDoctorDeptDetail> searchDeptDoctorAllWorkDetailList(String rotationFlow, String doctorFlow, String applyYear);
+
+	List<JsresDoctorDeptDetail> deptDoctorAllWorkDetailByNow_new(String recruitFlow, String doctorFlow, String applyYear, String rotationFlow);
 }

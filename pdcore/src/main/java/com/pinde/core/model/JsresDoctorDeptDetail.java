@@ -33,20 +33,21 @@ public class JsresDoctorDeptDetail implements java.io.Serializable {
 
     private String orgName;
 
+    //完成数
     private String completeNum;
-
+    //审核数
     private String auditNum;
-
+    //要求数
     private String reqNum;
-
+    //减免前要求数
     private String oldReqNum;
-
+    //完成比例
     private String completeBi;
-
+    //审核比例
     private String auditBi;
-
+    //状态
     private String recordStatus;
-
+     //创建时间
     private String createTime;
 
     private String createUserFlow;
@@ -56,17 +57,17 @@ public class JsresDoctorDeptDetail implements java.io.Serializable {
     private String modifyUserFlow;
 
     private String groupFlow;
-
+    //
     private String isShort;
-
+    //补填数
     private String outCompleteNum;
-
+    //正常数据
     private String inCompleteNum;
 
     private String applyYear;
-
+    //补填比例
     private String outCompleteBi;
-
+    //正常填报比例
     private String inCompleteBi;
 
     private String isAdd;

@@ -1,9 +1,11 @@
 package com.pinde.sci.ctrl.jsres;
 
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.enums.AfterRecTypeEnum;
 import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
+import com.pinde.sci.biz.sch.ISchArrangeResultBiz;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.*;
@@ -629,6 +631,14 @@ public class JsResDoctorAsseController extends GeneralController {
             model.addAttribute("file",file);
         }
         List<JsresGraduationApplyLog> logs = graduationApplyBiz.getAuditLogsByApplyFlow(applyFlow);
+        // 是否在异常记录表中
+        GraduationDoctorTemp graduationDoctorTemp = graduationApplyBiz.getGraduationDoctorTemp(resDoctor.getDoctorFlow());
+        // 默认不存在异常记录表
+        String tempDoctorFlag = GlobalConstant.FLAG_N;
+        if(graduationDoctorTemp != null){
+            tempDoctorFlag = GlobalConstant.FLAG_Y;
+        }
+        model.addAttribute("tempDoctorFlag", tempDoctorFlag);
         model.addAttribute("recruit", recruit);
         model.addAttribute("flag", flag);
         model.addAttribute("logs", logs);
@@ -949,7 +959,7 @@ public class JsResDoctorAsseController extends GeneralController {
     public String waitAuditListNew(Model model,String roleFlag,Integer currentPage ,HttpServletRequest request,String applyYear, String orgFlow,
                                    String trainingTypeId,String trainingSpeId,String datas[], String sessionNumber, String graduationYear,
                                    String qualificationMaterialId,String passFlag, String userName,String idNo, String completeBi,
-                                   String auditBi,String auditStatusId,String testId,String isNotMatch,String tabTag,String joinOrgFlow,String isPostpone
+                                   String auditBi,String auditStatusId,String testId,String isNotMatch,String tabTag,String joinOrgFlow,String isPostpone, String tempDoctorFlag
     ){
         //查询条件
         Map<String,Object> param=new HashMap<>();
@@ -1008,9 +1018,15 @@ public class JsResDoctorAsseController extends GeneralController {
         param.put("roleFlag",roleFlag);
         param.put("jointOrgFlow",joinOrgFlow);
         param.put("isPostpone",isPostpone);
+        param.put("tempDoctorFlag", tempDoctorFlag);
         PageHelper.startPage(currentPage,getPageSize(request));
         List<Map<String,Object>> list=graduationApplyBiz.chargeQueryApplyList(param);
+        Set<String> doctorFlowSet = list.stream().map(kv -> kv.get("doctorFlow").toString()).collect(Collectors.toSet());
+        Map<String,List<ResRec>> nonComplianceRecordsMap= new HashMap<String, List<ResRec>>();
+        Map<String, List<ResRec>> doctorFlowMap = graduationApplyBiz.getNonComplianceRecords(new ArrayList<>(doctorFlowSet));
+        nonComplianceRecordsMap.putAll(doctorFlowMap);
         model.addAttribute("list",list);
+        model.addAttribute("nonComplianceRecordsMap",nonComplianceRecordsMap);
         String f = com.pinde.core.common.GlobalConstant.FLAG_N;
         List<ResTestConfig> testConfigList = resTestConfigBiz.findChargeEffective(DateUtil.getCurrDateTime2());
         if (testConfigList.size() > 0) {

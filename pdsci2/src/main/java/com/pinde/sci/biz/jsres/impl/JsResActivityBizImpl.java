@@ -17,7 +17,6 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.ctrl.cfg.JsresPowerCfgController;
-import com.pinde.sci.dao.jsres.TeachingActivityInfoExtMapper;
 import com.pinde.sci.dao.sys.SysOrgExtMapper;
 import com.pinde.core.model.SysOrgExt;
 import org.dom4j.Document;
@@ -106,7 +105,7 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 
 	@Override
 	public Map<String, Object> readActivity(String activityFlow) {
-		return activityInfoExtMapper.readActivity(activityFlow);
+		return activityInfoExtMapper.readActivityForWeb(activityFlow);
 	}
 	@Override
 	public Map<String, Object> getDeptActivityStatisticsMap(String deptFlow,String startTime,String endTime) {
@@ -162,7 +161,7 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 	public Map<String, Object> getDoctorActivityStatisticsMap(String doctorFlow, String startTime, String endTime, String isDept, String userFlow) {
 
 		Map<String, Object> map=new HashMap<>();
-		List<Map<String,String>> datas=activityInfoExtMapper.getDoctorActivityStatisticsMap(doctorFlow,startTime,endTime, isDept, userFlow);
+		List<Map<String,String>> datas=activityInfoExtMapper.getDoctorActivityStatisticsMapForWeb(doctorFlow,startTime,endTime, isDept, userFlow);
 		if(datas!=null)
 		{
 			for(Map<String,String> d:datas)
@@ -199,7 +198,7 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 
 	@Override
 	public List<Map<String, Object>> readActivityResults(String activityFlow) {
-		return activityInfoExtMapper.readActivityResults(activityFlow);
+		return activityInfoExtMapper.readActivityResults(activityFlow,null);
 	}
 	@Override
 	public List<Map<String, Object>> readActivityRegists(String activityFlow) {

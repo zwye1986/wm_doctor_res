@@ -159,15 +159,16 @@
 				<th>协同单位</th>
 				<th>报考专业</th>
 				<th>培训起止时间</th>
+				<th>异常报考</th>
 			</tr>
 			<tr>
-				<td colspan="6" >无记录！</td>
+				<td colspan="7" >无记录！</td>
 			</tr>
 		</table>
 	</div>
 </c:if>
 <c:if test="${not empty list}">
-	<div class="main_bd clearfix">
+	<div class="main_bd clearfix" style="padding: 0 20px;">
 <%--		<table class="grid" style="width: auto;" id="dataTable">--%>
 		<table class="grid"  >
 			<thead>
@@ -179,12 +180,21 @@
 					<th style="width: 10%; " class="fixedBy">操作</th>
 				</c:if>
 				<c:if test="${param.tabTag ne 'FristWait' and param.tabTag ne 'FristWait2'}">
-					<th style="width: 20%; " class="fixedBy">审核状态</th>
+					<th style="width: 10%; " class="fixedBy">审核状态</th>
 				</c:if>
-				<th style="width: 20%; " class="toFiexdDept">姓名</th>
-				<th style="width: 20%; " class="fixedBy">协同单位</th>
-				<th style="width: 20%; " class="fixedBy">报考专业</th>
+				<th style="width: 10%; " class="toFiexdDept">姓名</th>
+				<th style="width: 20%; " class="fixedBy">
+				<c:choose>
+					<c:when test="${trainingTypeId eq 'AssiGeneral'}">
+						培训基地
+					</c:when>
+					<c:otherwise>
+						协同单位
+					</c:otherwise>
+				</c:choose></th>
+				<th style="width: 10%; " class="fixedBy">报考专业</th>
 				<th style="width: 20%; " class="fixedBy">培训起止时间</th>
+				<th style="width: 10%;" class="fixedBy">异常报考</th>
 			</tr>
 			</thead>
 			<tbody>
@@ -236,6 +246,7 @@
 					<td style="min-width: 60px; max-width: 60px; " class="by">${doctor.jointOrgName}</td>
 					<td style="min-width: 150px; max-width: 150px; " class="by">${doctor.changeSpeName}</td>
 					<td style="min-width: 200px; max-width: 200px; " class="by">${doctor.startDate}~${doctor.endDate}</td>
+					<td style="min-width: 60px; max-width: 60px; " class="by">${doctor.tempDoctorFlag}</td>
 				</tr>
 			</c:forEach>
 			</tbody>

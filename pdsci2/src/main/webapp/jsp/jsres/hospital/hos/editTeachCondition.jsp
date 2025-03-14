@@ -39,6 +39,9 @@
     input {
         width: 68px;
     }
+    input[type='radio'] {
+        width: 30px;
+    }
 </style>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -201,10 +204,10 @@
             <h4>基本条件（门诊科室设置情况，截止上年度）</h4>
             <table border="0" cellspacing="0" cellpadding="0" class="base_info">
                 <colgroup>
-                    <col width="22%"/>
-                    <col width="28%"/>
-                    <col width="22%"/>
-                    <col width="28%"/>
+                    <col width="24%"/>
+                    <col width="26%"/>
+                    <col width="24%"/>
+                    <col width="26%"/>
                 </colgroup>
                 <tbody>
                     <tr>
@@ -257,7 +260,8 @@
                         <th><span class="red">*</span>3年培训容量总和（人）：</th>
                         <td><input type="text" class="input1 validate[required,custom[integer],min[0],max[99999999]]" style="width:100px;"
                                    name="educationInfo.total3YearTrainingCapacity"
-                                   value="${educationInfo.total3YearTrainingCapacity}"/>
+                                   value="${empty educationInfo.total3YearTrainingCapacity ? trainTotal : educationInfo.total3YearTrainingCapacity}"/>
+                            <span style="color: gray;">系统自动计算总和：${trainTotal}</span>
                         </td>
                     </tr>
 
@@ -356,7 +360,7 @@
                                 <span id="clinicalBaseTrainContractUrlSpan" style="display:${!empty baseExtInfoEducationInfo.clinicalBaseTrainContractUrl?'':'none'} ">
                                     &nbsp; <a href="${sysCfgMap['upload_base_url']}/${baseExtInfoEducationInfo.clinicalBaseTrainContractUrl}" target="_blank">查看</a>&nbsp;
                                 </span>
-                                <a id="clinicalBaseTrainContractUrl" href="javascript:uploadPdfFile('clinicalBaseTrainContractUrl','培训管理制度','', '.pdf');" style="margin-left: 2px">${empty baseExtInfoEducationInfo.clinicalBaseTrainContractUrl?'':'重新'}上传</a>&nbsp;
+                                <a id="clinicalBaseTrainContractUrl" href="javascript:uploadPdfFile('clinicalBaseTrainContractUrl','临床基地培训协议','', '.pdf');" style="margin-left: 2px">${empty baseExtInfoEducationInfo.clinicalBaseTrainContractUrl?'':'重新'}上传</a>&nbsp;
                                 <span id="clinicalBaseTrainContractUrlDel" style="${empty baseExtInfoEducationInfo.clinicalBaseTrainContractUrl?'display:none':''}">
                                     <img class="opBtn" title="删除" src="<s:url value="/css/skin/${skinPath}/images/del1.png" />"
                                          style="cursor: pointer;" onclick="javascript:delFile('clinicalBaseTrainContractUrl');" />

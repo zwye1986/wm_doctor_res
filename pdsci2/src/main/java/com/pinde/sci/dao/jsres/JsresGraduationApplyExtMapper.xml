@@ -48,6 +48,7 @@
         <result column="ORG_CITY_ID" jdbcType="VARCHAR" property="orgCityId" />
         <result column="ORG_CITY_NAME" jdbcType="VARCHAR" property="orgCityName" />
         <result column="TEST_ID" jdbcType="VARCHAR" property="testId" />
+        <result column="TEMP_DOCTOR_FLAG" property="tempDoctorFlag" jdbcType="VARCHAR" />
     </resultMap>
 
     <select id="chargeQueryList" resultMap="chargeQueryMap">
@@ -481,7 +482,8 @@
         WHEN DR.TRAIN_YEAR='ThreeYear' THEN  to_char(add_months(to_date(DR.RECRUIT_DATE, 'yyyy-mm-dd'),12*3)-1, 'yyyy-mm-dd')
         ELSE ''
         END
-        END END_DATE
+        END END_DATE,
+        CASE WHEN GDT.DOCTOR_FLOW IS NOT NULL THEN '是' ELSE '否' END AS TEMP_DOCTOR_FLAG
         FROM JSRES_GRADUATION_APPLY JGA
         LEFT JOIN RES_DOCTOR_RECRUIT DR
         ON JGA.RECRUIT_FLOW = DR.RECRUIT_FLOW
@@ -493,11 +495,50 @@
         ON DR.ORG_FLOW = SO.ORG_FLOW
         INNER JOIN SYS_USER SU
         ON RD.DOCTOR_FLOW = SU.USER_FLOW
-        LEFT JOIN RES_SCORE SCORE
-        ON SCORE.RECRUIT_FLOW = DR.RECRUIT_FLOW
-        AND SCORE.DOCTOR_FLOW = DR.DOCTOR_FLOW
-        AND SCORE.SCORE_TYPE_ID = 'PublicScore'
-        AND SCORE.RECORD_STATUS='Y'
+        LEFT JOIN (
+            SELECT
+                SCORE_FLOW,
+                DOCTOR_FLOW,
+                RECRUIT_FLOW,
+                SKILL_SCORE,
+                RN
+            FROM
+            (
+                SELECT
+                    SCORE_FLOW,
+                    DOCTOR_FLOW,
+                    RECRUIT_FLOW,
+                    SKILL_SCORE,
+                    ROW_NUMBER () OVER (
+                        PARTITION BY RECRUIT_FLOW
+                        ORDER BY
+                        CREATE_TIME DESC
+                    ) RN
+                FROM
+                    RES_SCORE S
+                WHERE
+                    RECORD_STATUS = 'Y'
+                AND SCORE_TYPE_ID = 'PublicScore'
+                AND EXISTS (
+                    SELECT
+                        1
+                    FROM
+                        JSRES_GRADUATION_APPLY A
+                    WHERE
+                        A.RECORD_STATUS = 'Y'
+                    <if test="applyYear != null and applyYear != ''">
+                        AND A.APPLY_YEAR = #{applyYear}
+                    </if>
+                    AND A.RECRUIT_FLOW = S.RECRUIT_FLOW
+                )
+            )
+            WHERE
+                RN = 1
+        ) SCORE ON SCORE.Recruit_Flow = DR.RECRUIT_FLOW
+        LEFT JOIN GRADUATION_DOCTOR_TEMP GDT
+        ON GDT.DOCTOR_FLOW = RD.DOCTOR_FLOW
+        AND GDT.RECORD_STATUS = 'Y'
+        AND GDT.EXAM_TYPE = 'firstExam'
 <!--         LEFT JOIN (
              SELECT R.DOCTOR_FLOW, CASE  WHEN SUM (R.SCH_MONTH) > 33 THEN 33 ELSE SUM (R.SCH_MONTH) END AS SCH_MONTH
              FROM SCH_ARRANGE_RESULT R
@@ -1082,6 +1123,14 @@
                 AND T.DOCTOR_FLOW = DR.DOCTOR_FLOW)
             </if>
         </if>
+        <if test="tempDoctorFlag != null and tempDoctorFlag != ''">
+            <if test="tempDoctorFlag == 'Y'.toString()">
+                AND GDT.DOCTOR_FLOW IS NOT NULL
+            </if>
+            <if test="tempDoctorFlag == 'N'.toString()">
+                AND GDT.DOCTOR_FLOW IS NULL
+            </if>
+        </if>
         order by
         NLSSORT(dr.org_name,'NLS_SORT = SCHINESE_PINYIN_M'),
         DR.SPE_ID,
@@ -1159,7 +1208,8 @@
         WHEN DR.TRAIN_YEAR='ThreeYear' THEN  to_char(add_months(to_date(DR.RECRUIT_DATE, 'yyyy-mm-dd'),12*3)-1, 'yyyy-mm-dd')
         ELSE ''
         END
-        END END_DATE
+        END END_DATE,
+        CASE WHEN GDT.DOCTOR_FLOW IS NOT NULL THEN '是' ELSE '否' END AS TEMP_DOCTOR_FLAG
         FROM JSRES_GRADUATION_APPLY JGA
         LEFT JOIN RES_DOCTOR_RECRUIT DR
         ON JGA.RECRUIT_FLOW = DR.RECRUIT_FLOW
@@ -1171,10 +1221,50 @@
         ON DR.ORG_FLOW = SO.ORG_FLOW
         INNER JOIN SYS_USER SU
         ON RD.DOCTOR_FLOW = SU.USER_FLOW
-        LEFT JOIN RES_SCORE SCORE
-        ON SCORE.Recruit_Flow = DR.RECRUIT_FLOW
-        AND SCORE.SCORE_TYPE_ID = 'PublicScore'
-        AND SCORE.RECORD_STATUS='Y'
+        LEFT JOIN (
+            SELECT
+                SCORE_FLOW,
+                DOCTOR_FLOW,
+                RECRUIT_FLOW,
+                SKILL_SCORE,
+                RN
+            FROM
+            (
+                SELECT
+                    SCORE_FLOW,
+                    DOCTOR_FLOW,
+                    RECRUIT_FLOW,
+                    SKILL_SCORE,
+                    ROW_NUMBER () OVER (
+                        PARTITION BY RECRUIT_FLOW
+                        ORDER BY
+                        CREATE_TIME DESC
+                    ) RN
+                FROM
+                    RES_SCORE S
+                WHERE
+                    RECORD_STATUS = 'Y'
+                AND SCORE_TYPE_ID = 'PublicScore'
+                AND EXISTS (
+                    SELECT
+                        1
+                    FROM
+                        JSRES_GRADUATION_APPLY A
+                    WHERE
+                        A.RECORD_STATUS = 'Y'
+                    <if test="applyYear != null and applyYear != ''">
+                        AND A.APPLY_YEAR = #{applyYear}
+                    </if>
+                    AND A.RECRUIT_FLOW = S.RECRUIT_FLOW
+                )
+            )
+            WHERE
+            RN = 1
+        ) SCORE ON SCORE.Recruit_Flow = DR.RECRUIT_FLOW
+        LEFT JOIN GRADUATION_DOCTOR_TEMP GDT
+        ON GDT.DOCTOR_FLOW = RD.DOCTOR_FLOW
+        AND GDT.RECORD_STATUS = 'Y'
+        AND GDT.EXAM_TYPE = 'firstExam'
         <!--         LEFT JOIN (
                      SELECT R.DOCTOR_FLOW, CASE  WHEN SUM (R.SCH_MONTH) > 33 THEN 33 ELSE SUM (R.SCH_MONTH) END AS SCH_MONTH
                      FROM SCH_ARRANGE_RESULT R
@@ -1395,12 +1485,12 @@
         <if test="orgFlow!=null and orgFlow!=''">
             AND DR.org_flow = #{orgFlow}
         </if>
-        <if test="jointOrgFlow!=null and jointOrgFlow!='' and jointOrgFlow != 'isNull'.toString()">
+        <!--<if test="jointOrgFlow!=null and jointOrgFlow!='' and jointOrgFlow != 'isNull'.toString()">
             AND DR.joint_org_flow = #{jointOrgFlow}
         </if>
         <if test="jointOrgFlow!=null and jointOrgFlow!='' and jointOrgFlow == 'isNull'.toString()">
             AND DR.joint_org_flow is null
-        </if>
+        </if>-->
         <!--<if test="orgFlowList!=null and orgFlowList.size>0 and isJointOrg == 'Y'.toString()">
             and DR.joint_org_flow in
             <foreach collection="orgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
@@ -1761,6 +1851,14 @@
                 WHERE T.RECORD_STATUS = 'Y'
                 AND T.TYPE_ID = 'Delay'
                 AND T.DOCTOR_FLOW = DR.DOCTOR_FLOW)
+            </if>
+        </if>
+        <if test="tempDoctorFlag != null and tempDoctorFlag != ''">
+            <if test="tempDoctorFlag == 'Y'.toString()">
+                AND GDT.DOCTOR_FLOW IS NOT NULL
+            </if>
+            <if test="tempDoctorFlag == 'N'.toString()">
+                AND GDT.DOCTOR_FLOW IS NULL
             </if>
         </if>
         order by
@@ -4167,6 +4265,5 @@
        </if>
    ORDER BY NLSSORT(dr.org_name, 'NLS_SORT = SCHINESE_PINYIN_M'), DR.SPE_ID, NLSSORT(su.USER_NAME, 'NLS_SORT = SCHINESE_PINYIN_M'), DR.SESSION_NUMBER
    </select>
-
 
 </mapper>

@@ -236,7 +236,7 @@
 		<form id="searchForm">
 			<input type="hidden" id="currentPage" name="currentPage"/>
 			<input type="hidden" id="orgTypeFlag" value="${param.orgLevel}"/>
-			<table style="width:100%">
+			<table class="searchTable" style="border-collapse:separate; border-spacing:0px 10px;">
 				<tr>
 					<c:if test="${'1' eq hasJointOrg}">
 						<td class="td_left">培训基地：</td>
@@ -306,10 +306,10 @@
 					</td>
 				</tr>
 				<tr>
-
-					<td></td>
-					<td><input class="btn_green" type="button" value="查&#12288;询" onclick="toPage();"/></td>
-					<td><input class="btn_green" type="button" value="导&#12288;出" onclick="daochu();"/></td>
+					<td colspan="8">
+						<input class="btn_green" type="button" value="查&#12288;询" onclick="toPage();"/>
+						<input class="btn_green" type="button" value="导&#12288;出" onclick="daochu();"/>
+					</td>
 				</tr>
 			</table>
 		</form>

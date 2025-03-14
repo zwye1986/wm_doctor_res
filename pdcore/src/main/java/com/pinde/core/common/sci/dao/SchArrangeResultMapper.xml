@@ -749,10 +749,6 @@
         AND 1 &lt;&gt; -1
       </otherwise>
     </choose>
-
-    <if test='doctorStatusId != null and doctorStatusId != ""'>
-      AND DOCTOR_STATUS_ID = TO_CHAR(#{doctorStatusId})
-    </if>
   </select>
 
   <select id="searchArrangeResultByDateAndOrgByMapNew" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">

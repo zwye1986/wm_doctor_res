@@ -145,6 +145,7 @@
                 //改变协同医院状态
                 $("select[name=trainingSpeId] option[value != '']").remove();
                 $("select[name=trainingTypeId] option[value = '']").attr('selected','selected');
+				changeTrainSpes();
                 var orgFlag=$("#trainOrg").val();
                 var orgFlow=$("#orgFlow").val();
                 if(orgFlag.replace(/(^\s*)|(\s*$)/g, "")==""){
@@ -472,7 +473,7 @@
 		<%--<input type="hidden" id="graduationMaterialName" name="materialName"/>--%>
 		<%--省厅市局查询条件--%>
 
-		<table class="searchTable" style="width: 100%;border-collapse:separate; border-spacing:0px 10px;">
+		<table class="searchTable" style="width: 92%;border-collapse:separate; border-spacing:0px 10px;">
 			<tr>
 				<td class="td_left">结业年份：</td>
 				<td>
@@ -628,8 +629,20 @@
 						<label><input type="checkbox" id="${type.id}"value="${type.id}" checked class="docType" name="datas" />${type.name}&nbsp;</label>
 					</c:forEach>
 				</td>
+				<td class="td_left">异常报考：</td>
+				<td>
+					<select class="select" name="tempDoctorFlag">
+						<option value="">全部</option>
+						<option <c:if test="${param.tempDoctorFlag eq GlobalConstant.FLAG_Y}">selected="selected"</c:if>
+								value="${GlobalConstant.FLAG_Y}">是
+						</option>
+						<option <c:if test="${param.tempDoctorFlag eq GlobalConstant.FLAG_N}">selected="selected"</c:if>
+								value="${GlobalConstant.FLAG_N}">否
+						</option>
+					</select>
+				</td>
 
-				<td colspan="8">
+				<td colspan="6">
 					<input class="btn_green" type="button" value="查&#12288;询" onclick="toPage();"/>&#12288;
 					<input class="btn_green" type="button" value="导&#12288;出" onclick="exportInfo();"/>&#12288;
 					<c:if test="${param.tabTag eq 'FristWait' or param.tabTag eq 'FristWait2'}">
@@ -1211,7 +1224,7 @@
 <%--		</table>--%>
 	</form>
 </div>
-<div id="doctorListZi" style="padding: 10px 30px 10px 30px;box-sizing: border-box;">
+<div id="doctorListZi" style="padding: 0 20px;box-sizing: border-box;width: 92%;overflow-x: auto;">
 </div>
 <div style="display: none;">
 	<select id="WMFirst_select">

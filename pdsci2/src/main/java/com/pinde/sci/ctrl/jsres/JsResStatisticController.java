@@ -2,10 +2,11 @@ package com.pinde.sci.ctrl.jsres;
 
 import com.alibaba.fastjson.JSON;
 import com.pinde.core.common.PasswordHelper;
+import com.pinde.core.common.enums.DictTypeEnum;
 import com.pinde.core.common.enums.jsres.JsResTeacherLevelEnum;
 import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.core.common.enums.sys.CertificateTypeEnum;
-import com.pinde.core.common.sci.dao.SysUserMapper;
+import com.pinde.core.common.sci.dao.*;
 import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
@@ -25,7 +26,13 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.ctrl.cfg.JsresPowerCfgController;
 import com.pinde.core.model.JsDoctorInfoExt;
+import com.pinde.sci.model.jsres.TeacherSpeCountDto;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,12 +45,18 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author PPBear
@@ -81,6 +94,18 @@ public class JsResStatisticController extends GeneralController {
 	private SysUserMapper sysUserMapper;
 	@Autowired
 	private IJsResPowerCfgBiz jsResPowerCfgBiz;
+	@Autowired
+	private ResTeacherTrainingInfoMapper resTeacherTrainingInfoMapper;
+	@Autowired
+	private ResTeacherLetterInfoMapper resTeacherLetterInfoMapper;
+	@Autowired
+	private SysUserDeptMapper userDeptMapper;
+	@Autowired
+	private ResTeacherTrainingMapper resTeacherTrainingMapper;
+	@Autowired
+	private ResEducationInfoMapper resEducationInfoMapper;
+	@Autowired
+	private ResProfessionalInfoMapper resProfessionalInfoMapper;
 
 	@RequestMapping("/statisticCountryOrg")
 	public String statisticCountryOrg(Model model,String sessionNumber,String orgLevel,String[] datas){
@@ -2127,6 +2152,14 @@ public class JsResStatisticController extends GeneralController {
 	public String auditTeacherApplicationMain(Model model, String roleFlag, String deptFlow){
 		model.addAttribute("roleFlag", roleFlag);
 		model.addAttribute("deptFlow", deptFlow);
+		if (roleFlag.equals("local")) {
+			SysUser currUser = GlobalContext.getCurrentUser();
+			SysDept sysDept = new SysDept();
+			sysDept.setOrgFlow(currUser.getOrgFlow());
+			sysDept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+			List<SysDept> sysDeptList = deptBiz.searchDept(sysDept);
+			model.addAttribute("sysDeptList", sysDeptList);
+		}
 		return "jsres/global/statistics/auditTeacherApplicationMain";
 	}
 
@@ -2152,12 +2185,74 @@ public class JsResStatisticController extends GeneralController {
 	}
 
 	@RequestMapping("/auditTeacherApplication")
-	public String auditTeacherApplication(Model model,ResTeacherTraining teacherTraining,HttpServletRequest request,Integer currentPage, String roleFlag, String dataFlag){
+	public String auditTeacherApplication(Model model,HttpServletRequest request,Integer currentPage, String roleFlag, String doctorName, String deptFlow, String technicalPositionId, String teacherLevelId, String applicationAuditStatus, String orgFlow){
         if (StringUtil.isNotBlank(roleFlag) && com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
-			teacherTraining.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
+			orgFlow = GlobalContext.getCurrentUser().getOrgFlow();
 		}
 		PageHelper.startPage(currentPage, getPageSize(request));
-		List<ResTeacherTraining> teacherTrainingList =resStatisticBiz.searchTeacherInfo3(teacherTraining,dataFlag);
+		List<TeacherTrainingInfoVo> teacherTrainingList = resStatisticBiz.searchTeacherInfoByCondition(doctorName, deptFlow, technicalPositionId, teacherLevelId, applicationAuditStatus, orgFlow);
+		for (TeacherTrainingInfoVo teacherTrainingInfoVo : teacherTrainingList) {
+			StringBuilder trainingYears = new StringBuilder();
+			StringBuilder speNames = new StringBuilder();
+			StringBuilder certificateLevelNames = new StringBuilder();
+
+			ResTeacherTrainingInfoExample resTeacherTrainingInfoExample = new ResTeacherTrainingInfoExample();
+			resTeacherTrainingInfoExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andUserFlowEqualTo(teacherTrainingInfoVo.getUserFlow());
+			resTeacherTrainingInfoExample.setOrderByClause("training_year desc");
+			List<ResTeacherTrainingInfo> trainingInfoList = resTeacherTrainingInfoMapper.selectByExample(resTeacherTrainingInfoExample);
+			for (int i = 0; i < trainingInfoList.size(); i++) {
+				if (!trainingYears.toString().contains(trainingInfoList.get(i).getTrainingYear())) {
+					if (StringUtil.isBlank(trainingYears.toString())) {
+						trainingYears.append(trainingInfoList.get(i).getTrainingYear());
+					} else {
+						trainingYears.append(",").append(trainingInfoList.get(i).getTrainingYear());
+					}
+				}
+				if (!speNames.toString().contains(trainingInfoList.get(i).getTrainingSpeName())) {
+					if (StringUtil.isBlank(speNames.toString())) {
+						speNames.append(trainingInfoList.get(i).getTrainingSpeName());
+					} else {
+						speNames.append(",").append(trainingInfoList.get(i).getTrainingSpeName());
+					}
+				}
+				if (!certificateLevelNames.toString().contains(trainingInfoList.get(i).getCertificateLevelName())) {
+					if (StringUtil.isBlank(certificateLevelNames.toString())) {
+						certificateLevelNames.append(trainingInfoList.get(i).getCertificateLevelName());
+					} else {
+						certificateLevelNames.append(",").append(trainingInfoList.get(i).getCertificateLevelName());
+					}
+				}
+			}
+			teacherTrainingInfoVo.setTrainingYears(trainingYears.toString());
+			teacherTrainingInfoVo.setSpeNames(speNames.toString());
+			teacherTrainingInfoVo.setCertificateLevelNames(certificateLevelNames.toString());
+		}
+		if(CollectionUtils.isNotEmpty(teacherTrainingList)){
+			List<String> userFlows = teacherTrainingList.stream().map(TeacherTrainingInfoVo::getUserFlow).collect(Collectors.toList());
+
+			SysUserDeptExample example = new SysUserDeptExample();
+			example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andUserFlowIn(userFlows);
+			List<SysUserDept> sysUserDeptList = userDeptMapper.selectByExample(example);
+			Map<String, List<String>> sysUserDeptMap = new HashMap<String, List<String>>();
+			for (SysUserDept sysUserDept : sysUserDeptList) {
+				String userFlow = sysUserDept.getUserFlow();
+				if (sysUserDeptMap.containsKey(userFlow)) {
+					List<String> list = sysUserDeptMap.get(userFlow);
+					list.add(sysUserDept.getDeptName());
+				} else {
+					List<String> list = new ArrayList<String>();
+					list.add(sysUserDept.getDeptName());
+					sysUserDeptMap.put(userFlow, list);
+				}
+			}
+			Map<String,String> sysUserDeptNameMap = new HashMap<>();
+			for(Map.Entry<String, List<String>> entry : sysUserDeptMap.entrySet()){
+				String key = entry.getKey();
+				List<String> list = entry.getValue();
+				sysUserDeptNameMap.put(key,StringUtils.join(list,","));
+			}
+			model.addAttribute("sysUserDeptNameMap", sysUserDeptNameMap);
+		}
 		model.addAttribute("teacherTrainingList", teacherTrainingList);
 		model.addAttribute("roleFlag", roleFlag);
 		return "/jsres/global/statistics/auditTeacherApplicationList";
@@ -2232,99 +2327,6 @@ public class JsResStatisticController extends GeneralController {
 				return "请选择审核通过或者不通过！";
 			} else {
 				resStatisticBiz.save(teacherTraining);
-                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
-			}
-		} else {
-			return "角色未赋权！";
-		}
-	}
-
-	@RequestMapping("/batchAuditTeacherApplication")
-	public String batchAuditTeacherApplication(Model model, String[] recordFlowList, String roleFlag){
-		List<String> recordFlows = Arrays.asList(recordFlowList);
-		model.addAttribute("recordFlowList", recordFlows);
-		model.addAttribute("roleFlag", roleFlag);
-		return "/jsres/global/statistics/batchAuditTeacherApplication";
-	}
-
-	@RequestMapping("/saveBatchAudit")
-	@ResponseBody
-	public String saveBatchAudit(String[] recordFlowList, String applicationAuditStatus, String applicationAuditMessage, String roleFlag){
-        if (StringUtil.isNotBlank(roleFlag) && com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
-			if (StringUtil.isBlank(applicationAuditStatus)) {
-				return "请选择审核通过或者不通过！";
-			} else {
-                if (applicationAuditStatus.equals(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.Passed.getId())) {
-					for (String recordFlow : recordFlowList) {
-						recordFlow = recordFlow.replace("[", "").replace("]", "");
-						ResTeacherTraining teacherTraining = resStatisticBiz.searchTeacherInfoByPK(recordFlow);
-						teacherTraining.setTeacherLevelId(teacherTraining.getApplicationTeacherLevelId());
-						teacherTraining.setTeacherLevelName(JsResTeacherLevelEnum.getNameById(teacherTraining.getApplicationTeacherLevelId()));
-                        teacherTraining.setApplicationAuditStatus(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.Passed.getId());
-						resStatisticBiz.save(teacherTraining);
-						List<String> allDeptFlows = new ArrayList<String>();
-						if(StringUtil.isNotBlank(teacherTraining.getDeptFlow())&&!allDeptFlows.contains(teacherTraining.getDeptFlow())){
-							allDeptFlows.add(teacherTraining.getDeptFlow());
-						}
-						SysUser user = userBiz.readSysUser(recordFlow);
-						if(allDeptFlows.size()>0){
-							userBiz.addUserDept(user,allDeptFlows);
-						}else {
-							userBiz.disUserDept(user);
-						}
-						ResDoctor resDoctor = resDoctorBiz.findByFlow(teacherTraining.getRecordFlow());
-						if (resDoctor != null) {
-                            resDoctor.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
-							resDoctorBiz.editDoctor(resDoctor);
-						}
-						//打开app权限
-						String cfgCode = "jsres_teacher_app_login_"+teacherTraining.getRecordFlow();
-                        String cfgValue = com.pinde.core.common.GlobalConstant.FLAG_Y;
-						String cfgDesc = "是否开放带教app权限";
-						JsresPowerCfg cfg = new JsresPowerCfg();
-						cfg.setCfgCode(cfgCode);
-						cfg.setCfgValue(cfgValue);
-						cfg.setCfgDesc(cfgDesc);
-                        cfg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
-						jsResPowerCfgBiz.save(cfg);
-						SysRole sysRole1 = userRoleBiz.getByRoleName("学员");
-						SysUserRole sysUserRole1 = userRoleBiz.readUserRole(teacherTraining.getRecordFlow(), sysRole1.getRoleFlow());
-						if (sysUserRole1 != null) {
-                            sysUserRole1.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
-							userRoleBiz.saveSysUserRole(sysUserRole1);
-						}
-						SysRole sysRole = userRoleBiz.getByRoleName("带教老师");
-						SysUserRole sysUserRole = userRoleBiz.readUserRole(teacherTraining.getRecordFlow(), sysRole.getRoleFlow());
-						if (sysUserRole == null) {
-							List<String> allRoleFlows = new ArrayList<String>();
-							allRoleFlows.add(sysRole.getRoleFlow());
-							for (String roleFlow : allRoleFlows) {
-                                userRoleBiz.saveSysUserRole(teacherTraining.getRecordFlow(), roleFlow, com.pinde.core.common.GlobalConstant.RES_WS_ID);
-							}
-						}
-					}
-				} else {
-					for (String recordFlow : recordFlowList) {
-						recordFlow = recordFlow.replace("[", "").replace("]", "");
-						ResTeacherTraining teacherTraining = resStatisticBiz.searchTeacherInfoByPK(recordFlow);
-                        teacherTraining.setApplicationAuditStatus(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.NotPassed.getId());
-						teacherTraining.setApplicationAuditMessage(applicationAuditMessage);
-						resStatisticBiz.save(teacherTraining);
-					}
-				}
-                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
-			}
-		} else if (StringUtil.isNotBlank(roleFlag) && "head".equals(roleFlag)) {
-			if (StringUtil.isBlank(applicationAuditStatus)) {
-				return "请选择审核通过或者不通过！";
-			} else {
-				for (String recordFlow : recordFlowList) {
-					recordFlow = recordFlow.replace("[", "").replace("]", "");
-					ResTeacherTraining teacherTraining = resStatisticBiz.searchTeacherInfoByPK(recordFlow);
-					teacherTraining.setApplicationAuditStatus(applicationAuditStatus);
-					teacherTraining.setApplicationAuditMessage(applicationAuditMessage);
-					resStatisticBiz.save(teacherTraining);
-				}
                 return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 			}
 		} else {
@@ -2559,13 +2561,9 @@ public class JsResStatisticController extends GeneralController {
 	}
 
 	@RequestMapping(value = "/teacherApplication")
-	public String teacherApplication(String recordFlow, String roleId, Model model) {
-		ResTeacherTraining teacherTraining = resStatisticBiz.searchTeacherInfoByPK(recordFlow);
-		model.addAttribute("roleId", roleId);
-		model.addAttribute("teacher", teacherTraining);
-		if ("HeadAuditing".equals(teacherTraining.getApplicationAuditStatus()) || "HeadPassed".equals(teacherTraining.getApplicationAuditStatus())) {
-            model.addAttribute("applicationFlag", com.pinde.core.common.GlobalConstant.FLAG_N);
-		}
+	public String teacherApplication(String recordFlow, Model model) {
+		SysUser sysUser = userBiz.readSysUser(recordFlow);
+		model.addAttribute("sysUser", sysUser);
 		return "jsres/global/statistics/teacherApplication";
 	}
 
@@ -2593,9 +2591,15 @@ public class JsResStatisticController extends GeneralController {
 	}
 
 	@RequestMapping(value = "/applicationStatus")
-	public String applicationStatus(String recordFlow, Model model) {
-		ResTeacherTraining teacherTraining = resStatisticBiz.searchTeacherInfoByPK(recordFlow);
-		model.addAttribute("teacher", teacherTraining);
+	public String applicationStatus(String recordFlow, Model model) throws ParseException {
+		List<ResTeacherTraining> teacherTrainingList = resStatisticBiz.searchTeacherInfoByUserFlow(recordFlow);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+		SimpleDateFormat dateFormatNeed = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		for (ResTeacherTraining resTeacherTraining : teacherTrainingList) {
+			resTeacherTraining.setCreateTime(dateFormatNeed.format(dateFormat.parse(resTeacherTraining.getCreateTime())));
+			resTeacherTraining.setModifyTime(dateFormatNeed.format(dateFormat.parse(resTeacherTraining.getModifyTime())));
+		}
+		model.addAttribute("teacherTrainingList", teacherTrainingList);
 		return "jsres/global/statistics/applicationStatus";
 	}
 
@@ -3329,5 +3333,883 @@ public class JsResStatisticController extends GeneralController {
 		model.addAttribute("list",list);
 		model.addAttribute("roleFlag", roleFlag);
 		return "jsres/hospital/performance/teacherAuditList";
+	}
+
+	@RequestMapping(value = "/baseInfoTeacher")
+	public String baseInfoTeacher() {
+		return "jsres/global/baseInfoMainTeacher";
+	}
+
+	@RequestMapping(value = "/globalTeacherMain", method = {RequestMethod.POST, RequestMethod.GET})
+	public String globalTeacherMain(Model model) {
+		List<String> orgLevels = new ArrayList<>();
+		orgLevels.add(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
+		// 查询基地/医院
+		List<SysOrg> orgList = orgBiz.searchSysOrgOrder(orgLevels);
+		orgList.sort(Comparator.comparingInt(o -> o.getOrgCode().hashCode()));
+		model.addAttribute("orgList", orgList);
+		return "jsres/global/globalTeacherMain";
+	}
+
+	@RequestMapping(value = "/globalTeacher", method = {RequestMethod.POST, RequestMethod.GET})
+	public String globalTeacher(Model model, String orgFlow, String speId) {
+		List<String> orgLevels = new ArrayList<>();
+		orgLevels.add(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
+		// 查询基地/医院
+		List<SysOrg> orgList = orgBiz.searchSysOrgOrder(orgLevels);
+		orgList.sort(Comparator.comparingInt(o -> o.getOrgCode().hashCode()));
+		List<SysOrg> searchOrgList = new ArrayList<>();
+		if (StringUtil.isNotBlank(orgFlow)) {
+			searchOrgList.add(orgBiz.readSysOrg(orgFlow));
+		} else {
+			searchOrgList = orgList;
+		}
+		model.addAttribute("searchOrgList",searchOrgList);
+
+		// 各专业所有学校总计
+		Map<String,Integer> speAll = new HashMap<>();
+		speAll.put("all", 0);
+		speAll.put(JsResTeacherLevelEnum.GeneralFaculty.getId() + "all", 0);
+		speAll.put(JsResTeacherLevelEnum.KeyFaculty.getId() + "all", 0);
+		Map<String, Map<String,Object>> orgSpeList = new HashMap<>();
+		for (SysOrg sysOrg : searchOrgList) {
+			Map<String,Integer> speInfos = new HashMap<>();
+			speInfos.put("all", 0);
+			speInfos.put(JsResTeacherLevelEnum.GeneralFaculty.getId() + "all", 0);
+			speInfos.put(JsResTeacherLevelEnum.KeyFaculty.getId() + "all", 0);
+			String searchOrgFlow = sysOrg.getOrgFlow() == null ? "" : sysOrg.getOrgFlow();
+			List<TeacherTrainingInfoVo> sysUserList = userBiz.selectByCondition("", "", "", "", "", speId, "", searchOrgFlow);
+			for (TeacherTrainingInfoVo teacherTrainingInfoVo : sysUserList) {
+				List<String> speIds = new ArrayList<>();
+				if (StringUtil.isNotBlank(speId)) {
+					speIds.add(speId);
+				} else {
+					ResTeacherTrainingInfoExample resTeacherTrainingInfoExample = new ResTeacherTrainingInfoExample();
+					resTeacherTrainingInfoExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andUserFlowEqualTo(teacherTrainingInfoVo.getUserFlow());
+					resTeacherTrainingInfoExample.setOrderByClause("training_year desc");
+					List<ResTeacherTrainingInfo> trainingInfoList = resTeacherTrainingInfoMapper.selectByExample(resTeacherTrainingInfoExample);
+					speIds = trainingInfoList.stream().map(ResTeacherTrainingInfo::getTrainingSpeId).collect(Collectors.toList());
+				}
+				for (String spe : speIds) {
+					calculate4TeacherTrainingInfo(speAll, speInfos, teacherTrainingInfoVo, spe);
+				}
+			}
+			Map<String, Object> map = new HashMap<>();
+			map.put(searchOrgFlow,speInfos);
+			orgSpeList.put(searchOrgFlow,map);
+		}
+		model.addAttribute("orgSpeList",orgSpeList);
+		model.addAttribute("speAll",speAll);
+		return "jsres/global/globalTeacherReport";
+	}
+
+	@RequestMapping(value = "/exportGlobalTeacher", method = {RequestMethod.POST, RequestMethod.GET})
+	public void exportGlobalTeacher(String orgFlow, String speId, HttpServletResponse response) throws IOException {
+
+		//创建工作簿
+		HSSFWorkbook wb = new HSSFWorkbook();
+		// 为工作簿添加sheet
+		HSSFSheet sheet = wb.createSheet("sheet1");
+		//定义将用到的样式
+		HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
+		styleCenter.setAlignment(HorizontalAlignment.CENTER);
+
+		HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
+		styleLeft.setAlignment(HorizontalAlignment.LEFT);
+		styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
+
+		HSSFCellStyle stylevwc = wb.createCellStyle(); //居中
+		stylevwc.setAlignment(HorizontalAlignment.CENTER);
+		stylevwc.setVerticalAlignment(VerticalAlignment.CENTER);
+
+		//列宽自适应
+		HSSFRow rowOne = sheet.createRow(0);//第1行
+		HSSFRow rowTwo = sheet.createRow(1);//第2行
+
+		List<SysDict> sysDictList = dictBiz.searchDictListByDictTypeId(com.pinde.core.common.enums.DictTypeEnum.DoctorTrainingSpe.getId());
+		List<String> titles = new ArrayList<>();
+		titles.add("基地名称");
+		for (SysDict sysDict : sysDictList) {
+			if (sysDict.getDictId().equals("50")) {
+				continue;
+			}
+			titles.add(sysDict.getDictName());
+			titles.add("合计");
+		}
+		titles.add("总计");
+		titles.add("合计");
+		titles.add(" ");
+		// 设计表头
+		HSSFCell cellTitleOne;
+		HSSFCell cellTitleTwo;
+		HSSFCell cellTitleThree;
+		int k = 0;
+		for (int i = 0; i < titles.size(); i++) {
+			if (i % 2 == 1 && i != titles.size() - 1) {
+				CellRangeAddress cellRangeAddress = new CellRangeAddress(0, 0, i + k, i + k + 1);
+				sheet.addMergedRegion(cellRangeAddress);
+				k++;
+				cellTitleOne = rowOne.createCell(i + k - 1);
+				cellTitleTwo = rowTwo.createCell(i + k - 1);
+				cellTitleThree = rowTwo.createCell(i + k);
+				cellTitleTwo.setCellValue("一般师资");
+				cellTitleTwo.setCellStyle(styleCenter);
+				cellTitleThree.setCellValue("骨干师资");
+				cellTitleThree.setCellStyle(styleCenter);
+			} else {
+				CellRangeAddress cellRangeAddress = new CellRangeAddress(0, 1, i + k, i + k);
+				sheet.addMergedRegion(cellRangeAddress);
+				cellTitleOne = rowOne.createCell(i + k);
+			}
+			cellTitleOne.setCellValue(titles.get(i));
+			cellTitleOne.setCellStyle(styleCenter);
+		}
+
+		List<String> orgLevels = new ArrayList<>();
+		orgLevels.add(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
+		// 查询基地/医院
+		List<SysOrg> orgList = orgBiz.searchSysOrgOrder(orgLevels);
+		orgList.sort(Comparator.comparingInt(o -> o.getOrgCode().hashCode()));
+		List<SysOrg> searchOrgList = new ArrayList<>();
+		if (StringUtil.isNotBlank(orgFlow)) {
+			searchOrgList.add(orgBiz.readSysOrg(orgFlow));
+		} else {
+			searchOrgList = orgList;
+		}
+
+		// 各专业所有学校总计
+		Map<String,Integer> speAll = new HashMap<>();
+		speAll.put("all", 0);
+		speAll.put(JsResTeacherLevelEnum.GeneralFaculty.getId() + "all", 0);
+		speAll.put(JsResTeacherLevelEnum.KeyFaculty.getId() + "all", 0);
+		Map<String, Map<String,Object>> orgSpeList = new HashMap<>();
+
+		for (int i = 0; i < searchOrgList.size(); i++) {
+			SysOrg sysOrg = searchOrgList.get(i);
+			int j = 0;
+			Map<String,Integer> speInfos = new HashMap<>();
+			speInfos.put("all", 0);
+			speInfos.put(JsResTeacherLevelEnum.GeneralFaculty.getId() + "all", 0);
+			speInfos.put(JsResTeacherLevelEnum.KeyFaculty.getId() + "all", 0);
+			String searchOrgFlow = sysOrg.getOrgFlow() == null ? "" : sysOrg.getOrgFlow();
+			String orgName = sysOrg.getOrgName() == null ? "" : sysOrg.getOrgName();
+
+			HSSFRow rowThree = sheet.createRow(i + 2); //第3行
+			HSSFCell cellOne = rowThree.createCell(j++);
+			cellOne.setCellStyle(styleCenter);
+			cellOne.setCellValue(orgName);
+			List<TeacherTrainingInfoVo> sysUserList = userBiz.selectByCondition("", "", "", "", "", speId, "", searchOrgFlow);
+			for (TeacherTrainingInfoVo teacherTrainingInfoVo : sysUserList) {
+				List<String> speIds = new ArrayList<>();
+				if (StringUtil.isNotBlank(speId)) {
+					speIds.add(speId);
+				} else {
+					ResTeacherTrainingInfoExample resTeacherTrainingInfoExample = new ResTeacherTrainingInfoExample();
+					resTeacherTrainingInfoExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andUserFlowEqualTo(teacherTrainingInfoVo.getUserFlow());
+					resTeacherTrainingInfoExample.setOrderByClause("training_year desc");
+					List<ResTeacherTrainingInfo> trainingInfoList = resTeacherTrainingInfoMapper.selectByExample(resTeacherTrainingInfoExample);
+					speIds = trainingInfoList.stream().map(ResTeacherTrainingInfo::getTrainingSpeId).collect(Collectors.toList());
+				}
+				for (String spe : speIds) {
+					calculate4TeacherTrainingInfo(speAll, speInfos, teacherTrainingInfoVo, spe);
+				}
+			}
+			for (SysDict sysDict : sysDictList) {
+				if (sysDict.getDictId().equals("50")) {
+					continue;
+				}
+				HSSFCell cellTwo = rowThree.createCell(j++);
+				cellTwo.setCellStyle(styleCenter);
+				cellTwo.setCellValue(speInfos.getOrDefault(sysDict.getDictId() + JsResTeacherLevelEnum.GeneralFaculty.getId(), 0));
+
+				HSSFCell cellThree = rowThree.createCell(j++);
+				cellThree.setCellStyle(styleCenter);
+				cellThree.setCellValue(speInfos.getOrDefault(sysDict.getDictId() + JsResTeacherLevelEnum.KeyFaculty.getId(), 0));
+
+				HSSFCell cellFour = rowThree.createCell(j++);
+				cellFour.setCellStyle(styleCenter);
+				cellFour.setCellValue(speInfos.getOrDefault(sysDict.getDictId() + "all", 0));
+			}
+			HSSFCell cellFive = rowThree.createCell(j++);
+			cellFive.setCellStyle(styleCenter);
+			cellFive.setCellValue(speInfos.getOrDefault(JsResTeacherLevelEnum.GeneralFaculty.getId() + "all", 0));
+			HSSFCell cellSix = rowThree.createCell(j++);
+			cellSix.setCellStyle(styleCenter);
+			cellSix.setCellValue(speInfos.getOrDefault(JsResTeacherLevelEnum.KeyFaculty.getId() + "all", 0));
+			HSSFCell cellSeven = rowThree.createCell(j);
+			cellSeven.setCellStyle(styleCenter);
+			cellSeven.setCellValue(speInfos.getOrDefault("all", 0));
+		}
+		// 最下方的统计
+		HSSFRow rowFour = sheet.createRow(searchOrgList.size() + 2);
+		int j = 0;
+		HSSFCell cellOne = rowFour.createCell(j++);
+		cellOne.setCellStyle(styleCenter);
+		cellOne.setCellValue("合计");
+		for (SysDict sysDict : sysDictList) {
+			if (sysDict.getDictId().equals("50")) {
+				continue;
+			}
+			HSSFCell cellTwo = rowFour.createCell(j++);
+			cellTwo.setCellStyle(styleCenter);
+			cellTwo.setCellValue(speAll.getOrDefault(sysDict.getDictId() + JsResTeacherLevelEnum.GeneralFaculty.getId(), 0));
+
+			HSSFCell cellThree = rowFour.createCell(j++);
+			cellThree.setCellStyle(styleCenter);
+			cellThree.setCellValue(speAll.getOrDefault(sysDict.getDictId() + JsResTeacherLevelEnum.KeyFaculty.getId(), 0));
+
+			HSSFCell cellFour = rowFour.createCell(j++);
+			cellFour.setCellStyle(styleCenter);
+			cellFour.setCellValue(speAll.getOrDefault(sysDict.getDictId() + "all", 0));
+		}
+		HSSFCell cellFive = rowFour.createCell(j++);
+		cellFive.setCellStyle(styleCenter);
+		cellFive.setCellValue(speAll.getOrDefault(JsResTeacherLevelEnum.GeneralFaculty.getId() + "all", 0));
+		HSSFCell cellSix = rowFour.createCell(j++);
+		cellSix.setCellStyle(styleCenter);
+		cellSix.setCellValue(speAll.getOrDefault(JsResTeacherLevelEnum.KeyFaculty.getId() + "all", 0));
+		HSSFCell cellSeven = rowFour.createCell(j);
+		cellSeven.setCellStyle(styleCenter);
+		cellSeven.setCellValue(speAll.getOrDefault("all", 0));
+
+		String fileName = "师资统计报表.xls";
+
+		fileName = URLEncoder.encode(fileName, "UTF-8");
+		response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+		response.setContentType("application/octet-stream;charset=UTF-8");
+		wb.write(response.getOutputStream());
+	}
+
+	private void calculate4TeacherTrainingInfo(Map<String, Integer> speAll, Map<String, Integer> speInfos, TeacherTrainingInfoVo teacherTrainingInfoVo, String spe) {
+		speInfos.put("all", speInfos.get("all") + 1);
+		speAll.put("all", speAll.get("all") + 1);
+		if (speInfos.containsKey(spe + "all")) {
+			speInfos.put(spe + "all", speInfos.get(spe + "all") + 1);
+		} else {
+			speInfos.put(spe + "all", 1);
+		}
+		if (speAll.containsKey(spe + "all")) {
+			speAll.put(spe + "all", speAll.get(spe + "all") + 1);
+		} else {
+			speAll.put(spe + "all", 1);
+		}
+		if (teacherTrainingInfoVo.getTeacherLevel().equals(JsResTeacherLevelEnum.GeneralFaculty.getName())) {
+			speInfos.put(JsResTeacherLevelEnum.GeneralFaculty.getId() + "all", speInfos.get(JsResTeacherLevelEnum.GeneralFaculty.getId() + "all") + 1);
+			speAll.put(JsResTeacherLevelEnum.GeneralFaculty.getId() + "all", speAll.get(JsResTeacherLevelEnum.GeneralFaculty.getId() + "all") + 1);
+			if (speInfos.containsKey(spe + JsResTeacherLevelEnum.GeneralFaculty.getId())) {
+				speInfos.put(spe + JsResTeacherLevelEnum.GeneralFaculty.getId(), speInfos.get(spe + JsResTeacherLevelEnum.GeneralFaculty.getId()) + 1);
+			} else {
+				speInfos.put(spe + JsResTeacherLevelEnum.GeneralFaculty.getId(), 1);
+			}
+			if (speAll.containsKey(spe + JsResTeacherLevelEnum.GeneralFaculty.getId())) {
+				speAll.put(spe + JsResTeacherLevelEnum.GeneralFaculty.getId(), speAll.get(spe + JsResTeacherLevelEnum.GeneralFaculty.getId()) + 1);
+			} else {
+				speAll.put(spe + JsResTeacherLevelEnum.GeneralFaculty.getId(), 1);
+			}
+		} else {
+			speInfos.put(JsResTeacherLevelEnum.KeyFaculty.getId() + "all", speInfos.get(JsResTeacherLevelEnum.KeyFaculty.getId() + "all") + 1);
+			speAll.put(JsResTeacherLevelEnum.KeyFaculty.getId() + "all", speAll.get(JsResTeacherLevelEnum.KeyFaculty.getId() + "all") + 1);
+			if (speInfos.containsKey(spe + JsResTeacherLevelEnum.KeyFaculty.getId())) {
+				speInfos.put(spe + JsResTeacherLevelEnum.KeyFaculty.getId(), speInfos.get(spe + JsResTeacherLevelEnum.KeyFaculty.getId()) + 1);
+			} else {
+				speInfos.put(spe + JsResTeacherLevelEnum.KeyFaculty.getId(), 1);
+			}
+			if (speAll.containsKey(spe + JsResTeacherLevelEnum.KeyFaculty.getId())) {
+				speAll.put(spe + JsResTeacherLevelEnum.KeyFaculty.getId(), speAll.get(spe + JsResTeacherLevelEnum.KeyFaculty.getId()) + 1);
+			} else {
+				speAll.put(spe + JsResTeacherLevelEnum.KeyFaculty.getId(), 1);
+			}
+		}
+	}
+
+	@RequestMapping(value = "/commonSzSearch", method = {RequestMethod.POST, RequestMethod.GET})
+	public String commonSzSearch(Model model) {
+		List<String> orgLevels = new ArrayList<>();
+		orgLevels.add(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
+		// 查询基地/医院
+		List<SysOrg> orgList = orgBiz.searchSysOrgOrder(orgLevels);
+		orgList.sort(Comparator.comparingInt(o -> o.getOrgCode().hashCode()));
+		model.addAttribute("orgList", orgList);
+		return "jsres/global/commonSzSearch";
+	}
+
+	@RequestMapping(value = "/commonSzList", method = {RequestMethod.POST, RequestMethod.GET})
+	public String commonSzList(String doctorName, String teacherLevelId, String deptFlow, String technicalPositionId,
+							   String trainingYear, String speId, String certificateLevelId, String orgFlow, Integer currentPage, HttpServletRequest request, Model model) {
+
+		PageHelper.startPage(currentPage, getPageSize(request));
+		List<TeacherTrainingInfoVo> sysUserList = userBiz.selectByCondition(doctorName, teacherLevelId, deptFlow, technicalPositionId, trainingYear, speId, certificateLevelId, orgFlow);
+
+		for (TeacherTrainingInfoVo teacherTrainingInfoVo : sysUserList) {
+
+			StringBuilder trainingYears = new StringBuilder();
+			StringBuilder speNames = new StringBuilder();
+			StringBuilder certificateLevelNames = new StringBuilder();
+
+			ResTeacherTrainingInfoExample resTeacherTrainingInfoExample = new ResTeacherTrainingInfoExample();
+			resTeacherTrainingInfoExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andUserFlowEqualTo(teacherTrainingInfoVo.getUserFlow());
+			resTeacherTrainingInfoExample.setOrderByClause("training_year desc");
+			List<ResTeacherTrainingInfo> trainingInfoList = resTeacherTrainingInfoMapper.selectByExample(resTeacherTrainingInfoExample);
+			for (int i = 0; i < trainingInfoList.size(); i++) {
+				if (!trainingYears.toString().contains(trainingInfoList.get(i).getTrainingYear())) {
+					if (StringUtil.isBlank(trainingYears.toString())) {
+						trainingYears.append(trainingInfoList.get(i).getTrainingYear());
+					} else {
+						trainingYears.append(",").append(trainingInfoList.get(i).getTrainingYear());
+					}
+				}
+				if (!speNames.toString().contains(trainingInfoList.get(i).getTrainingSpeName())) {
+					if (StringUtil.isBlank(speNames.toString())) {
+						speNames.append(trainingInfoList.get(i).getTrainingSpeName());
+					} else {
+						speNames.append(",").append(trainingInfoList.get(i).getTrainingSpeName());
+					}
+				}
+				if (!certificateLevelNames.toString().contains(trainingInfoList.get(i).getCertificateLevelName())) {
+					if (StringUtil.isBlank(certificateLevelNames.toString())) {
+						certificateLevelNames.append(trainingInfoList.get(i).getCertificateLevelName());
+					} else {
+						certificateLevelNames.append(",").append(trainingInfoList.get(i).getCertificateLevelName());
+					}
+				}
+			}
+			teacherTrainingInfoVo.setTrainingYears(trainingYears.toString());
+			teacherTrainingInfoVo.setSpeNames(speNames.toString());
+			teacherTrainingInfoVo.setCertificateLevelNames(certificateLevelNames.toString());
+
+		}
+		model.addAttribute("sysUserList", sysUserList);
+
+		return "jsres/global/commonSzList";
+	}
+
+	@RequestMapping(value = "/exportSzList", method = {RequestMethod.POST, RequestMethod.GET})
+	public void exportSzList(String doctorName, String teacherLevelId, String deptFlow, String technicalPositionId,
+							 String trainingYear, String speId, String certificateLevelId, String orgFlow, HttpServletResponse response) throws Exception {
+		List<TeacherTrainingInfoVo> sysUserList = userBiz.selectByCondition(doctorName, teacherLevelId, deptFlow, technicalPositionId, trainingYear, speId, certificateLevelId, orgFlow);
+
+		for (TeacherTrainingInfoVo teacherTrainingInfoVo : sysUserList) {
+
+			StringBuilder trainingYears = new StringBuilder();
+			StringBuilder speNames = new StringBuilder();
+			StringBuilder certificateLevelNames = new StringBuilder();
+
+			ResTeacherTrainingInfoExample resTeacherTrainingInfoExample = new ResTeacherTrainingInfoExample();
+			resTeacherTrainingInfoExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andUserFlowEqualTo(teacherTrainingInfoVo.getUserFlow());
+			resTeacherTrainingInfoExample.setOrderByClause("training_year desc");
+			List<ResTeacherTrainingInfo> trainingInfoList = resTeacherTrainingInfoMapper.selectByExample(resTeacherTrainingInfoExample);
+			for (int i = 0; i < trainingInfoList.size(); i++) {
+				if (!trainingYears.toString().contains(trainingInfoList.get(i).getTrainingYear())) {
+					if (StringUtil.isBlank(trainingYears.toString())) {
+						trainingYears.append(trainingInfoList.get(i).getTrainingYear());
+					} else {
+						trainingYears.append(",").append(trainingInfoList.get(i).getTrainingYear());
+					}
+				}
+				if (!speNames.toString().contains(trainingInfoList.get(i).getTrainingSpeName())) {
+					if (StringUtil.isBlank(speNames.toString())) {
+						speNames.append(trainingInfoList.get(i).getTrainingSpeName());
+					} else {
+						speNames.append(",").append(trainingInfoList.get(i).getTrainingSpeName());
+					}
+				}
+				if (!certificateLevelNames.toString().contains(trainingInfoList.get(i).getCertificateLevelName())) {
+					if (StringUtil.isBlank(certificateLevelNames.toString())) {
+						certificateLevelNames.append(trainingInfoList.get(i).getCertificateLevelName());
+					} else {
+						certificateLevelNames.append(",").append(trainingInfoList.get(i).getCertificateLevelName());
+					}
+				}
+			}
+			teacherTrainingInfoVo.setTrainingYears(trainingYears.toString());
+			teacherTrainingInfoVo.setSpeNames(speNames.toString());
+			teacherTrainingInfoVo.setCertificateLevelNames(certificateLevelNames.toString());
+		}
+
+		String fileName = "师资信息.xls";
+		String[] titles;
+
+		titles = new String[]{
+				"userName:姓名",
+				"sex:性别",
+				"orgName:培训基地",
+				"teacherLevel:师资级别",
+				"technicalPositionName:技术职务",
+				"trainingYears:培训年份",
+				"speNames:培训专业",
+				"certificateLevelNames:培训证书等级"
+		};
+
+		fileName = new String(fileName.getBytes(), "ISO-8859-1");
+		response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+		response.setContentType("application/octet-stream;charset=UTF-8");
+		ExcleUtile.exportSimpleExcleByObjsAllString(titles, sysUserList, response.getOutputStream());
+	}
+
+	@RequestMapping("/editCommonSzInfo")
+	public String editCommonSzInfo(String userFlow, String recordFlow,String flag, String roleFlag, Model model) throws ParseException {
+		SysUser sysUser = userBiz.readSysUser(userFlow);
+		ResTeacherTraining teacherTraining = resTeacherTrainingMapper.selectByPrimaryKey(recordFlow);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+		SimpleDateFormat dateFormatNeed = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		teacherTraining.setCreateTime(dateFormatNeed.format(dateFormat.parse(teacherTraining.getCreateTime())));
+		teacherTraining.setModifyTime(dateFormatNeed.format(dateFormat.parse(teacherTraining.getModifyTime())));
+		model.addAttribute("teacherTraining", teacherTraining);
+
+		model.addAttribute("roleFlag", roleFlag);
+		if (StringUtil.isNotBlank(sysUser.getIdNo())) {
+			String age = DateUtil.calculateAge(sysUser.getIdNo().substring(6, 14));
+			model.addAttribute("age", age);
+		}
+		model.addAttribute("user", sysUser);
+		// 教育信息
+		ResEducationInfoExample resEducationInfoExample = new ResEducationInfoExample();
+		resEducationInfoExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andUserFlowEqualTo(userFlow);
+		List<ResEducationInfo> educationInfoList = resEducationInfoMapper.selectByExample(resEducationInfoExample);
+		educationInfoList.sort((o1, o2) -> o2.getAcademicBackgroundId().hashCode() - o1.getAcademicBackgroundId().hashCode());
+		model.addAttribute("educationInfoList", educationInfoList);
+
+		// 职称信息
+		ResProfessionalInfoExample resProfessionalInfoExample = new ResProfessionalInfoExample();
+		resProfessionalInfoExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andUserFlowEqualTo(userFlow);
+		List<ResProfessionalInfo> professionalInfoList = resProfessionalInfoMapper.selectByExample(resProfessionalInfoExample);
+		if (CollectionUtils.isNotEmpty(professionalInfoList)) {
+			ResProfessionalInfo professionalInfo = professionalInfoList.get(0);
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			LocalDate endDate = LocalDate.parse(DateUtil.getCurrDate(), formatter);
+			if (StringUtil.isNotBlank(professionalInfo.getTechnicalPositionTime()) && "view".equals(flag)) {
+				LocalDate startDate = LocalDate.parse(professionalInfo.getTechnicalPositionTime(), formatter);
+				Period period = Period.between(startDate, endDate);
+				int years = period.getYears();
+				professionalInfo.setTechnicalPositionTime(professionalInfo.getTechnicalPositionTime() + "(" + years + "年)");
+			}
+			if (StringUtil.isNotBlank(professionalInfo.getClinicalTeachingTime()) && "view".equals(flag)) {
+				LocalDate startDate = LocalDate.parse(professionalInfo.getClinicalTeachingTime(), formatter);
+				Period period = Period.between(startDate, endDate);
+				int years = period.getYears();
+				professionalInfo.setClinicalTeachingTime(professionalInfo.getClinicalTeachingTime() + "(" + years + "年)");
+			}
+			model.addAttribute("professionalInfo", professionalInfo);
+		} else {
+			model.addAttribute("professionalInfo", new ResProfessionalInfo());
+		}
+
+		// 师资培训记录
+		ResTeacherTrainingInfoExample resTeacherTrainingInfoExample = new ResTeacherTrainingInfoExample();
+		resTeacherTrainingInfoExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andUserFlowEqualTo(userFlow);
+		List<ResTeacherTrainingInfo> trainingInfoList = resTeacherTrainingInfoMapper.selectByExample(resTeacherTrainingInfoExample);
+		model.addAttribute("trainingInfoList", trainingInfoList);
+
+		// 师资聘书记录
+		ResTeacherLetterInfoExample resTeacherLetterInfoExample = new ResTeacherLetterInfoExample();
+		resTeacherLetterInfoExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andUserFlowEqualTo(userFlow);
+		resTeacherLetterInfoExample.setOrderByClause("LETTER_START_TIME DESC");
+		List<ResTeacherLetterInfo> letterInfoList = resTeacherLetterInfoMapper.selectByExample(resTeacherLetterInfoExample);
+		model.addAttribute("letterInfoList", letterInfoList);
+
+		if ("view".equals(flag)) {
+			return "jsres/global/viewCommonSzInfo";
+		} else if ("edit".equals(flag)) {
+			return "jsres/global/auditCommonSzInfo";
+		}
+		return "";
+	}
+
+	@RequestMapping("/saveAuditCommonSzInfo")
+	@ResponseBody
+	public String saveAuditCommonSzInfo(String roleFlag, String applicationAuditStatus, String recordFlow, String applicationAuditMessage){
+		ResTeacherTraining teacherTraining = resTeacherTrainingMapper.selectByPrimaryKey(recordFlow);
+		teacherTraining.setApplicationAuditStatus(applicationAuditStatus);
+		teacherTraining.setApplicationAuditMessage(applicationAuditMessage);
+		resStatisticBiz.save(teacherTraining);
+		if (applicationAuditStatus.equals("Passed")) {
+			SysUser sysUser = userBiz.readSysUser(teacherTraining.getDoctorName());
+			sysUser.setTeacherLevel(teacherTraining.getApplicationTeacherLevelId());
+			userBiz.updateUser(sysUser);
+		}
+		return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
+	}
+
+
+	@RequestMapping("/batchAuditTeacherApplication")
+	public String batchAuditTeacherApplication(Model model, String[] recordFlowList, String roleFlag){
+		List<String> recordFlows = Arrays.asList(recordFlowList);
+		model.addAttribute("recordFlowList", recordFlows);
+		model.addAttribute("roleFlag", roleFlag);
+		return "/jsres/global/statistics/batchAuditTeacherApplication";
+	}
+
+	@RequestMapping("/saveBatchAudit")
+	@ResponseBody
+	public String saveBatchAudit(String[] recordFlowList, String applicationAuditStatus, String applicationAuditMessage, String roleFlag){
+		for (String recordFlow : recordFlowList) {
+			recordFlow = recordFlow.replace("[", "").replace("]", "");
+			ResTeacherTraining teacherTraining = resTeacherTrainingMapper.selectByPrimaryKey(recordFlow);
+			teacherTraining.setApplicationAuditStatus(applicationAuditStatus);
+			teacherTraining.setApplicationAuditMessage(applicationAuditMessage);
+			resStatisticBiz.save(teacherTraining);
+			if (applicationAuditStatus.equals("Passed")) {
+				SysUser sysUser = userBiz.readSysUser(teacherTraining.getDoctorName());
+				sysUser.setTeacherLevel(teacherTraining.getApplicationTeacherLevelId());
+				userBiz.updateUser(sysUser);
+			}
+		}
+		return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
+	}
+
+	@RequestMapping(value = "/globalTeacherReportByOrg", method = {RequestMethod.POST, RequestMethod.GET})
+	public String globalTeacherReportByOrg(Model model, String orgFlow, String countType) {
+		SysOrg sysOrg = orgBiz.readSysOrg(orgFlow);
+		model.addAttribute("sysOrg", sysOrg);
+		List<TeacherReportCountDto> teacherReportCountDtoList =  resStatisticBiz.countTeacherLevelByOrgFlow(orgFlow);
+		Map<String, Object> teacherReportCountDtoMap = new HashMap<>();
+		teacherReportCountDtoMap.put("generalCount", 0);
+		teacherReportCountDtoMap.put("keyCount", 0);
+		for (TeacherReportCountDto teacherReportCountDto : teacherReportCountDtoList) {
+			if (teacherReportCountDto.getTeacherLevel().equals("一般师资")) {
+				teacherReportCountDtoMap.put("generalCount", teacherReportCountDto.getNum());
+			} else {
+				teacherReportCountDtoMap.put("keyCount", teacherReportCountDto.getNum());
+			}
+		}
+		model.addAttribute("teacherReportCountDtoMap", teacherReportCountDtoMap);
+
+		Map<String, Object> teacherCertificateCountDtoMap = new HashMap<>();
+		int country = 0;
+		int province = 0;
+		int city = 0;
+		int hospital = 0;
+		Map<String, Map<String, Integer>> speCount = new HashMap<>();
+		List<TeacherTrainingInfoVo> sysUserList = userBiz.selectByCondition("", "", "", "", "", "", "", orgFlow);
+		for (TeacherTrainingInfoVo trainingInfoVo : sysUserList) {
+			List<String> speNames = new ArrayList<>();
+			ResTeacherTrainingInfoExample resTeacherTrainingInfoExample = new ResTeacherTrainingInfoExample();
+			resTeacherTrainingInfoExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andUserFlowEqualTo(trainingInfoVo.getUserFlow());
+			resTeacherTrainingInfoExample.setOrderByClause("certificate_level_id, certificate_time desc");
+			List<ResTeacherTrainingInfo> trainingInfoList = resTeacherTrainingInfoMapper.selectByExample(resTeacherTrainingInfoExample);
+			if (StringUtil.isNotBlank(countType) && countType.equals("only")) {
+				if (CollectionUtils.isNotEmpty(trainingInfoList)) {
+					ResTeacherTrainingInfo resTeacherTrainingInfo = trainingInfoList.get(0);
+					switch (resTeacherTrainingInfo.getCertificateLevelId()) {
+						case "1":
+							country++;
+							break;
+						case "2":
+							province++;
+							break;
+						case "3":
+							city++;
+							break;
+						case "4":
+							hospital++;
+							break;
+						default:
+							break;
+					}
+					speNames.add(resTeacherTrainingInfo.getTrainingSpeName());
+				}
+			} else {
+				for (ResTeacherTrainingInfo resTeacherTrainingInfo : trainingInfoList) {
+					switch (resTeacherTrainingInfo.getCertificateLevelId()) {
+						case "1":
+							country++;
+							break;
+						case "2":
+							province++;
+							break;
+						case "3":
+							city++;
+							break;
+						case "4":
+							hospital++;
+							break;
+						default:
+							break;
+					}
+				}
+				speNames = trainingInfoList.stream().map(ResTeacherTrainingInfo::getTrainingSpeName).collect(Collectors.toList());
+			}
+			teacherCertificateCountDtoMap.put("country", country);
+			teacherCertificateCountDtoMap.put("province", province);
+			teacherCertificateCountDtoMap.put("city", city);
+			teacherCertificateCountDtoMap.put("hospital", hospital);
+			model.addAttribute("teacherCertificateCountDtoMap", teacherCertificateCountDtoMap);
+
+			for (String speName : speNames) {
+				if (!speCount.containsKey(speName)) {
+					Map<String, Integer> count = new HashMap<>();
+					count.put("generalNumber", 0);
+					count.put("keyNumber", 0);
+					speCount.put(speName, count);
+				}
+				if (trainingInfoVo.getTeacherLevel().equals(JsResTeacherLevelEnum.GeneralFaculty.getName())) {
+					int generalNumber = speCount.get(speName).get("generalNumber");
+					speCount.get(speName).put("generalNumber", generalNumber + 1);
+				} else {
+					int keyNumber = speCount.get(speName).get("keyNumber");
+					speCount.get(speName).put("keyNumber", keyNumber + 1);
+				}
+			}
+		}
+		List<com.pinde.sci.model.jsres.TeacherSpeCountDto> teacherSpeCountDtoList = new ArrayList<>();
+		Set<String> speKeys = speCount.keySet();
+		for (String speKey : speKeys) {
+			com.pinde.sci.model.jsres.TeacherSpeCountDto teacherSpeCountDto = new com.pinde.sci.model.jsres.TeacherSpeCountDto();
+			teacherSpeCountDto.setSpeName(speKey);
+			teacherSpeCountDto.setGeneralNumber(speCount.get(speKey).get("generalNumber"));
+			teacherSpeCountDto.setKeyNumber(speCount.get(speKey).get("keyNumber"));
+			teacherSpeCountDtoList.add(teacherSpeCountDto);
+		}
+		teacherSpeCountDtoList.sort((o1, o2) -> o1.getGeneralNumber() + o1.getKeyNumber() - o2.getGeneralNumber() - o2.getKeyNumber());
+		model.addAttribute("teacherSpeCountDtoList", teacherSpeCountDtoList);
+		return "jsres/global/teacherReport/globalTeacherReportByOrg";
+	}
+
+	@RequestMapping(value = "/globalTeacherReportBySpe", method = {RequestMethod.POST, RequestMethod.GET})
+	public String globalTeacherReportBySpe(Model model, String speId, String countType) {
+		String speNameGlobal = DictTypeEnum.DoctorTrainingSpe.getDictNameById(speId);
+		model.addAttribute("speName", speNameGlobal);
+		List<TeacherTrainingInfoVo> sysUserList = userBiz.selectByCondition("", "", "", "", "", speId, "", "");
+		Map<String, Object> teacherReportCountDtoMap = new HashMap<>();
+		teacherReportCountDtoMap.put("generalCount", 0);
+		teacherReportCountDtoMap.put("keyCount", 0);
+		for (TeacherTrainingInfoVo teacherTrainingInfoVo : sysUserList) {
+			if (teacherTrainingInfoVo.getTeacherLevel().equals("一般师资")) {
+				teacherReportCountDtoMap.put("generalCount", (Integer) teacherReportCountDtoMap.get("generalCount") + 1);
+			} else {
+				teacherReportCountDtoMap.put("keyCount", (Integer) teacherReportCountDtoMap.get("keyCount") + 1);
+			}
+		}
+		model.addAttribute("teacherReportCountDtoMap", teacherReportCountDtoMap);
+
+		List<String> orgLevels = new ArrayList<>();
+		orgLevels.add(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
+		// 查询基地/医院
+		List<SysOrg> orgList = orgBiz.searchSysOrgOrder(orgLevels);
+		orgList.sort((o1, o2) -> o2.getOrgCode().hashCode() - o1.getOrgCode().hashCode());
+
+		Map<String, Object> teacherCertificateCountDtoMap = new HashMap<>();
+		int country = 0;
+		int province = 0;
+		int city = 0;
+		int hospital = 0;
+		List<String> orgNames = sysUserList.stream().map(TeacherTrainingInfoVo::getOrgName).distinct().collect(Collectors.toList());
+		Map<String, Map<String, Integer>> orgCount = new HashMap<>();
+		for (TeacherTrainingInfoVo trainingInfoVo : sysUserList) {
+			ResTeacherTrainingInfoExample resTeacherTrainingInfoExample = new ResTeacherTrainingInfoExample();
+			resTeacherTrainingInfoExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andUserFlowEqualTo(trainingInfoVo.getUserFlow());
+			resTeacherTrainingInfoExample.setOrderByClause("certificate_level_id, certificate_time desc");
+			List<ResTeacherTrainingInfo> trainingInfoList = resTeacherTrainingInfoMapper.selectByExample(resTeacherTrainingInfoExample);
+			for (ResTeacherTrainingInfo resTeacherTrainingInfo : trainingInfoList) {
+				if (resTeacherTrainingInfo.getTrainingSpeId().equals(speId)) {
+					switch (resTeacherTrainingInfo.getCertificateLevelId()) {
+						case "1":
+							country++;
+							break;
+						case "2":
+							province++;
+							break;
+						case "3":
+							city++;
+							break;
+						case "4":
+							hospital++;
+							break;
+						default:
+							break;
+					}
+				}
+			}
+
+			for (String orgName : orgNames) {
+				if (!orgCount.containsKey(orgName)) {
+					Map<String, Integer> count = new HashMap<>();
+					count.put("generalNumber", 0);
+					count.put("keyNumber", 0);
+					orgCount.put(orgName, count);
+				}
+				if (trainingInfoVo.getTeacherLevel().equals(JsResTeacherLevelEnum.GeneralFaculty.getName())) {
+					if (trainingInfoVo.getOrgName().equals(orgName)) {
+						int generalNumber = orgCount.get(orgName).get("generalNumber");
+						orgCount.get(orgName).put("generalNumber", generalNumber + 1);
+					}
+				} else {
+					if (trainingInfoVo.getOrgName().equals(orgName)) {
+						int keyNumber = orgCount.get(orgName).get("keyNumber");
+						orgCount.get(orgName).put("keyNumber", keyNumber + 1);
+					}
+				}
+			}
+		}
+
+		teacherCertificateCountDtoMap.put("country", country);
+		teacherCertificateCountDtoMap.put("province", province);
+		teacherCertificateCountDtoMap.put("city", city);
+		teacherCertificateCountDtoMap.put("hospital", hospital);
+		model.addAttribute("teacherCertificateCountDtoMap", teacherCertificateCountDtoMap);
+
+		List<com.pinde.sci.model.jsres.TeacherSpeCountDto> teacherSpeCountDtoList = new ArrayList<>();
+		for (String speKey : orgNames) {
+			com.pinde.sci.model.jsres.TeacherSpeCountDto teacherSpeCountDto = new com.pinde.sci.model.jsres.TeacherSpeCountDto();
+			teacherSpeCountDto.setSpeName(speKey);
+			if (orgCount.containsKey(speKey)) {
+				teacherSpeCountDto.setGeneralNumber(orgCount.get(speKey).get("generalNumber"));
+				teacherSpeCountDto.setKeyNumber(orgCount.get(speKey).get("keyNumber"));
+			}
+			teacherSpeCountDtoList.add(teacherSpeCountDto);
+		}
+		teacherSpeCountDtoList.sort((o1, o2) -> o1.getGeneralNumber() + o1.getKeyNumber() - o2.getGeneralNumber() - o2.getKeyNumber());
+		model.addAttribute("teacherSpeCountDtoList", teacherSpeCountDtoList);
+		return "jsres/global/teacherReport/globalTeacherReportBySpe";
+	}
+
+	@RequestMapping(value = "/globalTeacherReportAll", method = {RequestMethod.POST, RequestMethod.GET})
+	public String globalTeacherReportAll(Model model, String countType) {
+
+		List<TeacherTrainingInfoVo> sysUserList = userBiz.selectByCondition("", "", "", "", "", "", "", "");
+		Map<String, Object> teacherReportCountDtoMap = new HashMap<>();
+		teacherReportCountDtoMap.put("generalCount", 0);
+		teacherReportCountDtoMap.put("keyCount", 0);
+		for (TeacherTrainingInfoVo teacherTrainingInfoVo : sysUserList) {
+			if (teacherTrainingInfoVo.getTeacherLevel().equals("一般师资")) {
+				teacherReportCountDtoMap.put("generalCount", (Integer) teacherReportCountDtoMap.get("generalCount") + 1);
+			} else {
+				teacherReportCountDtoMap.put("keyCount", (Integer) teacherReportCountDtoMap.get("keyCount") + 1);
+			}
+		}
+		model.addAttribute("teacherReportCountDtoMap", teacherReportCountDtoMap);
+
+		List<String> orgLevels = new ArrayList<>();
+		orgLevels.add(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
+		// 查询基地/医院
+		List<SysOrg> orgList = orgBiz.searchSysOrgOrder(orgLevels);
+		orgList.sort((o1, o2) -> o2.getOrgCode().hashCode() - o1.getOrgCode().hashCode());
+		List<String> orgNames = sysUserList.stream().map(TeacherTrainingInfoVo::getOrgName).distinct().collect(Collectors.toList());
+
+		Map<String, Object> teacherCertificateCountDtoMap = new HashMap<>();
+		int country = 0;
+		int province = 0;
+		int city = 0;
+		int hospital = 0;
+		Map<String, Map<String, Integer>> orgCount = new HashMap<>();
+		Map<String, Map<String, Integer>> speCount = new HashMap<>();
+
+		for (TeacherTrainingInfoVo trainingInfoVo : sysUserList) {
+			List<String> speNames = new ArrayList<>();
+			ResTeacherTrainingInfoExample resTeacherTrainingInfoExample = new ResTeacherTrainingInfoExample();
+			resTeacherTrainingInfoExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andUserFlowEqualTo(trainingInfoVo.getUserFlow());
+			resTeacherTrainingInfoExample.setOrderByClause("certificate_level_id, certificate_time desc");
+			List<ResTeacherTrainingInfo> trainingInfoList = resTeacherTrainingInfoMapper.selectByExample(resTeacherTrainingInfoExample);
+			if (StringUtil.isNotBlank(countType) && countType.equals("only")) {
+				if (CollectionUtils.isNotEmpty(trainingInfoList)) {
+					ResTeacherTrainingInfo resTeacherTrainingInfo = trainingInfoList.get(0);
+					switch (resTeacherTrainingInfo.getCertificateLevelId()) {
+						case "1":
+							country++;
+							break;
+						case "2":
+							province++;
+							break;
+						case "3":
+							city++;
+							break;
+						case "4":
+							hospital++;
+							break;
+						default:
+							break;
+					}
+					speNames.add(resTeacherTrainingInfo.getTrainingSpeName());
+				}
+			} else {
+				for (ResTeacherTrainingInfo resTeacherTrainingInfo : trainingInfoList) {
+					switch (resTeacherTrainingInfo.getCertificateLevelId()) {
+						case "1":
+							country++;
+							break;
+						case "2":
+							province++;
+							break;
+						case "3":
+							city++;
+							break;
+						case "4":
+							hospital++;
+							break;
+						default:
+							break;
+					}
+				}
+				speNames = trainingInfoList.stream().map(ResTeacherTrainingInfo::getTrainingSpeName).collect(Collectors.toList());
+			}
+
+			for (String orgName : orgNames) {
+				if (!orgCount.containsKey(orgName)) {
+					Map<String, Integer> count = new HashMap<>();
+					count.put("generalNumber", 0);
+					count.put("keyNumber", 0);
+					orgCount.put(orgName, count);
+				}
+				if (trainingInfoVo.getTeacherLevel().equals(JsResTeacherLevelEnum.GeneralFaculty.getName())) {
+					if (trainingInfoVo.getOrgName().equals(orgName)) {
+						int generalNumber = orgCount.get(orgName).get("generalNumber");
+						orgCount.get(orgName).put("generalNumber", generalNumber + 1);
+					}
+				} else {
+					if (trainingInfoVo.getOrgName().equals(orgName)) {
+						int keyNumber = orgCount.get(orgName).get("keyNumber");
+						orgCount.get(orgName).put("keyNumber", keyNumber + 1);
+					}
+				}
+			}
+
+			for (String speName : speNames) {
+				if (!speCount.containsKey(speName)) {
+					Map<String, Integer> count = new HashMap<>();
+					count.put("generalNumber", 0);
+					count.put("keyNumber", 0);
+					speCount.put(speName, count);
+				}
+				if (trainingInfoVo.getTeacherLevel().equals(JsResTeacherLevelEnum.GeneralFaculty.getName())) {
+					int generalNumber = speCount.get(speName).get("generalNumber");
+					speCount.get(speName).put("generalNumber", generalNumber + 1);
+				} else {
+					int keyNumber = speCount.get(speName).get("keyNumber");
+					speCount.get(speName).put("keyNumber", keyNumber + 1);
+				}
+			}
+		}
+
+		teacherCertificateCountDtoMap.put("country", country);
+		teacherCertificateCountDtoMap.put("province", province);
+		teacherCertificateCountDtoMap.put("city", city);
+		teacherCertificateCountDtoMap.put("hospital", hospital);
+		model.addAttribute("teacherCertificateCountDtoMap", teacherCertificateCountDtoMap);
+
+		List<com.pinde.sci.model.jsres.TeacherSpeCountDto> teacherSpeCountDtoList = new ArrayList<>();
+		Set<String> speKeys = speCount.keySet();
+		for (String speKey : speKeys) {
+			com.pinde.sci.model.jsres.TeacherSpeCountDto teacherSpeCountDto = new com.pinde.sci.model.jsres.TeacherSpeCountDto();
+			teacherSpeCountDto.setSpeName(speKey);
+			teacherSpeCountDto.setGeneralNumber(speCount.get(speKey).get("generalNumber"));
+			teacherSpeCountDto.setKeyNumber(speCount.get(speKey).get("keyNumber"));
+			teacherSpeCountDtoList.add(teacherSpeCountDto);
+		}
+		teacherSpeCountDtoList.sort((o1, o2) -> o1.getGeneralNumber() + o1.getKeyNumber() - o2.getGeneralNumber() - o2.getKeyNumber());
+		model.addAttribute("teacherSpeCountDtoList", teacherSpeCountDtoList);
+
+		List<com.pinde.sci.model.jsres.TeacherSpeCountDto> teacherSpeCountDtoListForOrg = new ArrayList<>();
+		for (String speKey : orgNames) {
+			com.pinde.sci.model.jsres.TeacherSpeCountDto teacherSpeCountDto = new com.pinde.sci.model.jsres.TeacherSpeCountDto();
+			teacherSpeCountDto.setSpeName(speKey);
+			if (orgCount.containsKey(speKey)) {
+				teacherSpeCountDto.setGeneralNumber(orgCount.get(speKey).get("generalNumber"));
+				teacherSpeCountDto.setKeyNumber(orgCount.get(speKey).get("keyNumber"));
+			}
+			teacherSpeCountDtoListForOrg.add(teacherSpeCountDto);
+		}
+		teacherSpeCountDtoListForOrg.sort((o1, o2) -> o1.getGeneralNumber() + o1.getKeyNumber() - o2.getGeneralNumber() - o2.getKeyNumber());
+		model.addAttribute("teacherSpeCountDtoListForOrg", teacherSpeCountDtoListForOrg);
+		return "jsres/global/teacherReport/globalTeacherReportAll";
 	}
 }

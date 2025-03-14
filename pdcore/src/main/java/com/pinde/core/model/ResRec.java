@@ -1,6 +1,12 @@
 package com.pinde.core.model;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+
+@TableName("res_rec")
 public class ResRec implements java.io.Serializable {
+    @TableId
     private String recFlow;
 
     private String orgFlow;
@@ -94,10 +100,51 @@ public class ResRec implements java.io.Serializable {
     private String medicineType;
 
     private String recContent;
+    @TableField(exist = false)
+    private  String checkItemName;
+    @TableField(exist = false)
+    private String invalidContent;
+    @TableField(exist = false)
+    private String startDate;
+    @TableField(exist = false)
+    private String endDate;
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getCheckItemName() {
+        return checkItemName;
+    }
+
+    public void setCheckItemName(String checkItemName) {
+        this.checkItemName = checkItemName;
+    }
+
+    public String getInvalidContent() {
+        return invalidContent;
+    }
+
+    public void setInvalidContent(String invalidContent) {
+        this.invalidContent = invalidContent;
+    }
 
     /**
      * 查询类型 ：2 教学活动
      */
+    @TableField(exist = false)
     private String queryType;
 
     public String getQueryType() {

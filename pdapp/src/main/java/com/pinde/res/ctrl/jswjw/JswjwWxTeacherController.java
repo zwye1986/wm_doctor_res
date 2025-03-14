@@ -1722,6 +1722,78 @@ public class JswjwWxTeacherController extends GeneralController {
 		return resultMap;
 	}
 
+	/**
+	 * 一键退回
+	 * @param
+	 * @param docFlow
+	 * @param processFlow
+	 * @param recType
+	 * @param userFlow
+	 * @param auditResult
+	 * @param roleId
+	 * @return
+	 */
+	@RequestMapping(value="/batchAuditBack",method=RequestMethod.POST)
+	@ResponseBody
+	public Object batchAuditBack(String userFlow, String auditResult, String roleId, String docFlow, String processFlow, String recType) {
+		Map<String,Object> resultMap = new HashMap<>();
+		resultMap.put("resultId", "200");
+		resultMap.put("resultType", "审核成功");
+		if(StringUtil.isBlank(userFlow)){
+			return ResultDataThrow("用户标识符为空");
+		}
+		if(StringUtil.isBlank(roleId)){
+			return ResultDataThrow("用户角色ID为空");
+		}
+		if(StringUtil.isBlank(docFlow)){
+			return ResultDataThrow("学生标识符为空");
+		}
+		if(StringUtil.isBlank(processFlow)){
+			return ResultDataThrow("轮转标识符为空");
+		}
+		//rec类型转换一下
+		recType=getRecTypeId(recType);
+		if(StringUtil.isBlank(recType)){
+			return ResultDataThrow("数据类型为空");
+		}
+		if(!roleId.equals("Teacher")){
+			return ResultDataThrow("用户角色ID与角色不符");
+		}
+		//验证用户是否存在
+		SysUser userinfo = jswjwBiz.readSysUser(userFlow);
+		if(userinfo==null){
+			return ResultDataThrow("用户不存在");
+		}
+
+		List<ResRec> recList = jswjwTeacherBiz.searchRecByProcessAndRecType(processFlow, docFlow, recType, "");
+		if(null != recList && recList.size() > 0){
+			ResRec resRec = recList.get(0);
+			String appMenu = jswjwBiz.getJsResCfgCodeNew("jsres_doctor_app_menu_" + resRec.getOperUserFlow());
+			if (!com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(appMenu)) {
+				return ResultDataThrow("无操作权限，请联系基地管理员！");
+			}
+			int i = 0;
+			for (ResRec rec : recList) {
+				ResRec re=jswjwBiz.readResRec(rec.getRecFlow());
+				String time=DateUtil.getCurrDateTime();
+				SysUser sysUser=jswjwBiz.readSysUser(userFlow);
+				re.setAuditTime(time);
+				re.setAuditUserFlow(sysUser.getUserFlow());
+				re.setAuditUserName(sysUser.getUserName());
+				re.setAuditStatusId(auditResult);
+				re.setAuditStatusName("");
+				i+=jswjwBiz.editResRec(re,sysUser,recType);
+			}
+			if (i==0) {
+				return ResultDataThrow("一键退回失败");
+			}
+		}else{
+			return ResultDataThrow("无可退回数据");
+		}
+		return resultMap;
+	}
+
+
 	private String getRecTypeId(String recType) {
 		String recTypeId = "";
 		switch (recType) {
@@ -2279,6 +2351,7 @@ public class JswjwWxTeacherController extends GeneralController {
 			int lcblsxzd = 0; int ssczzd = 0; int yxzdbgsxzd = 0; int lcwxyd = 0;
 			int ryjy = 0; int rzyjdjy = 0; int cjbg = 0;
 			int bgdfx=0;	int jxsj=0;	int sjys=0;
+			int ckkh = 0;
 			List<String> recTypes=new ArrayList<String>();
 			recTypes.add(recTypeIdt);
 			List<ResRec> recs= jswjwTeacherBiz.searchRecByProcessWithBLOBs(recTypes,processFlow,operUser.getUserFlow());
@@ -2302,7 +2375,7 @@ public class JswjwWxTeacherController extends GeneralController {
 					}else if(Rkjy.equals(text)){
 						rkjy++;
 					}else if(Ckks.equals(text)){
-//						ckkh++;
+						ckkh++;
 					}else if(Jnpx.equals(text)){
 						jnpx++;
 					}else if(Yph.equals(text)){
@@ -2363,7 +2436,7 @@ public class JswjwWxTeacherController extends GeneralController {
 					}else if(Rkjy.equals(text)){
 						rkjy++;
 					}else if(Ckks.equals(text)){
-//						ckkh++;
+						ckkh++;
 					}else if(Jnpx.equals(text)){
 						jnpx++;
 					}else if(Yph.equals(text)){
@@ -2443,7 +2516,7 @@ public class JswjwWxTeacherController extends GeneralController {
 			dataMap.put("xjk",String.valueOf(xjk));
 //			dataMap.put("swbltl",String.valueOf(swbltl));
 			dataMap.put("rkjy",String.valueOf(rkjy));
-//			dataMap.put("ckkh",String.valueOf(ckkh));
+			dataMap.put("ckkh",String.valueOf(ckkh));
 			dataMap.put("jnpx",String.valueOf(jnpx));
 			dataMap.put("yph",String.valueOf(yph));
 			dataMap.put("jxhz",String.valueOf(jxhz));
@@ -2848,15 +2921,15 @@ public class JswjwWxTeacherController extends GeneralController {
 				cjhdMap.put("value",formDataMap.get("rkjy"));
 			}
 			activityList.add(cjhdMap);
-//			cjhdMap = new HashMap<>();
-//			cjhdMap.put("inputId", "ckkh");
-//			cjhdMap.put("label", "学员出科考核");
-//			if(null == formDataMap || null == formDataMap.get("ckkh") || formDataMap.get("ckkh").equals("0")){
-//				cjhdMap.put("value",null == dataMap ? "0" : null == dataMap.get("ckkh") ? "0" : dataMap.get("ckkh"));
-//			}else{
-//				cjhdMap.put("value",formDataMap.get("ckkh"));
-//			}
-//			activityList.add(cjhdMap);
+			cjhdMap = new HashMap<>();
+			cjhdMap.put("inputId", "ckkh");
+			cjhdMap.put("label", "出科考核");
+			if(null == formDataMap || null == formDataMap.get("ckkh") || formDataMap.get("ckkh").equals("0")){
+				cjhdMap.put("value",null == dataMap ? "0" : null == dataMap.get("ckkh") ? "0" : dataMap.get("ckkh"));
+			}else{
+				cjhdMap.put("value",formDataMap.get("ckkh"));
+			}
+			activityList.add(cjhdMap);
 			cjhdMap = new HashMap<>();
 			cjhdMap.put("inputId", "jnpx");
 			cjhdMap.put("label", "技能培训");

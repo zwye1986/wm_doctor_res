@@ -33,6 +33,7 @@ import com.pinde.core.model.SchArrangeResult;
 import com.pinde.core.model.SchRotationDept;
 import com.pinde.core.model.SchRotationGroup;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
@@ -1947,56 +1948,38 @@ public class JsResTeacherController extends GeneralController{
 	@RequestMapping(value="/batchAudit",method=RequestMethod.POST)
 	@ResponseBody
 	public String batchAudit(String auditResult,String docFlow,String processFlow,String recType){
-		List<ResRec> recList=iResRecBiz.searchRecByProcess(processFlow,docFlow);
-		if(null != recList && recList.size() > 0){
-			int i = 0;
-			for (ResRec rec : recList) {
-				if(rec.getRecTypeId().equals(recType)){
-//					ResRec re=iResRecBiz.readResRecByType(rec.getRecFlow(),recType);
-					ResRec re=iResRecBiz.readResRec(rec.getRecFlow());
-					String time=DateUtil.getCurrDateTime();
-					SysUser sysUser=GlobalContext.getCurrentUser();
-					re.setAuditTime(time);
-					re.setAuditUserFlow(sysUser.getUserFlow());
-					re.setAuditUserName(sysUser.getUserName());
-					re.setAuditStatusId(auditResult);
-					re.setAuditStatusName(RecStatusEnum.getNameById(auditResult));
-//					i+=iResRecBiz.editByType(re, recType);
-					i+=iResRecBiz.edit(re);
-				}
-			}
-            if (i >= com.pinde.core.common.GlobalConstant.ONE_LINE) {
-                return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG;
-			}
-		}
-        return com.pinde.core.common.GlobalConstant.OPRE_FAIL_FLAG;
+
+		return iResRecBiz.batchAudit( auditResult, docFlow, processFlow, recType);
+
+
+
+//		if(null != recList && recList.size() > 0){
+//			int i = 0;
+//			for (ResRec rec : recList) {
+//				if(rec.getRecTypeId().equals(recType)){
+////					ResRec re=iResRecBiz.readResRecByType(rec.getRecFlow(),recType);
+//					ResRec re=iResRecBiz.readResRec(rec.getRecFlow());
+//					String time=DateUtil.getCurrDateTime();
+//					SysUser sysUser=GlobalContext.getCurrentUser();
+//					re.setAuditTime(time);
+//					re.setAuditUserFlow(sysUser.getUserFlow());
+//					re.setAuditUserName(sysUser.getUserName());
+//					re.setAuditStatusId(auditResult);
+//					re.setAuditStatusName(RecStatusEnum.getNameById(auditResult));
+////					i+=iResRecBiz.editByType(re, recType);
+//					i+=iResRecBiz.edit(re);
+//				}
+//			}
+//            if (i >= com.pinde.core.common.GlobalConstant.ONE_LINE) {
+//                return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG;
+//			}
+//		}
+//        return com.pinde.core.common.GlobalConstant.OPRE_FAIL_FLAG;
 	}
 	@RequestMapping(value="/batchAuditBack",method=RequestMethod.POST)
 	@ResponseBody
 	public String batchAuditBack(String auditResult,String docFlow,String processFlow,String recType){
-		List<ResRec> recList=iResRecBiz.searchRecByProcess(processFlow,docFlow);
-		if(null != recList && recList.size() > 0){
-			int i = 0;
-			for (ResRec rec : recList) {
-				if(rec.getRecTypeId().equals(recType)){
-//					ResRec re=iResRecBiz.readResRecByType(rec.getRecFlow(),recType);
-					ResRec re=iResRecBiz.readResRec(rec.getRecFlow());
-					String time=DateUtil.getCurrDateTime();
-					SysUser sysUser=GlobalContext.getCurrentUser();
-					re.setAuditTime(time);
-					re.setAuditUserFlow(sysUser.getUserFlow());
-					re.setAuditUserName(sysUser.getUserName());
-					re.setAuditStatusId(auditResult);
-					re.setAuditStatusName("");
-//					i+=iResRecBiz.editByType(re, recType);
-					i+=iResRecBiz.edit(re);
-				}
-			}
-            if (i >= com.pinde.core.common.GlobalConstant.ONE_LINE) {
-                return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG;
-			}
-		}
-        return com.pinde.core.common.GlobalConstant.OPRE_FAIL_FLAG;
+		return iResRecBiz.batchAudit( auditResult, docFlow, processFlow, recType);
 	}
 
 	/**
@@ -2159,6 +2142,9 @@ public class JsResTeacherController extends GeneralController{
 				List<ResRec> recs= iResRecBiz.searchRecAuditByProcessWithBLOBs(recTypes,processFlow,operUser.getUserFlow());
 			for (ResRec resRec : recs) {
 				String content=resRec.getRecContent();
+				content = StringEscapeUtils.unescapeHtml4(content);
+				content = content.replaceAll("[\\x00-\\x08\\x0B\\x0C\\x0E-\\x1F]", "");
+				if(content.contains("activity_content")) content = content.replaceAll("<activity_content>", "<activity_content><![CDATA[").replaceAll("</activity_content>", "]]></activity_content>");
 				Document document=DocumentHelper.parseText(content);
 				Element root=document.getRootElement();
 				Element ec = root.element("activity_way");

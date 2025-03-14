@@ -5,7 +5,7 @@ import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.stdp.IResActivityTargetBiz;
-import com.pinde.res.dao.stdp.ext.TeachingActivityInfoExtMapper;
+import com.pinde.core.common.sci.dao.TeachingActivityInfoExtMapper;
 import com.pinde.core.common.sci.dao.TeachingActivityFormValueMapper;
 import com.pinde.core.common.sci.dao.TeachingActivityInfoTargetMapper;
 import com.pinde.core.common.sci.dao.TeachingActivityTargetMapper;

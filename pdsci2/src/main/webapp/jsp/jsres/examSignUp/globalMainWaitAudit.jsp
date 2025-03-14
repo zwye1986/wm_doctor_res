@@ -127,6 +127,7 @@
                 //改变协同医院状态
                 $("select[name=trainingSpeId] option[value != '']").remove();
                 $("select[name=trainingTypeId] option[value = '']").attr('selected','selected');
+				changeTrainSpes();
                 var orgFlag=$("#trainOrg").val();
                 var orgFlow=$("#orgFlow").val();
                 if(orgFlag.replace(/(^\s*)|(\s*$)/g, "")==""){
@@ -449,13 +450,25 @@
 						</c:forEach>
 					</select>
 				</td>
+				<td class="td_left">异常报考：</td>
+				<td>
+					<select class="select" name="tempDoctorFlag" style="width: 128px;">
+						<option value="">全部</option>
+						<option <c:if test="${param.tempDoctorFlag eq GlobalConstant.FLAG_Y}">selected="selected"</c:if>
+								value="${GlobalConstant.FLAG_Y}">是
+						</option>
+						<option <c:if test="${param.tempDoctorFlag eq GlobalConstant.FLAG_N}">selected="selected"</c:if>
+								value="${GlobalConstant.FLAG_N}">否
+						</option>
+					</select>
+				</td>
 				<td class="td_left">人员类型：</td>
 				<td colspan="3">
 					<c:forEach items="${resDocTypeEnumList}" var="type">
 						<label><input type="checkbox" id="${type.id}"value="${type.id}" checked class="docType" name="datas" />${type.name}&nbsp;</label>
 					</c:forEach>
 				</td>
-				<td colspan="6">
+				<td colspan="4">
 					<input class="btn_green" type="button" value="查&#12288;询" onclick="toPage(1);"/>&#12288;
 					<c:if test="${maintenance ne 'Y'}"> <%--客服（运维角色）只能查看——--%>
 						<input class="btn_green" type="button" value="批量审核" onclick="batchApply();"/>&#12288;

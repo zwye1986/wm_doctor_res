@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.sys;
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.jsres.JsResTeacherLevelEnum;
 import com.pinde.core.common.enums.pub.UserSexEnum;
@@ -2037,7 +2038,21 @@ public class UserController extends GeneralController{
         return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
 	}
 
-
-
+	/**
+	 * @Department：研发部
+	 * @Description 解绑微信公众号
+	 * @Author fengxf
+	 * @Date 2025/1/16
+	 */
+	@RequestMapping(value="/unLockWeChat",method=RequestMethod.POST)
+	@ResponseBody
+	public String unLockWeChat(SysUser user){
+		user.setOpenId("");
+		int count = userBiz.updateUser(user);
+		if(count>0){
+			return GlobalConstant.OPRE_SUCCESSED;
+		}
+		return GlobalConstant.OPRE_FAIL;
+	}
 
 }

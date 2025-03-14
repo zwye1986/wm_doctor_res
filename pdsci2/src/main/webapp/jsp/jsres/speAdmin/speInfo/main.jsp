@@ -43,7 +43,7 @@ function editInfo(baseInfoName,speFlow){
 
 function loadInfo(baseInfoName,speFlow){
 	var url="<s:url value='/jsres/speAdmin/findAllBaseInfo'/>?onlyRead=${onlyRead}&viewFlag=${viewFlag}&baseInfoName="+baseInfoName
-        +"&speFlow="+speFlow+"&orgFlow=${orgFlow}&isJoin=${isJoin}&editFlag=${editFlag}&sessionNumber=${sessionNumber}&ishos=${ishos}";
+        +"&speFlow="+speFlow+"&orgFlow=${orgFlow}&isJoin=${isJoin}&editFlag=${editFlag}&ishos=${ishos}";
 	jboxLoad("hosContent", url, false);
 }
 

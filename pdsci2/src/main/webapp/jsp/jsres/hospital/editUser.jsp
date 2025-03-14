@@ -70,6 +70,14 @@
 				return false ;
 			}
 
+			var teacherLevel = $("select[name=teacherLevel]").val();
+			if (teacherLevel) {
+				if (!$("input[name=idNo]").val()) {
+					jboxTip("师资人员身份证号必填！")
+					return false;
+				}
+			}
+
 			var url = "<s:url value='/sys/user/save4jsresteacher'/>";
 			var data = $('#editForm').serialize();
 			jboxPost(url, data, function(data) {
@@ -82,7 +90,6 @@
 					jboxConfirm("该手机号已绑定用户，是否绑定新的账号？", function () {
 						var url = "<s:url value='/sys/user/save4jsresteacher'/>";
 						var data = $('#editForm').serialize();
-						debugger
 						console.log(data)
 						console.log(typeof data)
 						data = data + "&coverPhone=Y"
@@ -171,7 +178,7 @@
 					</td>
 				</tr>
 				<tr>
-					<th>手机号码：</th>
+					<th><font color="red">*</font>手机号码：</th>
 					<td>
 						<c:choose>
 							<c:when test="${sessionScope.userListScope eq GlobalConstant.USER_LIST_PERSONAL && GlobalConstant.FLAG_N eq sysCfgMap['user_edit_phone']}">
@@ -179,7 +186,7 @@
 								<input name="userPhone" type="hidden" value="${sysUser.userPhone}" >
 							</c:when>
 							<c:otherwise>
-								<input class="validate[custom[mobile]] input" required name="userPhone" type="text" value="${sysUser.userPhone}" >
+								<input class="validate[required, custom[mobile]] input" required name="userPhone" type="text" value="${sysUser.userPhone}" >
 							</c:otherwise>
 						</c:choose>
 					</td>
@@ -288,14 +295,14 @@
 <%--						<!-- 						<a onclick="$('#mDept').toggle();">多选</a> -->--%>
 <%--						&lt;%&ndash; 					</c:if> &ndash;%&gt;--%>
 <%--					</td>--%>
-					<th>责任导师：</th>
-					<td>
-						<select name="isResponsibleTutor" class="select" style="width: 181px;margin:0 12px 0 4px">
-							<option value="" >请选择</option>
-							<option value="Y" <c:if test="${sysUser.isResponsibleTutor eq 'Y'}">selected="selected"</c:if>>是</option>
-							<option value="N" <c:if test="${sysUser.isResponsibleTutor eq 'N'}">selected="selected"</c:if>>否</option>
-						</select>
-					</td>
+<%--					<th>责任导师：</th>--%>
+<%--					<td>--%>
+<%--						<select name="isResponsibleTutor" class="select" style="width: 181px;margin:0 12px 0 4px">--%>
+<%--							<option value="" >请选择</option>--%>
+<%--							<option value="Y" <c:if test="${sysUser.isResponsibleTutor eq 'Y'}">selected="selected"</c:if>>是</option>--%>
+<%--							<option value="N" <c:if test="${sysUser.isResponsibleTutor eq 'N'}">selected="selected"</c:if>>否</option>--%>
+<%--						</select>--%>
+<%--					</td>--%>
 					<th>师资级别：</th>
 					<td>
 						<select name="teacherLevel" class="select" style="width: 181px;margin:0 12px 0 4px">
@@ -304,8 +311,6 @@
 							<option value="骨干师资" <c:if test="${sysUser.teacherLevel eq '骨干师资'}">selected="selected"</c:if>>骨干师资</option>
 						</select>
 					</td>
-				</tr>
-				<tr>
 					<th>角色：</th>
 					<td>
 						<select multiple class="selectpicker" name="userRoleList" id="userRoleList" title="请选择角色" data-actions-box="true">

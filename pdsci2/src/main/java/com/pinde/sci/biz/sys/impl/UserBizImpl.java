@@ -841,6 +841,7 @@ public class UserBizImpl implements IUserBiz {
 		map.put("orgFlow", user.getOrgFlow());
 		map.put("isSelect",isSelect);
 		map.put("examTeaRole",examTeaRole);
+		map.put("teacherLevel",user.getTeacherLevel());
 		map.put("moreDept",user.getIsForeign());//用作暂存多科室查询字段
 		if(roleList!=null && roleList.size()>0){
 			map.put("roleList", roleList);
@@ -1132,6 +1133,11 @@ public class UserBizImpl implements IUserBiz {
             return StringUtil.isNotBlank(sysUserRole.getRoleFlow()) && sysUserRole.getRoleFlow().equals(roleFlow);
 		}
 		return false;
+	}
+
+	@Override
+	public List<TeacherTrainingInfoVo> selectByCondition(String doctorName, String teacherLevelId, String deptFlow, String technicalPositionId, String trainingYear, String speId, String certificateLevelId, String orgFlow) {
+		return userExtMapper.selectByCondition(doctorName, teacherLevelId, deptFlow, technicalPositionId, trainingYear, speId, certificateLevelId, orgFlow);
 	}
 
 	/**

@@ -97,16 +97,16 @@
                     <colgroup>
                         <col width="10%"/>
                         <col width="45%"/>
-                        <col width="30%"/>
+<%--                        <col width="30%"/>--%>
                         <col width="15%"/>
                     </colgroup>
                     <tr>
-                        <td colspan="4" style="text-align: left">近三年入科教育、轮转计划表、教学查房、疑难死亡病例讨论、小讲课、出科考核。</td>
+                        <td colspan="3" style="text-align: left">近三年入科教育、轮转计划表、教学查房、疑难死亡病例讨论、小讲课、出科考核。</td>
                     </tr>
                     <tr>
                         <th style="background-color: #f4f5f9;">序号</th>
                         <th style="background-color: #f4f5f9;">培训活动记录名称</th>
-                        <th style="background-color: #f4f5f9;">日期</th>
+<%--                        <th style="background-color: #f4f5f9;">日期</th>--%>
                         <th style="background-color: #f4f5f9;">上传附件</th>
                     </tr>
                     <tbody id="workTb">
@@ -115,9 +115,9 @@
                     <tr>
                         <td>${status.index+1}</td>
                         <td>${s.activityName }</td>
-                        <td>
+<%--                        <td>--%>
 
-                        </td>
+<%--                        </td>--%>
                         <td>
                             <c:set var="file" value="${fileMap[s.appendix]}"></c:set>
                             <c:if test="${empty file}">

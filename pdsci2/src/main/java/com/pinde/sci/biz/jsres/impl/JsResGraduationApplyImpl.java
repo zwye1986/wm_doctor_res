@@ -1,21 +1,26 @@
 package com.pinde.sci.biz.jsres.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.google.common.collect.Lists;
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.enums.AfterRecTypeEnum;
-import com.pinde.core.common.sci.dao.JsresDoctorDeptDetailMapper;
-import com.pinde.core.common.sci.dao.JsresGraduationApplyLogMapper;
-import com.pinde.core.common.sci.dao.JsresGraduationApplyMapper;
+import com.pinde.core.common.enums.ExeMethod;
+import com.pinde.core.common.enums.ResRecTypeEnum;
+import com.pinde.core.common.sci.dao.*;
 import com.pinde.core.model.*;
+import com.pinde.core.service.impl.ResRecCheckConfigService;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
+import com.pinde.core.util.XmlUtils;
 import com.pinde.sci.biz.jsres.IJsResGraduationApplyBiz;
 import com.pinde.sci.biz.jsres.ISchRotationDeptAfterBiz;
 import com.pinde.sci.biz.pub.IPubUserResumeBiz;
 import com.pinde.sci.biz.res.IResDoctorRecruitBiz;
 import com.pinde.sci.biz.res.IResJointOrgBiz;
 import com.pinde.sci.biz.res.IResSchProcessExpressBiz;
+import com.pinde.sci.biz.sch.impl.SchArrangeResultBizImpl;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.jsres.JsresGraduationApplyExtMapper;
-import com.pinde.sci.dao.jsres.TempMapper;
 import com.pinde.core.common.form.UserResumeExtInfoForm;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -28,6 +33,10 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -36,9 +45,9 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * Created by czz on 2017/2/27.
@@ -66,8 +75,23 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
     private IPubUserResumeBiz userResumeBiz;
     @Resource
     private IResJointOrgBiz jointOrgBiz;
+    @Resource
+    private GraduationDoctorTempMapper graduationDoctorTempMapper;
+    @Resource
+    private ResRecMapper resRecMapper;
+
+    @Resource
+    private ResRecCheckConfigMapper resRecCheckConfigMapper;
+
 
     private static final Logger logger = LoggerFactory.getLogger(JsResGraduationApplyImpl.class);
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+    @Autowired
+    private SchArrangeResultBizImpl schArrangeResultBizImpl;
+
+    @Resource
+    private ResDoctorSchProcessMapper resDoctorSchProcessMapper;
 
     @Override
     public JsresGraduationApply searchByRecruitFlow(String recruitFlow, String applyYear) {
@@ -117,7 +141,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
     }
 
     @Override
-    public void addOldInfoByApplyYear(String applyYear, String recruitFlow, String doctorFlow, String applyFlow, Map<String, String> practicingMap)  throws DocumentException {
+    public void addOldInfoByApplyYear(String applyYear, String recruitFlow, String doctorFlow, String applyFlow, Map<String, String> practicingMap, String rotationFlow, String reSubmitFlag)  throws DocumentException {
         //学员出科考核表数据抽取
         selectAfter(applyYear,recruitFlow,doctorFlow);
         //更新学员相关证书信息
@@ -125,75 +149,11 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
         practicingMap.put("doctorFlow",doctorFlow);
         tempMapper.updateRecruitAsseInfoByApplyYear2(practicingMap);
         //学员资格审查百分比
-        setFourStep(applyYear,recruitFlow,doctorFlow,applyFlow);
-//        //完成比例与审核比例
-//        List<JsresDoctorDeptDetail> details = resultBiz.deptDoctorAllWorkDetailByNow(recruitFlow, doctorFlow);
-//        if (details != null && details.size() > 0) {
-//            int isShortY=0;
-//            int isShortN=0;
-//            int shortYCount=0;
-//            int shortNCount=0;
-//            double shortYCBSum=0;//完成比例
-//            double shortNCBSum=0;
-//            double shortYOCBSum=0;//补填比例
-//            double shortNOCBSum=0;
-//            double shortYICBSum=0;//正常比例
-//            double shortNICBSum=0;
-//            double shortYABSum=0;//审核 比例
-//            double shortNABSum=0;
-//            double avgComBi=0;//平均完成比例
-//            double avgOutComBi=0;//平均补填比例
-//            double avgInComBi=0;//平均正常比例
-//            double avgAuditComBi=0;//平均审核比例
-//            for (JsresDoctorDeptDetail d : details) {
-//                if(com.pinde.core.common.GlobalConstant.FLAG_Y.equals(d.getIsShort())) {
-//                    shortYCount++;
-//                    shortYCBSum+=StringUtil.isBlank(d.getCompleteBi())?0:"-".equals(d.getCompleteBi())?0:Double.valueOf(d.getCompleteBi());
-//                    shortYOCBSum+=StringUtil.isBlank(d.getOutCompleteBi())?0:"-".equals(d.getOutCompleteBi())?0:Double.valueOf(d.getOutCompleteBi());
-//                    shortYICBSum+=StringUtil.isBlank(d.getInCompleteBi())?0:"-".equals(d.getInCompleteBi())?0:Double.valueOf(d.getInCompleteBi());
-//                    shortYABSum+=StringUtil.isBlank(d.getAuditBi())?0:"-".equals(d.getAuditBi())?0:Double.valueOf(d.getAuditBi());
-//                    if (isShortY == 0) {
-//                        isShortY = 1;
-//                    }
-//                }
-//                if(com.pinde.core.common.GlobalConstant.FLAG_N.equals(d.getIsShort())) {
-//                    shortNCount++;
-//                    shortNCBSum+=StringUtil.isBlank(d.getCompleteBi())?0:"-".equals(d.getCompleteBi())?0:Double.valueOf(d.getCompleteBi());
-//                    shortNOCBSum+=StringUtil.isBlank(d.getOutCompleteBi())?0:"-".equals(d.getOutCompleteBi())?0:Double.valueOf(d.getOutCompleteBi());
-//                    shortNICBSum+=StringUtil.isBlank(d.getInCompleteBi())?0:"-".equals(d.getInCompleteBi())?0:Double.valueOf(d.getInCompleteBi());
-//                    shortNABSum+=StringUtil.isBlank(d.getAuditBi())?0:"-".equals(d.getAuditBi())?0:Double.valueOf(d.getAuditBi());
-//                    if (isShortN == 0) {
-//                        isShortN = 1;
-//                    }
-//                }
-//                d.setApplyYear(applyYear);
-//                addJsresDoctorDeptDetail(d);
-//            }
-//            //平均完成比例与平均审核比例
-//            if((isShortY+isShortN)>1)
-//            {
-//                avgComBi=new BigDecimal(shortYCBSum/shortYCount).setScale(1,BigDecimal.ROUND_HALF_UP).doubleValue();
-//                avgOutComBi=new BigDecimal(shortYOCBSum/shortYCount).setScale(1,BigDecimal.ROUND_HALF_UP).doubleValue();
-//                avgInComBi=new BigDecimal(shortYICBSum/shortYCount).setScale(1,BigDecimal.ROUND_HALF_UP).doubleValue();
-//                avgAuditComBi=new BigDecimal(shortYABSum/shortYCount).setScale(1,BigDecimal.ROUND_HALF_UP).doubleValue();
-//            }else{
-//                avgComBi=new BigDecimal((shortYCBSum+shortNCBSum)/(shortYCount+shortNCount)).setScale(1,BigDecimal.ROUND_HALF_UP).doubleValue();
-//                avgOutComBi=new BigDecimal((shortYOCBSum+shortNOCBSum)/(shortYCount+shortNCount)).setScale(1,BigDecimal.ROUND_HALF_UP).doubleValue();
-//                avgInComBi=new BigDecimal((shortYICBSum+shortNICBSum)/(shortYCount+shortNCount)).setScale(1,BigDecimal.ROUND_HALF_UP).doubleValue();
-//                avgAuditComBi=new BigDecimal((shortYABSum+shortNABSum)/(shortYCount+shortNCount)).setScale(1,BigDecimal.ROUND_HALF_UP).doubleValue();
-//            }
-//            JsresGraduationApply apply=new JsresGraduationApply();
-//            apply.setApplyFlow(applyFlow);
-//            apply.setAvgComplete(avgComBi+"");
-//            apply.setAvgOutComplete(avgOutComBi+"");
-//            apply.setAvgInComplete(avgInComBi+"");
-//            apply.setAvgAudit(avgAuditComBi+"");
-//            editGraduationApply(apply);
-//        }
+        setFourStep(applyYear,recruitFlow,doctorFlow,applyFlow, rotationFlow, reSubmitFlag);
     }
 
     @Override
-    public int editGraduationApply2(JsresGraduationApply jsresGraduationApply, String recruitFlow, String changeSpeId, String doctorFlow, String applyYear, Map<String, String> practicingMap) throws DocumentException {
+    public int editGraduationApply2(JsresGraduationApply jsresGraduationApply, String recruitFlow, String changeSpeId, String doctorFlow, String applyYear, Map<String, String> practicingMap, String rotationFlow, String reSubmitFlag) throws DocumentException {
         int i=editGraduationApply(jsresGraduationApply);
         if(i==1)
         {
@@ -206,7 +166,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
                 doctorRecruitBiz.editDoctorRecruit(newRecruit);
             }
             //保存提交后的证书信息，百分比，出科考核表
-            addOldInfoByApplyYear(applyYear,recruitFlow,doctorFlow,jsresGraduationApply.getApplyFlow(),practicingMap);
+            addOldInfoByApplyYear(applyYear,recruitFlow,doctorFlow,jsresGraduationApply.getApplyFlow(),practicingMap, rotationFlow, reSubmitFlag);
         }
         return i;
     }
@@ -227,10 +187,30 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
         return graduationApplyExtMapper.queryGraduationInfoListExport(param);
     }
 
-    private void setFourStep(String applyYear, String recruitFlow, String doctorFlow, String applyFlow) {
+    private void setFourStep(String applyYear, String recruitFlow, String doctorFlow, String applyFlow, String rotationFlow, String reSubmitFlag) {
         //1
         tempMapper.deleteDeptDetailByApplyYear(applyYear,doctorFlow);
-        tempMapper.insetDeptDetailByApplyYear(applyYear,doctorFlow,recruitFlow);
+        String exeMethodInRedis =  stringRedisTemplate.opsForValue().get(GlobalConstant.exeMethod);
+        if(StringUtils.isEmpty(exeMethodInRedis)) {
+            exeMethodInRedis = ExeMethod.SQL.getValue();
+        }
+        if(ExeMethod.JOB.getValue().equals(exeMethodInRedis)) {
+            // 非重新提交从计算好的学员比例插入数据
+            if(StringUtil.isNotBlank(reSubmitFlag) && GlobalConstant.FLAG_N.equals(reSubmitFlag)){
+                tempMapper.insetDeptDetailByStatistics(applyYear, doctorFlow, rotationFlow);
+            }else{
+                tempMapper.insetDeptDetailByApplyYear(applyYear,doctorFlow,recruitFlow, rotationFlow);
+            }
+        }else if(ExeMethod.SQL.getValue().equals(exeMethodInRedis)){
+            tempMapper.insetDeptDetailByApplyYear(applyYear,doctorFlow,recruitFlow, rotationFlow);
+        }else {
+            List<JsresDoctorDeptDetail> jsresDoctorDeptDetails = schArrangeResultBizImpl.deptDoctorAllWorkDetailByNow_new(recruitFlow, doctorFlow, applyYear, rotationFlow);
+            LambdaQueryWrapper<JsresDoctorDeptDetail> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.eq(JsresDoctorDeptDetail::getDoctorFlow,doctorFlow);
+            jsresDoctorDeptDetailMapper.delete(queryWrapper);
+            if(CollectionUtils.isNotEmpty(jsresDoctorDeptDetails)) jsresDoctorDeptDetailMapper.insert(jsresDoctorDeptDetails);
+
+        }
         //2
         tempMapper.deleteDeptTempByRecruitFlow(recruitFlow);
         tempMapper.updateDeptTempByRecruitFlow(recruitFlow,applyYear);
@@ -249,27 +229,6 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
         tempMapper.updateDeptAvgPerTempByRecruitFlow(recruitFlow,applyYear);
         //4
         tempMapper.updateRecruitAvgPerTempByRecruitFlow(recruitFlow,applyFlow);
-    }
-
-    private void addJsresDoctorDeptDetail(JsresDoctorDeptDetail d) {
-        JsresDoctorDeptDetail old=getJsresDoctorDeptDetail(d.getApplyYear(),d.getDoctorFlow(),d.getSchStandardDeptFlow());
-        if(old==null) {
-            jsresDoctorDeptDetailMapper.insert(d);
-        }else{
-            d.setRecordFlow(old.getRecordFlow());
-            jsresDoctorDeptDetailMapper.updateByPrimaryKeySelective(d);
-        }
-    }
-
-    private JsresDoctorDeptDetail getJsresDoctorDeptDetail(String applyYear, String doctorFlow, String schStandardDeptFlow) {
-        JsresDoctorDeptDetailExample example=new JsresDoctorDeptDetailExample();
-        example.createCriteria().andApplyYearEqualTo(applyYear).andDoctorFlowEqualTo(doctorFlow).andSchStandardDeptFlowEqualTo(schStandardDeptFlow);
-        List<JsresDoctorDeptDetail> list=jsresDoctorDeptDetailMapper.selectByExample(example);
-        if(list!=null&&list.size()>0)
-        {
-            return list.get(0);
-        }
-        return null;
     }
 
     private void selectAfter(String applyYear, String recruitFlow, String doctorFlow) throws DocumentException {
@@ -357,6 +316,122 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
     @Override
     public List<Map<String,Object>> chargeQueryApplyList2(Map<String, Object> param) {
         return graduationApplyExtMapper.chargeQueryApplyList2(param);
+    }
+
+    /**
+     * @param doctorFlow
+     * @Department：研发部
+     * @Description 查询异常报考记录学员信息
+     * @Author fengxf
+     * @Date 2025/2/17
+     */
+    @Override
+    public GraduationDoctorTemp getGraduationDoctorTemp(String doctorFlow) {
+        return graduationDoctorTempMapper.selectByPrimaryKey(doctorFlow);
+    }
+
+    /**
+     * @Description: 根据doctorFlow查询不合规范的填写记录
+     * @param doctorFlow
+     * @return
+     */
+    @Override
+    public Map<String, List<ResRec>> getNonComplianceRecords(List<String> doctorFlowList) {
+        if(CollectionUtils.isEmpty(doctorFlowList)) return Collections.EMPTY_MAP;
+        List<ResRec> resRecList = new ArrayList<>();
+        LambdaQueryWrapper<ResRec> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.in(ResRec::getOperUserFlow,doctorFlowList).eq(ResRec::getRecordStatus,"Y")
+                .isNotNull(ResRec::getProcessFlow)
+                .in(ResRec::getRecTypeId,new String[]{ResRecTypeEnum.CaseRegistry.getId(), ResRecTypeEnum.DiseaseRegistry.getId(), ResRecTypeEnum.SkillRegistry.getId(), ResRecTypeEnum.OperationRegistry.getId(), ResRecTypeEnum.CampaignRegistry.getId()});
+        List<ResRec> resRecs = resRecMapper.selectList(lambdaQueryWrapper);
+
+        LambdaQueryWrapper<ResRecCheckConfig> resRecCheckConfigLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        resRecCheckConfigLambdaQueryWrapper.eq(ResRecCheckConfig::getRecordStatus,com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        List<ResRecCheckConfig> resRecCheckConfigs = resRecCheckConfigMapper.selectList(resRecCheckConfigLambdaQueryWrapper);
+        Map<String, List<ResRecCheckConfig>> configMap = resRecCheckConfigs.stream().collect(Collectors.groupingBy(resRecCheckConfig -> resRecCheckConfig.getRegistryTypeId()));
+        resRecs.forEach(resRec -> {
+            //如果resRec.getRecContent()是空，直接加入不合规的记录中
+            if(StringUtils.isBlank(resRec.getRecContent())){
+                resRec.setCheckItemName("填写内容");
+                resRec.setInvalidContent("");
+                resRecList.add(resRec);
+            }else{
+
+                if(CollectionUtils.isEmpty(resRecCheckConfigs)) return;
+                //遍历配置项,针对每种检查项，判断是否为空，为空则加入不合规的记录中
+                List<ResRecCheckConfig> resRecCheckConfigs2 = configMap.get(resRec.getRecTypeId());
+                if(CollectionUtils.isEmpty(resRecCheckConfigs2)) return;
+                resRecCheckConfigs2.forEach(rrcc2  -> {
+                    String valueByTag = XmlUtils.getValueByTag(rrcc2.getCheckItem(), resRec.getRecContent());
+                    if(StringUtils.isEmpty(valueByTag)){
+                        resRec.setInvalidContent(valueByTag);
+                        resRec.setCheckItemName(rrcc2.getCheckItemName());
+                        resRecList.add(resRec);
+                    }else{
+                        int[] i = new int[]{0};
+                        //例外的情形
+                        if(StringUtils.isNotEmpty(rrcc2.getCheckRulesExp())){
+                            String[] split = rrcc2.getCheckRulesExp().split(",");
+
+                            Arrays.asList(split).stream().forEach(e -> {
+                                if(e.equals(valueByTag)) {
+                                    i[0] = 1;
+                                    return;
+                                }
+                            });
+
+                        }
+
+                        if( i[0] == 0){
+                            String pattern = rrcc2.getCheckRules();
+                            //如果配置的正则表达式为空，再看是否有其他制定的检查规则
+                            if(StringUtils.isNotEmpty(pattern)){
+                                boolean matches = Pattern.compile(pattern).matcher(valueByTag).matches();
+                                if(!matches) {
+                                    resRec.setInvalidContent(valueByTag);
+                                    resRec.setCheckItemName(rrcc2.getCheckItemName());
+                                    resRecList.add(resRec);
+                                }
+                            }
+                            String checkRulesSingle = rrcc2.getCheckRulesSingle();
+                            if(StringUtils.isEmpty(checkRulesSingle)) return;
+                            String[] split = checkRulesSingle.split(",");
+                            for (String s : split) {
+                                if(valueByTag.equals(s)) {
+                                    resRec.setInvalidContent(valueByTag);
+                                    resRec.setCheckItemName(rrcc2.getCheckItemName());
+                                    resRecList.add(resRec);
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        });
+
+        Set<String> proessFlowSet = resRecList.stream().map(resRec -> resRec.getProcessFlow()).collect(Collectors.toSet());
+        List<List<String>> partition = Lists.partition(new ArrayList<>(proessFlowSet), 1000);
+        List<ResDoctorSchProcess> resDoctorSchProcesses = new ArrayList<>();
+        partition.forEach(proessFlowList -> {
+            LambdaQueryWrapper<ResDoctorSchProcess> resDoctorSchProcessLambdaQueryWrapper = new LambdaQueryWrapper<>();
+            resDoctorSchProcessLambdaQueryWrapper.in(ResDoctorSchProcess::getProcessFlow,proessFlowList)
+                    .eq(ResDoctorSchProcess::getRecordStatus,com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+            resDoctorSchProcesses.addAll(resDoctorSchProcessMapper.selectList(resDoctorSchProcessLambdaQueryWrapper)) ;
+
+        });
+
+        Map<String, ResDoctorSchProcess> processMap = resDoctorSchProcesses.stream().collect(Collectors.toMap(ResDoctorSchProcess::getProcessFlow, resDoctorSchProcess -> resDoctorSchProcess));
+        resRecList.forEach(resRec -> {
+            ResDoctorSchProcess resDoctorSchProcess = processMap.get(resRec.getProcessFlow());
+            if(resDoctorSchProcess != null) {
+                resRec.setStartDate(resDoctorSchProcess.getSchStartDate());
+                resRec.setEndDate(resDoctorSchProcess.getSchEndDate());
+            }
+        });
+
+        Map<String, List<ResRec>> resultMap = resRecList.stream().collect(Collectors.groupingBy(resRec -> resRec.getOperUserFlow()));
+
+        return resultMap;
     }
 
     @Override

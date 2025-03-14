@@ -921,7 +921,7 @@
 		</div>
 		</c:if>
 		<div class="main_bd" >
-			<h4>审核意见</h4>
+			<h4>审核意见<c:if test="${tempDoctorFlag eq 'Y'}"><font color="red">（该学员为异常报考人员，请谨慎审核！）</font></c:if></h4>
 			<form id="myform">
 				<table border="0" cellpadding="0" cellspacing="0" style="border:none; width:99%;text-align: center;"class="base_info" >
 					<colgroup>
@@ -933,7 +933,7 @@
 					</colgroup>
 					<tbody>
 					<tr style=" width:100%;text-align: center;">
-						<td style="text-align: left;border:none;">&#12288;&#12288;<input type="radio" name="auditStatusId" value="${jsResAuditStatusEnumPassed.id}" <c:if test="${avgCompleteDouble < 80.00 and roleFlag eq 'charge' and recruit.catSpeId eq 'DoctorTrainingSpe'}">disabled="true"</c:if> onclick="check();">通过 </th>
+						<td style="text-align: left;border:none;">&#12288;&#12288;<input type="radio" name="auditStatusId" value="${jsResAuditStatusEnumPassed.id}" <c:if test="${avgCompleteDouble < 80.00 and roleFlag eq 'charge' and recruit.catSpeId eq 'DoctorTrainingSpe'}">disabled="true"</c:if> onclick="check();">通过 </td>
 						<td style="text-align: left;border:none;">&#12288;&#12288;<input type="radio" name="auditStatusId" value="${jsResAuditStatusEnumNotPassed.id}" onclick="check();">不通过</td>
 						<c:if test="${roleFlag eq 'global'}">
 							<td style="text-align: left;border:none;">&#12288;&#12288;<input type="radio" name="auditStatusId" value="Black" onclick="check();">驳回</td>

@@ -425,7 +425,7 @@ public class JsResTempController extends GeneralController{
 		{
 			return "结业考核年份不是当前年，无法更新数据！";
 		}
-		JsresGraduationApply jsresGraduationApply = jsresGraduationApplyBiz.searchByRecruitFlow(recruitFlow, "");
+		JsresGraduationApply jsresGraduationApply = jsresGraduationApplyBiz.searchByRecruitFlow(recruitFlow, applyYear);
 		if(jsresGraduationApply == null) {
 			return "未提交过申请，无法更新数据！";
 		}
@@ -593,7 +593,7 @@ public class JsResTempController extends GeneralController{
 				jsresGraduationApply.setGlobalAuditStatusName("");
 				jsresGraduationApply.setGlobalReason("");
 			}
-			int i = jsresGraduationApplyBiz.editGraduationApply2(jsresGraduationApply,recruitFlow,"",recruit.getDoctorFlow(),applyYear, practicingMap);
+			int i = jsresGraduationApplyBiz.editGraduationApply2(jsresGraduationApply,recruitFlow,"",recruit.getDoctorFlow(),applyYear, practicingMap, recruit.getRotationFlow(), "Y");
 			return i+"";
 	}
 	@RequestMapping(value={"/updatePer"})//更新不超过100的百分比

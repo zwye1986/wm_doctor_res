@@ -24,7 +24,6 @@ import com.pinde.sci.common.util.JspFormUtil;
 import com.pinde.sci.dao.res.ResAppealExtMapper;
 import com.pinde.sci.dao.res.ResDoctorSchProcessExtMapper;
 import com.pinde.sci.dao.res.ResRecExtMapper;
-import com.pinde.sci.dao.sch.SchArrangeResultExtMapper;
 import com.pinde.sci.keyUtil.PdUtil;
 import com.pinde.core.model.ResDoctorSchProcessExt;
 import com.pinde.core.model.ResRecExt;
@@ -7543,6 +7542,34 @@ public class ResRecBizImpl implements IResRecBiz {
 	@Override
 	public List<Map<String, String>> searchNurseAssEvaluate(Map<String, Object> paramMap) {
 		return resRecExtMapper.searchNurseAssEvaluate(paramMap);
+	}
+
+	@Override
+	public String batchAudit(String auditResult, String docFlow, String processFlow, String recType) {
+		List<String> recTypes = new ArrayList<>();
+		recTypes.add(recType);
+		List<ResRec> recList=searchRecByProcessWithBLOBs(recTypes,processFlow,docFlow);
+
+		if(null != recList && recList.size() > 0){
+			List<String> recFlows = recList.stream().map(ResRec::getRecFlow).collect(Collectors.toList());
+			List<List<String>> partitionRecFlows = Lists.partition(recFlows , 100);
+			SysUser sysUser=GlobalContext.getCurrentUser();
+			ResRec rec = new ResRec();
+			rec.setAuditTime(DateUtil.getCurrDateTime());
+			rec.setAuditUserFlow(sysUser.getUserFlow());
+			rec.setAuditUserName(sysUser.getUserName());
+			rec.setAuditStatusId(auditResult);
+			rec.setAuditStatusName(RecStatusEnum.getNameById(auditResult));
+
+			for(List<String> flows : partitionRecFlows){
+				ResRecExample recExample = new ResRecExample();
+				ResRecExample.Criteria criteria = recExample.createCriteria();
+				criteria.andRecFlowIn(flows);
+				resRecMapper.updateByExampleSelective(rec, recExample);
+			}
+		}
+
+		return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG;
 	}
 
 	@Override

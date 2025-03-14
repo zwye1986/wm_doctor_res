@@ -115,6 +115,10 @@ $(document).ready(function(){
     if ('${file.filePath}') {
         flag = 'Y';
     }
+	if("${apply}" == 'Y' && "${exeMethodInRedis}" == "job"){
+		// 更新提示信息
+		$("#graduationMsg").html("当前数据补填人数较多，数据填报比例计算会有延迟（当日补填数据次日早上6点后更新填报比例），请优先进行数据填报。");
+	}
 });
 
 $(function () {
@@ -151,89 +155,176 @@ function apply2(doctorFlow,applyYear) {
     },null);
 }
 //提交
-function apply(doctorFlow,canApply)
-{
-    if(canApply == "N"){
-        jboxTip("请将培训信息补充完整！");
-        return;
-    };
-    if(!$("#doctorForm").validationEngine("validate")){
-    	return false;
+function apply(doctorFlow,canApply) {
+	var isTempUser = '${isTempUser}';
+	if (isTempUser == 'Y') {
+		jboxConfirm("您属于异常结业报考人员，审核时有被驳回风险，请关注最终审核结果。请问是否继续？" , function() {
+			if(canApply == "N"){
+				jboxTip("请将培训信息补充完整！");
+				return;
+			};
+			if(!$("#doctorForm").validationEngine("validate")){
+				return false;
+			}
+			if(${empty userResumeExt.certificateUri}){
+				jboxTip("请上传毕业证书附件！");
+				return;
+			}
+			<%--if(${empty userResumeExt.qualificationMaterialUri}){--%>
+			<%--jboxTip("请上传医师执业证书附件！");--%>
+			<%--return;--%>
+			<%--}--%>
+
+			var skillScore = $("[name='skillScore']").val();
+			if (skillScore == 1) {
+				if (${sysCfgMap['is_public_qualified'] eq 'Y' || empty sysCfgMap['is_public_qualified']}) {
+					if (${empty publicScore.skillScore}) {
+						if (flag == 'N') {
+							jboxTip("公共科目合格时必须上传公共科目成绩单");
+							return;
+						}
+					}
+				}
+			}
+
+			if(${sysCfgMap['is_check_uploaded'] eq 'Y' || empty sysCfgMap['is_check_uploaded']}){
+				if(${empty afterImgMap}){
+					jboxTip("请上传出科考核表！");
+					return;
+				}
+			}
+			var changeSpeId="";
+			var changeSpeName="";
+			<c:if test="${needChange eq 'Y'}">
+			changeSpeId=$("#changeSpeId").val();
+			changeSpeName=$("#changeSpeId").find('option:selected').text();
+			if(!changeSpeId)
+			{
+				jboxTip("请选择报考专业！");
+				return;
+			}
+			</c:if>
+			var msg="1.请认真核对基本信息；";
+			if(!changeSpeName){
+				changeSpeName="${doctorRecruit.speName}";
+				msg+="<br/>2.当前报名专业为“"+changeSpeName+"”；";
+			}else{
+				msg+="<br/>2.当前报名专业为“"+changeSpeName+"”，培训专业为“${doctorRecruit.speName}”；"
+			}
+			msg+="<br/>3.提交后培训数据完成比例将不再统计更新；"+
+					"<br/>4.提交后将无法修改，是否确认提交！";
+			var recruitFlow = "${recruitFlow}";
+			// 备注信息
+			var remark = $("#remark").val();
+			jboxConfirm(msg , function() {
+				$("#submitBtn").hide();
+				jboxPost("<s:url value='/jsres/doctor/asseApply?applyYear=${pdfn:getCurrYear()}&doctorFlow='/>" + doctorFlow +"&recruitFlow=" + recruitFlow+"&changeSpeId=" + changeSpeId + "&remark=" + remark, null, function (resp) {
+					if ("1" == resp) {
+						jboxTip("申请成功!");
+						setTimeout(function(){
+							<%--jboxLoad("doctorContent", "<s:url value='/jsres/doctor/getAsseApplication?applyYear=${pdfn:getCurrYear()}&doctorFlow='/>" + doctorFlow +"&recruitFlow=" + recruitFlow, true);--%>
+							jboxLoad("doctorContent", "<s:url value='/jsres/doctor/asseApplicationMain'/>" , true);
+						},1500);
+					}else	if ("0" == resp) {
+						jboxTip("申请失败!");
+						$("#submitBtn").show();
+					}else	if ("-1" == resp) {
+						jboxTip("已提交申请，请勿重复提交!");
+						setTimeout(function(){
+							<%--jboxLoad("doctorContent", "<s:url value='/jsres/doctor/getAsseApplication?applyYear=${pdfn:getCurrYear()}&doctorFlow='/>" + doctorFlow +"&recruitFlow=" + recruitFlow, true);--%>
+							jboxLoad("doctorContent", "<s:url value='/jsres/doctor/asseApplicationMain'/>" , true);
+						},1500);
+					}else{
+						jboxTip(resp);
+						$("#submitBtn").show();
+					}
+				}, null, false);
+			},null);
+		},null);
+	} else {
+		if(canApply == "N"){
+			jboxTip("请将培训信息补充完整！");
+			return;
+		};
+		if(!$("#doctorForm").validationEngine("validate")){
+			return false;
+		}
+		if(${empty userResumeExt.certificateUri}){
+			jboxTip("请上传毕业证书附件！");
+			return;
+		}
+		<%--if(${empty userResumeExt.qualificationMaterialUri}){--%>
+		<%--jboxTip("请上传医师执业证书附件！");--%>
+		<%--return;--%>
+		<%--}--%>
+
+		var skillScore = $("[name='skillScore']").val();
+		if (skillScore == 1) {
+			if (${sysCfgMap['is_public_qualified'] eq 'Y' || empty sysCfgMap['is_public_qualified']}) {
+				if (${empty publicScore.skillScore}) {
+					if (flag == 'N') {
+						jboxTip("公共科目合格时必须上传公共科目成绩单");
+						return;
+					}
+				}
+			}
+		}
+
+		if(${sysCfgMap['is_check_uploaded'] eq 'Y' || empty sysCfgMap['is_check_uploaded']}){
+			if(${empty afterImgMap}){
+				jboxTip("请上传出科考核表！");
+				return;
+			}
+		}
+		var changeSpeId="";
+		var changeSpeName="";
+		<c:if test="${needChange eq 'Y'}">
+		changeSpeId=$("#changeSpeId").val();
+		changeSpeName=$("#changeSpeId").find('option:selected').text();
+		if(!changeSpeId)
+		{
+			jboxTip("请选择报考专业！");
+			return;
+		}
+		</c:if>
+		var msg="1.请认真核对基本信息；";
+		if(!changeSpeName){
+			changeSpeName="${doctorRecruit.speName}";
+			msg+="<br/>2.当前报名专业为“"+changeSpeName+"”；";
+		}else{
+			msg+="<br/>2.当前报名专业为“"+changeSpeName+"”，培训专业为“${doctorRecruit.speName}”；"
+		}
+		msg+="<br/>3.提交后培训数据完成比例将不再统计更新；"+
+				"<br/>4.提交后将无法修改，是否确认提交！";
+		var recruitFlow = "${recruitFlow}";
+		// 备注信息
+		var remark = $("#remark").val();
+		jboxConfirm(msg , function() {
+			$("#submitBtn").hide();
+			jboxPost("<s:url value='/jsres/doctor/asseApply?applyYear=${pdfn:getCurrYear()}&doctorFlow='/>" + doctorFlow +"&recruitFlow=" + recruitFlow+"&changeSpeId=" + changeSpeId + "&remark=" + remark, null, function (resp) {
+				if ("1" == resp) {
+					jboxTip("申请成功!");
+					setTimeout(function(){
+						<%--jboxLoad("doctorContent", "<s:url value='/jsres/doctor/getAsseApplication?applyYear=${pdfn:getCurrYear()}&doctorFlow='/>" + doctorFlow +"&recruitFlow=" + recruitFlow, true);--%>
+						jboxLoad("doctorContent", "<s:url value='/jsres/doctor/asseApplicationMain'/>" , true);
+					},1500);
+				}else	if ("0" == resp) {
+					jboxTip("申请失败!");
+					$("#submitBtn").show();
+				}else	if ("-1" == resp) {
+					jboxTip("已提交申请，请勿重复提交!");
+					setTimeout(function(){
+						<%--jboxLoad("doctorContent", "<s:url value='/jsres/doctor/getAsseApplication?applyYear=${pdfn:getCurrYear()}&doctorFlow='/>" + doctorFlow +"&recruitFlow=" + recruitFlow, true);--%>
+						jboxLoad("doctorContent", "<s:url value='/jsres/doctor/asseApplicationMain'/>" , true);
+					},1500);
+				}else{
+					jboxTip(resp);
+					$("#submitBtn").show();
+				}
+			}, null, false);
+		},null);
 	}
-    if(${empty userResumeExt.certificateUri}){
-        jboxTip("请上传毕业证书附件！");
-        return;
-    }
-    <%--if(${empty userResumeExt.qualificationMaterialUri}){--%>
-    <%--jboxTip("请上传医师执业证书附件！");--%>
-    <%--return;--%>
-    <%--}--%>
 
-    var skillScore = $("[name='skillScore']").val();
-    if (skillScore == 1) {
-        if (${sysCfgMap['is_public_qualified'] eq 'Y' || empty sysCfgMap['is_public_qualified']}) {
-            if (${empty publicScore.skillScore}) {
-                if (flag == 'N') {
-                    jboxTip("公共科目合格时必须上传公共科目成绩单");
-                    return;
-                }
-            }
-        }
-    }
-
-    if(${sysCfgMap['is_check_uploaded'] eq 'Y' || empty sysCfgMap['is_check_uploaded']}){
-        if(${empty afterImgMap}){
-            jboxTip("请上传出科考核表！");
-            return;
-        }
-    }
-    var changeSpeId="";
-    var changeSpeName="";
-    <c:if test="${needChange eq 'Y'}">
-    changeSpeId=$("#changeSpeId").val();
-    changeSpeName=$("#changeSpeId").find('option:selected').text();
-    if(!changeSpeId)
-    {
-        jboxTip("请选择报考专业！");
-        return;
-    }
-    </c:if>
-    var msg="1.请认真核对基本信息；";
-    if(!changeSpeName){
-        changeSpeName="${doctorRecruit.speName}";
-        msg+="<br/>2.当前报名专业为“"+changeSpeName+"”；";
-    }else{
-        msg+="<br/>2.当前报名专业为“"+changeSpeName+"”，培训专业为“${doctorRecruit.speName}”；"
-    }
-    msg+="<br/>3.提交后培训数据完成比例将不再统计更新；"+
-        "<br/>4.提交后将无法修改，是否确认提交！";
-    var recruitFlow = "${recruitFlow}";
-    // 备注信息
-    var remark = $("#remark").val();
-    jboxConfirm(msg , function() {
-        $("#submitBtn").hide();
-        jboxPost("<s:url value='/jsres/doctor/asseApply?applyYear=${pdfn:getCurrYear()}&doctorFlow='/>" + doctorFlow +"&recruitFlow=" + recruitFlow+"&changeSpeId=" + changeSpeId + "&remark=" + remark, null, function (resp) {
-            if ("1" == resp) {
-                jboxTip("申请成功!");
-                setTimeout(function(){
-                    <%--jboxLoad("doctorContent", "<s:url value='/jsres/doctor/getAsseApplication?applyYear=${pdfn:getCurrYear()}&doctorFlow='/>" + doctorFlow +"&recruitFlow=" + recruitFlow, true);--%>
-                    jboxLoad("doctorContent", "<s:url value='/jsres/doctor/asseApplicationMain'/>" , true);
-                },1500);
-            }else	if ("0" == resp) {
-                jboxTip("申请失败!");
-                $("#submitBtn").show();
-            }else	if ("-1" == resp) {
-                jboxTip("已提交申请，请勿重复提交!");
-                setTimeout(function(){
-                    <%--jboxLoad("doctorContent", "<s:url value='/jsres/doctor/getAsseApplication?applyYear=${pdfn:getCurrYear()}&doctorFlow='/>" + doctorFlow +"&recruitFlow=" + recruitFlow, true);--%>
-                    jboxLoad("doctorContent", "<s:url value='/jsres/doctor/asseApplicationMain'/>" , true);
-                },1500);
-            }else{
-                jboxTip(resp);
-                $("#submitBtn").show();
-            }
-        }, null, false);
-    },null);
 }
 //打印
 function printDoc(doctorFlow)
@@ -1253,7 +1344,7 @@ function showReductionImg(recordFlow) {
 
 			<div class="main_bd doctorInfo" style="padding-top: 15px;" >
 				<h4 style="float:none;">轮转详情</h4>
-				<div style="overflow:auto;max-width: 930px;max-height: 550px;border: medium;">
+				<div style="overflow:auto;max-height: 550px;border: medium;">
 					<table cellpadding="0" cellspacing="0" class="grid" style="width: 100%;padding:0px;margin: 0px;">
 						<tr>
 							<th style="width: 100px;min-width: 100px;max-width: 100px;">轮转类型</th>
@@ -1261,7 +1352,7 @@ function showReductionImg(recordFlow) {
 							<th style="width: 100px;min-width: 100px;max-width: 100px;">要求时间(月)/实际时间(月)</th>
 							<th style="width: 100px;min-width: 100px;max-width: 100px;">轮转科室</th>
 							<th style="width: 300px;min-width: 200px;max-width: 300px;">轮转时间</th>
-							<th style="width: 400px;min-width: 400px;max-width: 400px;">出科考核表</th>
+							<th style="width: 300px;min-width: 200px;max-width: 300px;">出科考核表</th>
 							<th style="width: 60px;min-width: 60px;max-width: 60px;">总比例</th>
 							<th style="width: 60px;min-width: 60px;max-width: 60px;">补填比例</th>
 							<th style="width: 60px;min-width: 60px;max-width: 60px;">审核比例</th>
@@ -1508,12 +1599,12 @@ function showReductionImg(recordFlow) {
 						<%--or ('TwoYear' eq doctorRecruit.trainYear and allMonth > 19)--%>
 						<%--or ('OneYear' eq doctorRecruit.trainYear and allMonth > 11)--%>
 						<%--and avgBiMap.avgComplete >= 80 and doctorRecruit.catSpeId eq 'DoctorTrainingSpe'}">--%>
-					<c:if test="${avgBiMap.avgComplete >= 80 and doctorRecruit.catSpeId eq 'DoctorTrainingSpe'}">
+					<c:if test="${avgBiMap.avgComplete >= 88 and doctorRecruit.catSpeId eq 'DoctorTrainingSpe'}">
 						<input type="button" class="btn_green" id="submitBtn" onclick="apply('${resDoctor.doctorFlow}','${canApply}');"
 							   value="提交认证"/>&#12288;&#12288;
 					</c:if>
 
-					<c:if test="${doctorRecruit.catSpeId ne 'DoctorTrainingSpe' and submitBtnShow eq 'Y'}">
+					<c:if test="${doctorRecruit.catSpeId ne 'DoctorTrainingSpe'}">
 						<input type="button" class="btn_green" id="submitBtn" onclick="apply('${resDoctor.doctorFlow}','${canApply}');"
 							   value="提交认证"/>&#12288;&#12288;
 					</c:if>

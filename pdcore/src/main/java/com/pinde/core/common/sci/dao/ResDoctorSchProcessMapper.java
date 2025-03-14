@@ -1,12 +1,13 @@
 package com.pinde.core.common.sci.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.pinde.core.model.ResDoctorSchProcess;
 import com.pinde.core.model.ResDoctorSchProcessExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface ResDoctorSchProcessMapper {
+public interface ResDoctorSchProcessMapper extends BaseMapper<ResDoctorSchProcess> {
     int countByExample(ResDoctorSchProcessExample example);
 
     int deleteByExample(ResDoctorSchProcessExample example);

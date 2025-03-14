@@ -31,7 +31,10 @@
 </script>
 
 <div class="main_hd">
-    <h2 class="underline" style="font-weight: bold;letter-spacing: 2px;">结业考试申请</h2>
+    <h2 class="underline" style="font-weight: bold;letter-spacing: 2px;">
+        结业考试申请
+        <span id="graduationMsg" style="color: red;font-size: 14px;margin-left: 15px;"></span>
+    </h2>
 </div>
 <div class="title_tab" style="margin-top: 0px;">
         <ul id="reducationTab">

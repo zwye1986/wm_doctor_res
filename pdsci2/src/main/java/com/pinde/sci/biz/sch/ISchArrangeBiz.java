@@ -2,7 +2,7 @@ package com.pinde.sci.biz.sch;
 
 import com.pinde.core.model.ResDoctor;
 import com.pinde.core.model.SchArrange;
-import com.pinde.sci.form.sch.SchGradeFrom;
+import com.pinde.core.common.form.SchGradeFrom;
 
 import java.util.List;
 

@@ -48,7 +48,7 @@ public class PropertiesUtils {
 
         try {
 //            File file = new File(PropertiesUtils.class.getResource("/").getPath() + "wxConfig.properties");
-            File file = new File("wxConfig.properties");
+            File file = new File("dev/wxConfig.properties");
             FileOutputStream outStream = new FileOutputStream(file);
             properties.setProperty(key, value);
             //写入properties文件  

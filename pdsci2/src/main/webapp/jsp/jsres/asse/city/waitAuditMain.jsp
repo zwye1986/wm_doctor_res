@@ -132,6 +132,7 @@ $(document).ready(function(){
             //改变协同医院状态
             $("select[name=trainingSpeId] option[value != '']").remove();
             $("select[name=trainingTypeId] option[value = '']").attr('selected','selected');
+			changeTrainSpes();
             var orgFlag=$("#trainOrg").val();
             var orgFlow=$("#orgFlow").val();
             if(orgFlag.replace(/(^\s*)|(\s*$)/g, "")==""){
@@ -334,7 +335,7 @@ function exportInfo()
 				<td class="td_left">培训类别：</td>
 				<td>
 					<%--<select name="trainingTypeId" id="trainingTypeId" class="select" onchange="changeTrainSpes('1')" style="width:128px;">--%>
-					<select name="trainingTypeId" id="trainingTypeId" class="select" style="width:128px;">
+					<select name="trainingTypeId" id="trainingTypeId" class="select" style="width:128px;" onchange="changeTrainSpes('1')">
 						<%--<option value="">请选择</option>--%>
 						<c:if test="${param.tabTag eq 'FristWait' or param.tabTag eq 'FristList'}">
 							<option value="DoctorTrainingSpe" selected="selected">住院医师</option>
@@ -460,7 +461,19 @@ function exportInfo()
 									  name="datas"/>${type.name}&nbsp;</label>
 					</c:forEach>
 				</td>
-				<td colspan="3" style="text-align: left"><label><input type="checkbox" value="Y" name="isNotMatch" />培训专业与执业范围不匹配</label></td>
+				<td colspan="2" style="text-align: left"><label><input type="checkbox" value="Y" name="isNotMatch" />培训专业与执业范围不匹配</label></td>
+				<td class="td_left">异常报考：</td>
+				<td>
+					<select class="select" name="tempDoctorFlag" style="width: 128px;">
+						<option value="">全部</option>
+						<option <c:if test="${param.tempDoctorFlag eq GlobalConstant.FLAG_Y}">selected="selected"</c:if>
+								value="${GlobalConstant.FLAG_Y}">是
+						</option>
+						<option <c:if test="${param.tempDoctorFlag eq GlobalConstant.FLAG_N}">selected="selected"</c:if>
+								value="${GlobalConstant.FLAG_N}">否
+						</option>
+					</select>
+				</td>
 			</tr>
 		</table>
 		<div>

@@ -381,15 +381,15 @@
             "${formDataMap['rkjy']}"
         </c:if>
         },
-<%--        {--%>
-<%--        "inputId": "ckkh",--%>
-<%--        "value": <c:if test="${empty formDataMap['ckkh']or (formDataMap['ckkh'] eq '0')}">--%>
-<%--        "${dataMap['ckkh']}"--%>
-<%--        </c:if>--%>
-<%--        <c:if test="${not empty formDataMap['ckkh']  and !(formDataMap['ckkh'] eq '0')}">--%>
-<%--            "${formDataMap['ckkh']}"--%>
-<%--        </c:if>--%>
-<%--        },--%>
+        {
+        "inputId": "ckkh",
+        "value": <c:if test="${empty formDataMap['ckkh']or (formDataMap['ckkh'] eq '0')}">
+        "${dataMap['ckkh']}"
+        </c:if>
+        <c:if test="${not empty formDataMap['ckkh']  and !(formDataMap['ckkh'] eq '0')}">
+            "${formDataMap['ckkh']}"
+        </c:if>
+        },
         {
         "inputId": "jnpx",
         "value": <c:if test="${empty formDataMap['jnpx']or (formDataMap['jnpx'] eq '0')}">

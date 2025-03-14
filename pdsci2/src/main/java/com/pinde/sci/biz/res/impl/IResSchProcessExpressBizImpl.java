@@ -1,5 +1,8 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.pinde.core.common.enums.GlobalRecTypeEnum;
 import com.pinde.core.common.enums.JszyTCMPracticEnum;
 import com.pinde.core.common.enums.RecStatusEnum;
@@ -859,9 +862,9 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
     }
 
     @Override
-    public ResSchProcessExpress queryResRec(String processFlow, String operUserFlow,
+    public List<ResSchProcessExpress> queryResRec(String processFlow, String operUserFlow,
                               String recTypeId) {
-        ResSchProcessExpress rec=null;
+        /*ResSchProcessExpress rec=null;
         ResSchProcessExpressExample example = new ResSchProcessExpressExample();
         com.pinde.core.model.ResSchProcessExpressExample.Criteria create = example.createCriteria();
         create.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
@@ -878,7 +881,16 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
         if (list != null && list.size() >0) {
             rec = list.get(0);
         }
-        return rec;
+        return rec;*/
+
+        LambdaQueryWrapper<ResSchProcessExpress> lambdaQueryWrapper = Wrappers.lambdaQuery();
+        lambdaQueryWrapper.eq(ResSchProcessExpress::getSchRotationDeptFlow,processFlow)
+                .eq(ResSchProcessExpress::getOperUserFlow,operUserFlow)
+                .eq(ResSchProcessExpress::getRecTypeId,recTypeId)
+                .eq(ResSchProcessExpress::getRecordStatus,com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+//                .orderByAsc(ResSchProcessExpress::getModifyTime);
+        List<ResSchProcessExpress> resSchProcessExpresses = expressMapper.selectList(lambdaQueryWrapper);
+        return resSchProcessExpresses;
     }
     @Override
     public ResSchProcessExpress queryResRecByProcessAndType(String processFlow,String recTypeId) {

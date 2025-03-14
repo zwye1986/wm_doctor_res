@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.core.common.sci.dao.ResTeacherTrainingInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.ResTeacherTrainingInfo" >
+    <id column="TRAINING_FLOW" property="trainingFlow" jdbcType="VARCHAR" />
+    <result column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
+    <result column="TRAINING_YEAR" property="trainingYear" jdbcType="VARCHAR" />
+    <result column="TRAINING_UNIT" property="trainingUnit" jdbcType="VARCHAR" />
+    <result column="TRAINING_SPE_ID" property="trainingSpeId" jdbcType="VARCHAR" />
+    <result column="TRAINING_SPE_NAME" property="trainingSpeName" jdbcType="VARCHAR" />
+    <result column="CERTIFICATE_LEVEL_ID" property="certificateLevelId" jdbcType="VARCHAR" />
+    <result column="CERTIFICATE_LEVEL_NAME" property="certificateLevelName" jdbcType="VARCHAR" />
+    <result column="CERTIFICATE_NO" property="certificateNo" jdbcType="VARCHAR" />
+    <result column="CERTIFICATE_TIME" property="certificateTime" jdbcType="VARCHAR" />
+    <result column="CERTIFICATE_FILE" property="certificateFile" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    TRAINING_FLOW, USER_FLOW, TRAINING_YEAR, TRAINING_UNIT, TRAINING_SPE_ID, TRAINING_SPE_NAME, 
+    CERTIFICATE_LEVEL_ID, CERTIFICATE_LEVEL_NAME, CERTIFICATE_NO, CERTIFICATE_TIME, CERTIFICATE_FILE, 
+    RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.ResTeacherTrainingInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.RES_TEACHER_TRAINING_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from PDSCI.RES_TEACHER_TRAINING_INFO
+    where TRAINING_FLOW = #{trainingFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.RES_TEACHER_TRAINING_INFO
+    where TRAINING_FLOW = #{trainingFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.ResTeacherTrainingInfoExample" >
+    delete from PDSCI.RES_TEACHER_TRAINING_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.core.model.ResTeacherTrainingInfo" >
+    insert into PDSCI.RES_TEACHER_TRAINING_INFO (TRAINING_FLOW, USER_FLOW, TRAINING_YEAR, 
+      TRAINING_UNIT, TRAINING_SPE_ID, TRAINING_SPE_NAME, 
+      CERTIFICATE_LEVEL_ID, CERTIFICATE_LEVEL_NAME, 
+      CERTIFICATE_NO, CERTIFICATE_TIME, CERTIFICATE_FILE, 
+      RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
+      MODIFY_TIME, MODIFY_USER_FLOW)
+    values (#{trainingFlow,jdbcType=VARCHAR}, #{userFlow,jdbcType=VARCHAR}, #{trainingYear,jdbcType=VARCHAR}, 
+      #{trainingUnit,jdbcType=VARCHAR}, #{trainingSpeId,jdbcType=VARCHAR}, #{trainingSpeName,jdbcType=VARCHAR}, 
+      #{certificateLevelId,jdbcType=VARCHAR}, #{certificateLevelName,jdbcType=VARCHAR}, 
+      #{certificateNo,jdbcType=VARCHAR}, #{certificateTime,jdbcType=VARCHAR}, #{certificateFile,jdbcType=VARCHAR}, 
+      #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
+      #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.core.model.ResTeacherTrainingInfo" >
+    insert into PDSCI.RES_TEACHER_TRAINING_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="trainingFlow != null" >
+        TRAINING_FLOW,
+      </if>
+      <if test="userFlow != null" >
+        USER_FLOW,
+      </if>
+      <if test="trainingYear != null" >
+        TRAINING_YEAR,
+      </if>
+      <if test="trainingUnit != null" >
+        TRAINING_UNIT,
+      </if>
+      <if test="trainingSpeId != null" >
+        TRAINING_SPE_ID,
+      </if>
+      <if test="trainingSpeName != null" >
+        TRAINING_SPE_NAME,
+      </if>
+      <if test="certificateLevelId != null" >
+        CERTIFICATE_LEVEL_ID,
+      </if>
+      <if test="certificateLevelName != null" >
+        CERTIFICATE_LEVEL_NAME,
+      </if>
+      <if test="certificateNo != null" >
+        CERTIFICATE_NO,
+      </if>
+      <if test="certificateTime != null" >
+        CERTIFICATE_TIME,
+      </if>
+      <if test="certificateFile != null" >
+        CERTIFICATE_FILE,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="trainingFlow != null" >
+        #{trainingFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="userFlow != null" >
+        #{userFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="trainingYear != null" >
+        #{trainingYear,jdbcType=VARCHAR},
+      </if>
+      <if test="trainingUnit != null" >
+        #{trainingUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="trainingSpeId != null" >
+        #{trainingSpeId,jdbcType=VARCHAR},
+      </if>
+      <if test="trainingSpeName != null" >
+        #{trainingSpeName,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateLevelId != null" >
+        #{certificateLevelId,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateLevelName != null" >
+        #{certificateLevelName,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateNo != null" >
+        #{certificateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateTime != null" >
+        #{certificateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateFile != null" >
+        #{certificateFile,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.core.model.ResTeacherTrainingInfoExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.RES_TEACHER_TRAINING_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.RES_TEACHER_TRAINING_INFO
+    <set >
+      <if test="record.trainingFlow != null" >
+        TRAINING_FLOW = #{record.trainingFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userFlow != null" >
+        USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trainingYear != null" >
+        TRAINING_YEAR = #{record.trainingYear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trainingUnit != null" >
+        TRAINING_UNIT = #{record.trainingUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trainingSpeId != null" >
+        TRAINING_SPE_ID = #{record.trainingSpeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trainingSpeName != null" >
+        TRAINING_SPE_NAME = #{record.trainingSpeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certificateLevelId != null" >
+        CERTIFICATE_LEVEL_ID = #{record.certificateLevelId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certificateLevelName != null" >
+        CERTIFICATE_LEVEL_NAME = #{record.certificateLevelName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certificateNo != null" >
+        CERTIFICATE_NO = #{record.certificateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certificateTime != null" >
+        CERTIFICATE_TIME = #{record.certificateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certificateFile != null" >
+        CERTIFICATE_FILE = #{record.certificateFile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.RES_TEACHER_TRAINING_INFO
+    set TRAINING_FLOW = #{record.trainingFlow,jdbcType=VARCHAR},
+      USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
+      TRAINING_YEAR = #{record.trainingYear,jdbcType=VARCHAR},
+      TRAINING_UNIT = #{record.trainingUnit,jdbcType=VARCHAR},
+      TRAINING_SPE_ID = #{record.trainingSpeId,jdbcType=VARCHAR},
+      TRAINING_SPE_NAME = #{record.trainingSpeName,jdbcType=VARCHAR},
+      CERTIFICATE_LEVEL_ID = #{record.certificateLevelId,jdbcType=VARCHAR},
+      CERTIFICATE_LEVEL_NAME = #{record.certificateLevelName,jdbcType=VARCHAR},
+      CERTIFICATE_NO = #{record.certificateNo,jdbcType=VARCHAR},
+      CERTIFICATE_TIME = #{record.certificateTime,jdbcType=VARCHAR},
+      CERTIFICATE_FILE = #{record.certificateFile,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResTeacherTrainingInfo" >
+    update PDSCI.RES_TEACHER_TRAINING_INFO
+    <set >
+      <if test="userFlow != null" >
+        USER_FLOW = #{userFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="trainingYear != null" >
+        TRAINING_YEAR = #{trainingYear,jdbcType=VARCHAR},
+      </if>
+      <if test="trainingUnit != null" >
+        TRAINING_UNIT = #{trainingUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="trainingSpeId != null" >
+        TRAINING_SPE_ID = #{trainingSpeId,jdbcType=VARCHAR},
+      </if>
+      <if test="trainingSpeName != null" >
+        TRAINING_SPE_NAME = #{trainingSpeName,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateLevelId != null" >
+        CERTIFICATE_LEVEL_ID = #{certificateLevelId,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateLevelName != null" >
+        CERTIFICATE_LEVEL_NAME = #{certificateLevelName,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateNo != null" >
+        CERTIFICATE_NO = #{certificateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateTime != null" >
+        CERTIFICATE_TIME = #{certificateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateFile != null" >
+        CERTIFICATE_FILE = #{certificateFile,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where TRAINING_FLOW = #{trainingFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResTeacherTrainingInfo" >
+    update PDSCI.RES_TEACHER_TRAINING_INFO
+    set USER_FLOW = #{userFlow,jdbcType=VARCHAR},
+      TRAINING_YEAR = #{trainingYear,jdbcType=VARCHAR},
+      TRAINING_UNIT = #{trainingUnit,jdbcType=VARCHAR},
+      TRAINING_SPE_ID = #{trainingSpeId,jdbcType=VARCHAR},
+      TRAINING_SPE_NAME = #{trainingSpeName,jdbcType=VARCHAR},
+      CERTIFICATE_LEVEL_ID = #{certificateLevelId,jdbcType=VARCHAR},
+      CERTIFICATE_LEVEL_NAME = #{certificateLevelName,jdbcType=VARCHAR},
+      CERTIFICATE_NO = #{certificateNo,jdbcType=VARCHAR},
+      CERTIFICATE_TIME = #{certificateTime,jdbcType=VARCHAR},
+      CERTIFICATE_FILE = #{certificateFile,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR}
+    where TRAINING_FLOW = #{trainingFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

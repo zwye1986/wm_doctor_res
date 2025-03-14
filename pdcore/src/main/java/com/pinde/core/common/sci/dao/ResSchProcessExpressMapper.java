@@ -1,12 +1,13 @@
 package com.pinde.core.common.sci.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.pinde.core.model.ResSchProcessExpress;
 import com.pinde.core.model.ResSchProcessExpressExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface ResSchProcessExpressMapper {
+public interface ResSchProcessExpressMapper extends BaseMapper<ResSchProcessExpress> {
     int countByExample(ResSchProcessExpressExample example);
 
     int deleteByExample(ResSchProcessExpressExample example);

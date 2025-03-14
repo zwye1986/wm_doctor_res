@@ -15,6 +15,7 @@
 	$(document).ready(function(){
 		if ("${GlobalConstant.FLAG_Y}"=="${pageFlag}") {
 			window.parent.jboxTip("申请成功！");
+			window.parent.editCommonSzInfo('${sessionScope.currUser.userFlow}');
 			jboxClose();
 		}
 	});
@@ -52,21 +53,20 @@
 <c:if test="${empty applicationFlag}">
 	<form id="excelForm" method="post" action="<s:url value='/jsres/statistic/saveTeacherApplication'/>" enctype="multipart/form-data">
 		<table class="grid" style="width: 100%;margin-top: 15px">
-			<input  type="text" name="recordFlow" id="recordFlow"  value="${teacher.recordFlow}" style="display: none;"/>
-			<input  type="text" name="roleId" id="roleId"  value="${roleId}" style="display: none;"/>
+			<input  type="text" name="doctorName" id="doctorName"  value="${sysUser.userFlow}" style="display: none;"/>
 			<tr>
 				<th width="150px"><font color="red" >*</font>师资类型</th>
-				<c:if test="${roleId == 'student'}">
+				<c:if test="${empty sysUser.teacherLevel}">
 					<td colspan="3" style="text-align: left;">
 						<select class="select" name="applicationTeacherLevelId" style="width: 100px">
-							<option <c:if test="${applicationTeacherLevelId eq 'GeneralFaculty'}">selected="selected"</c:if> value="GeneralFaculty">一般师资</option>
-							<option <c:if test="${applicationTeacherLevelId eq 'KeyFaculty'}">selected="selected"</c:if> value="KeyFaculty">骨干师资</option>
+							<option <c:if test="${applicationTeacherLevelId eq '一般师资'}">selected="selected"</c:if> value="一般师资">一般师资</option>
+							<option <c:if test="${applicationTeacherLevelId eq '骨干师资'}">selected="selected"</c:if> value="骨干师资">骨干师资</option>
 						</select>
 					</td>
 				</c:if>
-				<c:if test="${roleId != 'student'}">
+				<c:if test="${not empty sysUser.teacherLevel}">
 					<td colspan="3" style="text-align: left;">
-						<input  type="text" name="applicationTeacherLevelId" class="select validate[required]" hidden value="KeyFaculty"  style="text-align: left;width: 150px;"/>
+						<input  type="text" name="applicationTeacherLevelId" class="select validate[required]" hidden value="骨干师资"  style="text-align: left;width: 150px;"/>
 						<input  type="text" class="select validate[required]" disabled value="骨干师资"  style="text-align: left;width: 150px;"/>
 					</td>
 				</c:if>
@@ -91,11 +91,6 @@
 	<div style="text-align: center; margin-top: 10px;">
 		<input type="button" onclick="saveTeacherApplication();" class="btn_green" value="确&#12288;认"/>
 		<input type="button" class="btn_green" value="取&#12288;消" onclick="jboxClose();"/>
-	</div>
-</c:if>
-<c:if test="${not empty applicationFlag && applicationFlag == 'N'}">
-	<div style="text-align: center; margin-top: 100px;">
-		<font size="6">您存在未审核完毕的申请流程，请耐心等待审核完毕！</font>
 	</div>
 </c:if>
 

@@ -1,5 +1,6 @@
 package com.pinde.core.common.sci.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.pinde.core.model.ResRec;
 import com.pinde.core.model.ResRecExample;
 import org.apache.ibatis.annotations.Param;
@@ -7,7 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 import java.util.Map;
 
-public interface ResRecMapper {
+public interface ResRecMapper extends BaseMapper<ResRec> {
     int countByExample(ResRecExample example);
 
     int deleteByExample(ResRecExample example);

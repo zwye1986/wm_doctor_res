@@ -23,7 +23,6 @@ public interface ISchRotationDeptAfterBiz {
 
     void updateRecruitAsseInfo(String applyYear);
 
-    int deleteUriAuditInfo();
 
     int  updateUriAuditInfo();
 

@@ -211,7 +211,7 @@
     IS_SUBMIT_NAME, CHECK_STATUS_ID, CHECK_STATUS_NAME, CHECK_REASON, APP_LAST_LOGIN_ERROR_TIME, 
     APP_LOGIN_ERROR_COUNT, AUDIT_STATUS, ORG_FLOW_GX, SCHOOL, USER_LEVEL_ID, USER_LEVEL_NAME, 
     USER_SIGN_URL, BANK_OF_DEPOSIT, BANK_ACCOUNT_NUMBER, OPEN_ID, UN_LOCK_TIME,TRAINING_TYPE_ID,
-    TRAINING_TYPE_NAME
+    TRAINING_TYPE_NAME, TEACHER_LEVEL
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.SysUserExample" >
     select
@@ -1991,6 +1991,9 @@
       </if>
       <if test="trainingTypeName != null" >
         TRAINING_TYPE_NAME = #{trainingTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherLevel != null" >
+        TEACHER_LEVEL = #{teacherLevel,jdbcType=VARCHAR},
       </if>
     </set>
     where USER_FLOW = #{userFlow,jdbcType=VARCHAR}

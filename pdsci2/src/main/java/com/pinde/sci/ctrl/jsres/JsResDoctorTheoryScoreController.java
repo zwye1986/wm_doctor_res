@@ -1,10 +1,14 @@
 package com.pinde.sci.ctrl.jsres;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.pinde.core.common.enums.AfterRecTypeEnum;
+import com.pinde.core.common.enums.TrainCategoryEnum;
 import com.pinde.core.common.enums.jsres.CertificateStatusEnum;
+import com.pinde.core.common.sci.dao.ResJointOrgMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
+import com.pinde.core.service.impl.ResRecCheckConfigService;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
 import com.pinde.core.util.StringUtil;
@@ -25,6 +29,8 @@ import com.pinde.core.model.ResJointOrg;
 import com.pinde.core.model.ResPassScoreCfg;
 import com.pinde.core.model.ResScore;
 import com.pinde.core.model.ResTestConfig;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
@@ -39,6 +45,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -47,6 +54,7 @@ import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/jsres/doctorTheoryScore")
@@ -62,7 +70,7 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
     @Autowired
     private IResDoctorBiz resDoctorBiz;
     @Autowired
-    private IPubUserResumeBiz userResumeBiz;
+    private ResJointOrgMapper resJointOrgMapper;
     @Autowired
     private OrgBizImpl orgBiz;
     @Autowired
@@ -71,12 +79,14 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
     private IResRecBiz resRecBiz;
     @Autowired
     private IResScoreBiz resScoreBiz;
-    @Autowired
+    @Resource
     private IJsResGraduationApplyBiz graduationApplyBiz;
     @Autowired
     private IResDoctorRecruitBiz resDoctorRecruitBiz;
     @Autowired
     private IResTestConfigBiz resTestConfigBiz;
+
+
     public static final String SCOREYEAR_NOT_FIND="请选择成绩年份";
 
     @RequestMapping(value="/doctorTheoryList")
@@ -2102,6 +2112,7 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
         Map<String,Object> param = new HashMap<>();
         //查询条件
         List<String> orgFlowList = new ArrayList();
+        if(StringUtils.isNotEmpty(orgFlow)) orgFlowList.add(orgFlow);
         SysOrg org = orgBiz.readSysOrg(orgFlow);
         if (com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId().equals(org.getOrgLevelId())) {
             orgFlowList.add(orgFlow);
@@ -2136,7 +2147,7 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
         if(!tempJoinOrgs.isEmpty() && tempJoinOrgs.size()>0){
             isJointOrg = com.pinde.core.common.GlobalConstant.FLAG_Y;
         }
-        param.put("isJointOrg",isJointOrg);
+        if(TrainCategoryEnum.AssiGeneral.getId().equals(trainingTypeId)) param.put("isJointOrg",isJointOrg);
         param.put("trainingTypeId",trainingTypeId);
         param.put("trainingSpeId",trainingSpeId);
         param.put("sessionNumber",sessionNumber);
@@ -2155,7 +2166,9 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
         param.put("roleFlag",roleFlag);
         param.put("tabTag",tabTag);
         List<Map<String,Object>> list = graduationApplyBiz.chargeQueryListForExport(param);
-        graduationApplyBiz.chargeExportListTwo(list,response,isWaitAudit);
+        Map<Object, List<Map<String, Object>>> list2 = list.stream().collect(Collectors.groupingBy(e -> e.get("idNo")));
+        List<Map<String,Object>> list3 = list2.entrySet().stream().map(e -> e.getValue().get(0)).collect(Collectors.toList());
+        graduationApplyBiz.chargeExportListTwo(list3,response,isWaitAudit);
 
     }
 
@@ -2255,7 +2268,7 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
     public String auditList(Model model,String roleFlag,Integer currentPage ,HttpServletRequest request, String orgFlow,String trainingTypeId,
                             String trainingSpeId,String datas[], String sessionNumber, String graduationYear,String qualificationMaterialId,
                             String passFlag, String userName,String idNo, String completeBi,String auditBi,String auditStatusId,String testId,
-                            String isNotMatch,String applyYear,String tabTag,String joinOrgFlow,String isPostpone
+                            String isNotMatch,String applyYear,String tabTag,String isPostpone, String tempDoctorFlag
     ){
         SysUser currentUser = GlobalContext.getCurrentUser();
 //        SysOrg currentOrg = orgBiz.readSysOrg(currentUser.getOrgFlow());
@@ -2264,28 +2277,12 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
         Map<String,Object> param = new HashMap<>();
         List<String> orgFlowList = new ArrayList();
 //        List<String> jointOrgFlowList = new ArrayList();
-        SysOrg org = orgBiz.readSysOrg(orgFlow);
-        // 助理全科不区分主协
-        if("AssiGeneral".equals(trainingTypeId)){
-            joinOrgFlow = currentUser.getOrgFlow();
-        }else{
-            if (com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId().equals(org.getOrgLevelId())) {
-                orgFlowList.add(orgFlow);
-                if(StringUtil.isNotBlank(joinOrgFlow) && orgFlow.equals(joinOrgFlow)) {
-                    joinOrgFlow = "isNull";
-                }
-            }else{
-                List<ResJointOrg> jointOrgList = jointOrgBiz.selectByJointOrgFlow(orgFlow);
-                if(null != jointOrgList && jointOrgList.size()>0){
-                    if("DoctorTrainingSpe".equals(trainingTypeId)) {
-                        orgFlowList.add(jointOrgList.get(0).getOrgFlow());
-                        joinOrgFlow = jointOrgList.get(0).getJointOrgFlow();
-                    }else{
-                        orgFlowList.add(jointOrgList.get(0).getJointOrgFlow());
-                        joinOrgFlow = jointOrgList.get(0).getJointOrgFlow();
-                    }
-                }
-            }
+        orgFlowList.add(orgFlow);
+        LambdaQueryWrapper<ResJointOrg> resJointOrgLambdaQueryWrapper = new LambdaQueryWrapper();
+        resJointOrgLambdaQueryWrapper.eq(ResJointOrg::getOrgFlow, orgFlow).eq(ResJointOrg::getRecordStatus,"Y");
+        List<ResJointOrg> jointOrgList = resJointOrgMapper.selectList(resJointOrgLambdaQueryWrapper);
+        if(CollectionUtils.isNotEmpty(jointOrgList)) {
+            jointOrgList.stream().forEach(e -> orgFlowList.add(e.getJointOrgFlow()));
         }
 //        param.put("jointOrgFlowList",jointOrgFlowList);//协同基地
         List<String>docTypeList=new ArrayList<String>();//人员类型
@@ -2313,6 +2310,7 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
         param.put("tabTag",tabTag);
 
         param.put("isPostpone",isPostpone);
+        param.put("tempDoctorFlag", tempDoctorFlag);
         //判断是否是协同基地
         String isJointOrg = com.pinde.core.common.GlobalConstant.FLAG_N;
         List<ResJointOrg> tempJoinOrgs = jointOrgBiz.searchResJointByJointOrgFlow(currentUser.getOrgFlow());
@@ -2326,18 +2324,20 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
             }
         }
         param.put("orgFlowList",orgFlowList);//培训基地
-        param.put("jointOrgFlow",joinOrgFlow);
         param.put("isJointOrg",isJointOrg);
 
         PageHelper.startPage(currentPage,getPageSize(request));
         //禅道2143 主基地查询数据不包含协同基地助理全科
         List<Map<String,Object>> list=graduationApplyBiz.chargeQueryApplyList2(param);
-//        List<Map<String,Object>> list=graduationApplyBiz.chargeQueryApplyList(param);
-//        List<Map<String,Object>> list=graduationApplyBiz.chargeQueryApplyListNew(param);
+        Set<String> doctorFlowSet = list.stream().map(kv -> kv.get("doctorFlow").toString()).collect(Collectors.toSet());
+        Map<String,List<ResRec>> nonComplianceRecordsMap= new HashMap<String, List<ResRec>>();
+        Map<String, List<ResRec>> doctorFlowMap = graduationApplyBiz.getNonComplianceRecords(new ArrayList<>(doctorFlowSet));
+        nonComplianceRecordsMap.putAll(doctorFlowMap);
         if(StringUtil.isNotBlank(roleFlag)){
             model.addAttribute("roleFlag",roleFlag);
         }
         model.addAttribute("list",list);
+        model.addAttribute("nonComplianceRecordsMap",nonComplianceRecordsMap);
        /* String nowTime=DateUtil.transDateTime(DateUtil.getCurrentTime());
         String startDate=InitConfig.getSysCfg("local_submit_start_time");
         String endDate=InitConfig.getSysCfg("local_submit_end_time");*/
@@ -2355,6 +2355,8 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
         model.addAttribute("f",f);
         model.addAttribute("currentUser",currentUser);
         model.addAttribute("roleFlag",roleFlag);
+        model.addAttribute("trainingTypeId",trainingTypeId);
+
         return "jsres/asse/hospital/auditList";
     }
 

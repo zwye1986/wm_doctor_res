@@ -1,12 +1,13 @@
 package com.pinde.core.common.sci.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.pinde.core.model.JsresDoctorDeptDetail;
 import com.pinde.core.model.JsresDoctorDeptDetailExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface JsresDoctorDeptDetailMapper {
+public interface JsresDoctorDeptDetailMapper extends BaseMapper<JsresDoctorDeptDetail> {
     int countByExample(JsresDoctorDeptDetailExample example);
 
     int deleteByExample(JsresDoctorDeptDetailExample example);
@@ -15,7 +16,7 @@ public interface JsresDoctorDeptDetailMapper {
 
     int insert(JsresDoctorDeptDetail record);
 
-    int insertSelective(JsresDoctorDeptDetail record);
+//    int insertSelective(JsresDoctorDeptDetail record);
 
     List<JsresDoctorDeptDetail> selectByExample(JsresDoctorDeptDetailExample example);
 

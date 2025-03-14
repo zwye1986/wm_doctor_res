@@ -1,8 +1,13 @@
 package com.pinde.core.model;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.math.BigDecimal;
 
+@TableName("res_doctor_sch_process")
 public class ResDoctorSchProcess implements java.io.Serializable {
+    @TableId
     private String processFlow;
 
     private String userFlow;

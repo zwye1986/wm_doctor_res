@@ -1,12 +1,14 @@
 package com.pinde.core.common.sci.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.pinde.core.model.SchDoctorDept;
 import com.pinde.core.model.SchDoctorDeptExample;
+import liquibase.pro.packaged.B;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface SchDoctorDeptMapper {
+public interface SchDoctorDeptMapper extends BaseMapper<SchDoctorDept> {
     int countByExample(SchDoctorDeptExample example);
 
     int deleteByExample(SchDoctorDeptExample example);

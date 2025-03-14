@@ -348,7 +348,7 @@
             </span>
         </div>
         <div class="main_bd" style="margin-top: 30px">
-            <h4>审核意见</h4>
+            <h4>审核意见<c:if test="${tempDoctorFlag eq 'Y'}"><font color="red">（该学员为异常报考人员，请谨慎审核！）</font></c:if></h4>
             <form id="myform">
                 <table border="0" cellpadding="0" cellspacing="0" style=" width:100%;text-align: center;border: none;"class="base_info" >
                     <colgroup>

@@ -89,7 +89,7 @@ public interface IResSchProcessExpressBiz {
                          String schDeptFlow, String rotationFlow, HttpServletRequest req,
                          String orgFlow, String medicineTypeId);
 
-    ResSchProcessExpress queryResRec(String processFlow, String operUserFlow,String recTypeId);
+    List<ResSchProcessExpress> queryResRec(String processFlow, String operUserFlow,String recTypeId);
 
     List<ResSchProcessExpress> queryResRecList(List<String> processFlowList, List<String> operUserFlowList,String recTypeId);
 

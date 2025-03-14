@@ -2017,6 +2017,11 @@
 		<if test="workOrgId != null and workOrgId != ''">
 			and rd.work_org_id = #{workOrgId}
 		</if>
+		<if test="schStartDate != null and schStartDate != '' and schEndDate != null and schEndDate != ''">
+			AND((P.SCH_START_DATE <![CDATA[ <= ]]> #{schStartDate} AND P.SCH_END_DATE >= #{schEndDate})
+			OR (P.SCH_START_DATE <![CDATA[ >= ]]> #{schStartDate} AND P.SCH_START_DATE <![CDATA[ <= ]]> #{schEndDate})
+			OR (P.SCH_END_DATE <![CDATA[ >= ]]> #{schStartDate} AND P.SCH_END_DATE <![CDATA[ <= ]]> #{schEndDate}))
+		</if>
 		<if test="teacherUserFlows != null and teacherUserFlows.size() > 0">
 			<!--<choose>
 				<when test="teacherUserFlows.size() >= 1000">
@@ -2142,6 +2147,11 @@
 		</if>
 		<if test="workOrgId != null and workOrgId != ''">
 			and rd.work_org_id = #{workOrgId}
+		</if>
+		<if test="schStartDate != null and schStartDate != '' and schEndDate != null and schEndDate != ''">
+			AND((P.SCH_START_DATE <![CDATA[ <= ]]> #{schStartDate} AND P.SCH_END_DATE >= #{schEndDate})
+			OR (P.SCH_START_DATE <![CDATA[ >= ]]> #{schStartDate} AND P.SCH_START_DATE <![CDATA[ <= ]]> #{schEndDate})
+			OR (P.SCH_END_DATE <![CDATA[ >= ]]> #{schStartDate} AND P.SCH_END_DATE <![CDATA[ <= ]]> #{schEndDate}))
 		</if>
 		AND (p.SCH_START_DATE <![CDATA[ <= ]]> nvl((select cfg2.power_start_time from jsres_power_cfg cfg2 where cfg2.record_status = 'Y'
 		AND cfg2.cfg_code = ('jsres_doctor_data_time_' || rd.doctor_flow)

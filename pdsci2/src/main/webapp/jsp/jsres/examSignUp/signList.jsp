@@ -14,6 +14,7 @@
 	<jsp:param name="jquery_placeholder" value="true"/>
 	<jsp:param name="jquery_iealert" value="false"/>
 </jsp:include>
+<%@include file="/jsp/common/common.jsp"%>
 <script type="text/javascript" src="<s:url value='/js/Scoll/Scorll2.js'/>?v=${applicationScope.sysCfgMap['sys_version']}"></script>
 <script type="text/javascript" src="<s:url value='/js/jquery-select/js/jquery.select.js'/>?v=${applicationScope.sysCfgMap['sys_version']}"></script>
 <script type="text/javascript">
@@ -99,9 +100,10 @@
 						<th>证件号码</th>
 						<th>审核状态</th>
 						<th>操作</th>
+						<th>异常报考</th>
 					</tr>
 					<tr>
-						<td colspan="12" >无记录！</td>
+						<td colspan="13" >无记录！</td>
 					</tr>
 				</table>
 			</div>
@@ -112,6 +114,7 @@
 			<thead>
 			<tr>
 				<th style="min-width: 100px; max-width: 100px; "   class="toFiexdDept">操作</th>
+				<th style="width: 100px; ">轮转数据是否合规</th>
 				<th style="min-width: 80px; max-width: 80px; "   class="toFiexdDept">姓名</th>
 				<c:if test="${roleFlag eq GlobalConstant.USER_LIST_GLOBAL}">
 					<th style="min-width: 120px; max-width: 120px; " class="fixedBy">地市</th>
@@ -125,6 +128,7 @@
 				<th style="min-width: 150px; max-width: 150px; " class="fixedBy">培训年限</th>
 				<th style="min-width: 150px; max-width: 150px; " class="fixedBy">证件号码</th>
 				<th style="min-width: 150px; max-width: 150px; " class="fixedBy">审核状态</th>
+				<th style="min-width: 150px; max-width: 150px; " class="fixedBy">异常报考</th>
 			</tr>
 			</thead>
 			<tbody>
@@ -143,6 +147,16 @@
 							<a class="btn"  onclick="showSignup('${s.signupFlow}');" style="margin-top: 5px;margin-bottom: 5px;">查看</a>
 						</c:if>
 					</td>
+					<td style="min-width: 80px; max-width: 80px; " class="by">
+						<c:choose>
+                            <c:when test="${not empty nonComplianceRecordsMap[s.doctorFlow]}">
+                                <a onclick="showNonComplianceRecords('${s.doctorFlow}')">否</a>
+                            </c:when>
+                            <c:otherwise>
+                                是
+                            </c:otherwise>
+                        </c:choose>
+					</td>
 					<td style="min-width: 80px; max-width: 80px; " class="by">${s.userName}</td>
 					<c:if test="${roleFlag eq GlobalConstant.USER_LIST_GLOBAL}">
 						<td style="min-width: 120px; max-width: 120px; " class="by">${s.orgCityName}</td>
@@ -160,6 +174,7 @@
 					</td>
 					<td style="min-width: 150px; max-width: 150px; " class="by">${s.idNo}</td>
 					<td style="min-width: 150px; max-width: 150px; " class="by">${s.auditStatusName}</td>
+					<td style="min-width: 150px; max-width: 150px; " class="by">${s.tempDoctorFlag}</td>
 				</tr>
 			</c:forEach>
 			</tbody>

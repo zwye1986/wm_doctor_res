@@ -1951,6 +1951,8 @@
 		A.ORG_NAME,
 		A.ORG_FLOW,
 		A.USER_NAME,
+		A.ID_NO,
+		A.CRET_TYPE_NAME,
 		A.TRAINING_SPE_ID,
 		A.TRAINING_SPE_NAME,
 		A.SESSION_NUMBER,
@@ -1968,6 +1970,8 @@
 		DR.ORG_NAME,
 		DR.ORG_FLOW,
 		SU.USER_NAME,
+		SU.ID_NO,
+		SU.CRET_TYPE_NAME,
 		DR.SPE_ID TRAINING_SPE_ID,
 		DR.SPE_NAME TRAINING_SPE_NAME,
 		DR.SESSION_NUMBER,
@@ -4127,6 +4131,8 @@
 		<result  property="ylz" column="YLZ_NUM" javaType="string"/>
 		<result  property="cbl" column="COMPLETE_BI" javaType="string"/>
 		<result  property="abl" column="AUDIT_BI" javaType="string"/>
+		<result property="cretTypeName" column="CRET_TYPE_NAME" javaType="string" />
+		<result property="idNo" column="ID_NO" javaType="string" />
 	</resultMap>
 	<select id="workList"  resultMap="workListMap">
 		    SELECT A.DOCTOR_FLOW,

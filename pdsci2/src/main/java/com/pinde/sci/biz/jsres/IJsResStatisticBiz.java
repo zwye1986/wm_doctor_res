@@ -196,4 +196,10 @@ public interface IJsResStatisticBiz {
     List<Map<String, Object>> searchTeacherUserList(Map<String, Object> param);
 
     List<Map<String, Object>> searchTeacherAuditList(Map<String, Object> param);
+
+    List<ResTeacherTraining> searchTeacherInfoByUserFlow(String recordFlow);
+
+    List<TeacherTrainingInfoVo> searchTeacherInfoByCondition(String doctorName, String deptFlow, String technicalPositionId, String teacherLevelId, String applicationAuditStatus, String orgFlow);
+
+    List<TeacherReportCountDto> countTeacherLevelByOrgFlow(String orgFlow);
 }

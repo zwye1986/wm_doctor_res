@@ -1,8 +1,6 @@
 package com.pinde.sci.biz.jsres;
 
-import com.pinde.core.model.JsresGraduationApply;
-import com.pinde.core.model.JsresGraduationApplyLog;
-import com.pinde.core.model.JsresGraduationInfo;
+import com.pinde.core.model.*;
 import org.dom4j.DocumentException;
 
 import javax.servlet.http.HttpServletResponse;
@@ -35,9 +33,9 @@ public interface IJsResGraduationApplyBiz {
 
     List<Map<String,Object>> chargeQueryListForExport(Map<String, Object> param);
 
-    void addOldInfoByApplyYear(String applyYear, String recruitFlow, String doctorFlow, String applyFlow, Map<String, String> practicingMap) throws DocumentException;
+    void addOldInfoByApplyYear(String applyYear, String recruitFlow, String doctorFlow, String applyFlow, Map<String, String> practicingMap, String rotationFlow, String reSubmitFlag) throws DocumentException;
 
-    int editGraduationApply2(JsresGraduationApply jsresGraduationApply, String recruitFlow, String changeSpeId, String doctorFlow, String applyYear, Map<String, String> practicingMap) throws DocumentException;
+    int editGraduationApply2(JsresGraduationApply jsresGraduationApply, String recruitFlow, String changeSpeId, String doctorFlow, String applyYear, Map<String, String> practicingMap, String rotationFlow, String reSubmitFlag) throws DocumentException;
 
     List<Map<String,Object>> chargeQueryApplyList(Map<String, Object> param);
 
@@ -59,5 +57,15 @@ public interface IJsResGraduationApplyBiz {
     List<Map<String,Object>> chargeQueryListForExport2(Map<String, Object> param);
 
     List<Map<String,Object>> chargeQueryApplyList2(Map<String, Object> param);
+
+    /**
+     * @Department：研发部
+     * @Description 查询异常报考记录学员信息
+     * @Author fengxf
+     * @Date 2025/2/17
+     */
+    GraduationDoctorTemp getGraduationDoctorTemp(String doctorFlow);
+
+    Map<String, List<ResRec>> getNonComplianceRecords(List<String> doctorFlow);
 
 }

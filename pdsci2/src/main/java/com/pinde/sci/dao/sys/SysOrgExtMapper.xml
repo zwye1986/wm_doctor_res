@@ -655,65 +655,62 @@
 	</select>
 	<select id="searchOrgListByParamNew" parameterType="com.pinde.core.model.SysOrgExt" resultMap="orgMap">
 		SELECT
-		T1.ORG_CITY_NAME,
-		T1.ORG_CODE,
-		T1.ORG_FLOW,
-		T1.ORG_NAME,
-		B1.BASE_GRADE_NAME AS ORG_BASE_GRADE_NAME,
-		T1.JOINT_ORG_FLOW,
-		T1.JOINT_ORG_NAME,
-		B2.BASE_GRADE_NAME AS JOINT_BASE_GRADE_NAME
+			T1.ORG_CITY_NAME,
+			T1.ORG_CODE,
+			T1.ORG_FLOW,
+			T1.ORG_NAME,
+			B1.BASE_GRADE_NAME AS ORG_BASE_GRADE_NAME,
+			T1.JOINT_ORG_FLOW,
+			T1.JOINT_ORG_NAME,
+			B2.BASE_GRADE_NAME AS JOINT_BASE_GRADE_NAME
 		FROM
 		(
-		SELECT
-		O.ORG_CITY_NAME,
-		O.ORG_CODE,
-		O.ORG_FLOW,O.ordinal,
-		O.ORG_NAME,
-		J.JOINT_ORG_FLOW,
-		J.JOINT_ORG_NAME
-		FROM
-		SYS_ORG O
-		LEFT JOIN RES_JOINT_ORG J ON J.ORG_FLOW = O.ORG_FLOW
-		AND J.RECORD_STATUS = 'Y'
-		AND J.SESSION_NUMBER = #{sessionYear,jdbcType=VARCHAR}
-		WHERE
-		O.RECORD_STATUS = 'Y'
-		AND O.ORG_PROV_ID = #{orgProvId,jdbcType=VARCHAR}
-		AND O.ORG_TYPE_ID = #{orgTypeId,jdbcType=VARCHAR}
-		AND O.ORG_LEVEL_ID = #{orgLevelId,jdbcType=VARCHAR}
-		<if test="orgCityId != null and orgCityId != ''">
-			AND O.ORG_CITY_ID = #{orgCityId}
-		</if>
-		<if test="orgName != null and orgName != ''">
-			AND O.ORG_NAME LIKE CONCAT(CONCAT('%', #{orgName,jdbcType=VARCHAR}),'%')
-		</if>
-		<if test="jointOrgName != null and jointOrgName != ''">
-			AND J.JOINT_ORG_NAME LIKE CONCAT(CONCAT('%', #{jointOrgName,jdbcType=VARCHAR}),'%')
-		</if>
+			SELECT
+				O.ORG_CITY_NAME,
+				O.ORG_CODE,
+				O.ORG_FLOW,
+				O.ordinal,
+				O.ORG_NAME,
+				J.JOINT_ORG_FLOW,
+				J.JOINT_ORG_NAME
+			FROM
+				SYS_ORG O
+			LEFT JOIN RES_JOINT_ORG J ON J.ORG_FLOW = O.ORG_FLOW
+				AND J.RECORD_STATUS = 'Y'
+			WHERE
+				O.RECORD_STATUS = 'Y'
+			AND O.ORG_PROV_ID = #{orgProvId,jdbcType=VARCHAR}
+			AND O.ORG_TYPE_ID = #{orgTypeId,jdbcType=VARCHAR}
+			AND O.ORG_LEVEL_ID = #{orgLevelId,jdbcType=VARCHAR}
+			<if test="orgCityId != null and orgCityId != ''">
+				AND O.ORG_CITY_ID = #{orgCityId}
+			</if>
+			<if test="orgName != null and orgName != ''">
+				AND O.ORG_NAME LIKE CONCAT(CONCAT('%', #{orgName,jdbcType=VARCHAR}),'%')
+			</if>
+			<if test="jointOrgName != null and jointOrgName != ''">
+				AND J.JOINT_ORG_NAME LIKE CONCAT(CONCAT('%', #{jointOrgName,jdbcType=VARCHAR}),'%')
+			</if>
 		) T1
 		LEFT JOIN RES_BASE B1 ON T1.ORG_FLOW = B1.ORG_FLOW
 		AND B1.RECORD_STATUS = 'Y'
-		AND B1.SESSION_NUMBER is null
 		LEFT JOIN RES_BASE B2 ON T1.JOINT_ORG_FLOW = B2.ORG_FLOW
 		AND B2.RECORD_STATUS = 'Y'
-		AND B2.SESSION_NUMBER is null
 		ORDER BY
-		T1.ORG_CODE ASC,
-		T1.ordinal,
-		T1.JOINT_ORG_FLOW
+			T1.ORG_CODE ASC,
+			T1.ordinal,
+			T1.JOINT_ORG_FLOW
 	</select>
 	<select id="getJointOrgCountByParamNew" parameterType="com.pinde.core.model.SysOrgExt" resultType="map">
 		SELECT
-		O.ORG_FLOW,
-		COUNT(J.JOINT_ORG_FLOW) AS JOINT_COUNT
+			O.ORG_FLOW,
+			COUNT(J.JOINT_ORG_FLOW) AS JOINT_COUNT
 		FROM
-		SYS_ORG O
+			SYS_ORG O
 		LEFT JOIN RES_JOINT_ORG J ON J.ORG_FLOW = O.ORG_FLOW
 		AND J.RECORD_STATUS = 'Y'
-		AND J.SESSION_NUMBER = #{sessionYear,jdbcType=VARCHAR}
 		WHERE
-		O.RECORD_STATUS = 'Y'
+			O.RECORD_STATUS = 'Y'
 		AND O.ORG_PROV_ID = #{orgProvId,jdbcType=VARCHAR}
 		AND O.ORG_TYPE_ID = #{orgTypeId,jdbcType=VARCHAR}
 		AND O.ORG_LEVEL_ID = #{orgLevelId,jdbcType=VARCHAR}
@@ -727,9 +724,9 @@
 			AND J.JOINT_ORG_NAME LIKE CONCAT(CONCAT('%', #{jointOrgName,jdbcType=VARCHAR}),'%')
 		</if>
 		GROUP BY
-		O.ORG_FLOW,O.ORG_CODE,O.ordinal
+			O.ORG_FLOW,O.ORG_CODE,O.ordinal
 		ORDER BY
-		O.ORG_CODE ASC,
-		O.ordinal
+			O.ORG_CODE ASC,
+			O.ordinal
 	</select>
 </mapper>

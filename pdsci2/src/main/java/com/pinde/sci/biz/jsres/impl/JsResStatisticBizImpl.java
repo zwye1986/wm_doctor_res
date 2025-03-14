@@ -26,6 +26,7 @@ import com.pinde.sci.common.util.IExcelUtil;
 import com.pinde.sci.dao.jsres.ChartExtMapper;
 import com.pinde.sci.dao.jsres.JsResDoctorRecruitExtMapper;
 import com.pinde.sci.dao.res.ResDoctorExtMapper;
+import com.pinde.sci.dao.sys.SysUserExtMapper;
 import com.pinde.core.model.JsDoctorInfoExt;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.poi.hssf.usermodel.*;
@@ -78,6 +79,8 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 	private ResTeacherTrainingMapper teacherTrainingMapper;
 	@Autowired
 	private SysUserMapper sysUserMapper;
+	@Autowired
+	private SysUserExtMapper userExtMapper;
 
     private static final Logger logger = LoggerFactory.getLogger(JsResStatisticBizImpl.class);
 
@@ -1224,5 +1227,24 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 	@Override
 	public List<Map<String, Object>> searchTeacherAuditList(Map<String, Object> param) {
 		return recruitExtMapper.searchTeacherAuditList(param);
+	}
+
+	@Override
+	public List<ResTeacherTraining> searchTeacherInfoByUserFlow(String recordFlow) {
+		ResTeacherTrainingExample example=new ResTeacherTrainingExample();
+		example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
+				.andDoctorNameEqualTo(recordFlow);
+		example.setOrderByClause("CREATE_TIME DESC");
+		return teacherTrainingMapper.selectByExample(example);
+	}
+
+	@Override
+	public List<TeacherTrainingInfoVo> searchTeacherInfoByCondition(String doctorName, String deptFlow, String technicalPositionId, String teacherLevelId, String applicationAuditStatus, String orgFlow) {
+		return userExtMapper.searchTeacherInfoByCondition(doctorName, deptFlow, technicalPositionId, teacherLevelId, applicationAuditStatus, orgFlow);
+	}
+
+	@Override
+	public List<TeacherReportCountDto> countTeacherLevelByOrgFlow(String orgFlow) {
+		return userExtMapper.countTeacherLevelByOrgFlow(orgFlow);
 	}
 }

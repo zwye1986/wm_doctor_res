@@ -21,6 +21,7 @@
 		font: 14px 'Microsoft Yahei';
 		font-weight: 400;
 	}
+
 </style>
 <script type="text/javascript">
 
@@ -53,7 +54,7 @@
 			if("${GlobalConstant.SAVE_SUCCESSED}" == resp){
 				setTimeout(function(){
 					$("#submitBtn").show();
-					loadInfo('${GlobalConstant.DEPARTMENT_HEAD}','${deptFlow}');
+					loadInfo('${GlobalConstant.DEPARTMENT_HEAD}','${speFlow}');
 				},1000);
 			}
 		}, null, true);
@@ -71,7 +72,7 @@
 				<h4><span class="red">*</span>专业基地负责人情况</h4>
 				<table border="0" cellspacing="0" cellpadding="0" class="base_info">
 					<colgroup>
-						<col width="25%"/>
+						<col width="27%"/>
 						<col width="12%"/>
 						<col width="8%"/>
 						<col width="12%"/>
@@ -97,15 +98,47 @@
 							<th><span style="color: red">*</span>&nbsp;年龄：</th>
 							<td><input type="text"  class='input validate[required,custom[integer],min[0]]' style="width:100px;" name="departmentHeadForm.userAge"  value="${departmentHeadForm.userAge}"/></td>
 							<th><span style="color: red">*</span>&nbsp;学历：</th>
-							<td><input type="text"  class="input validate[required]" style="width:100px;" name="departmentHeadForm.xl"  value="${departmentHeadForm.xl}"/></td>
+							<td>
+								<select name="departmentHeadForm.xl" class="select validate[required]" style="width:109px;">
+									<option value="">请选择</option>
+									<c:forEach items="${dictTypeEnumUserEducationList}" var="education">
+										<option value="${education.dictName}"
+												<c:if test='${departmentHeadForm.xl == education.dictName}'>selected="selected"</c:if>>${education.dictName}</option>
+									</c:forEach>
+								</select>
+							</td>
 						</tr>
 						<tr>
 							<th><span style="color: red">*</span>&nbsp;学位：</th>
-							<td><input type="text" class="input validate[required]"  name="departmentHeadForm.xw" style="width:100px;" value="${departmentHeadForm.xw}"/></td>
+							<td>
+								<select name="departmentHeadForm.xw" class="select validate[required]" style="width:109px;">
+									<option value="">请选择</option>
+									<c:forEach items="${dictTypeEnumUserDegreeList}" var="degree">
+										<option value="${degree.dictName}"
+												<c:if test='${departmentHeadForm.xw == degree.dictName}'>selected="selected"</c:if>>${degree.dictName}</option>
+									</c:forEach>
+								</select>
+							</td>
 							<th><span style="color: red">*</span>&nbsp;职称：</th>
-							<td><input type="text" class="input validate[required]" style="width:100px;" name="departmentHeadForm.zc"  value="${departmentHeadForm.zc}"/></td>
+							<td>
+								<select name="departmentHeadForm.zc" class="select validate[required]" style="width:109px;">
+									<option value="">请选择</option>
+									<c:forEach items="${dictTypeEnumUserTitleList}" var="title">
+										<option value="${title.dictName}"
+												<c:if test='${departmentHeadForm.zc == title.dictName}'>selected="selected"</c:if>>${title.dictName}</option>
+									</c:forEach>
+								</select>
+							</td>
 							<th><span style="color: red">*</span>&nbsp;职务：</th>
-							<td colspan="3"><input type="text" class="input validate[required]" style="width:100px;" name="departmentHeadForm.zw"  value="${departmentHeadForm.zw}"/></td>
+							<td colspan="3">
+								<select name="departmentHeadForm.zw" class="select validate[required]" style="width:109px;">
+									<option value="">请选择</option>
+									<c:forEach items="${dictTypeEnumUserPostList}" var="post">
+										<option value="${post.dictName}"
+												<c:if test='${departmentHeadForm.zw == post.dictName}'>selected="selected"</c:if>>${post.dictName}</option>
+									</c:forEach>
+								</select>
+							</td>
 						</tr>
 						<tr>
 							<th><span class="red">*</span>导师情况：</th>
@@ -137,30 +170,30 @@
 							<th><span class="red">*</span>工作简历：</th>
 							<td colspan="7"><textarea name="departmentHeadForm.gzjl" class="validate[required]">${departmentHeadForm.gzjl}</textarea></td>
 						</tr>
-						<th colspan="8" style="text-align: left;padding-left: 5px;">
-							获得的省、部级以上教学成果奖名称、级别及获奖年度（近3年）
-						</th>
-						<tr>
-							<td colspan="8" style="padding-left: 0px;"><textarea name="departmentHeadForm.jx" >${departmentHeadForm.jx}</textarea></td>
-						</tr>
-						<th colspan="8" style="text-align: left;padding-left: 5px;">
-							获得的省、部级以上科研成果奖名称、级别及获奖年度（近3年）
-						</th>
-						<tr>
-							<td colspan="8" style="padding-left: 0px;"><textarea name="departmentHeadForm.ky" >${departmentHeadForm.ky}</textarea></td>
-						</tr>
-						<th colspan="8" style="text-align: left;padding-left: 5px;">
-							承担的省、部级以上本专业的临床教学、科研项目（近3年）
-						</th>
-						<tr>
-							<td colspan="8" style="padding-left: 0px;"><textarea name="departmentHeadForm.lc" >${departmentHeadForm.lc}</textarea></td>
-						</tr>
-						<th colspan="8" style="text-align: left;padding-left: 5px;">
-							参加住院医师规范化培训相关工作情况（包括标准制定、基地评估与考核等）
-						</th>
-						<tr>
-							<td colspan="8" style="padding-left: 0px;"><textarea name="departmentHeadForm.px" >${departmentHeadForm.px}</textarea></td>
-						</tr>
+<%--						<th colspan="8" style="text-align: left;padding-left: 5px;">--%>
+<%--							获得的省、部级以上教学成果奖名称、级别及获奖年度（近3年）--%>
+<%--						</th>--%>
+<%--						<tr>--%>
+<%--							<td colspan="8" style="padding-left: 0px;"><textarea name="departmentHeadForm.jx" >${departmentHeadForm.jx}</textarea></td>--%>
+<%--						</tr>--%>
+<%--						<th colspan="8" style="text-align: left;padding-left: 5px;">--%>
+<%--							获得的省、部级以上科研成果奖名称、级别及获奖年度（近3年）--%>
+<%--						</th>--%>
+<%--						<tr>--%>
+<%--							<td colspan="8" style="padding-left: 0px;"><textarea name="departmentHeadForm.ky" >${departmentHeadForm.ky}</textarea></td>--%>
+<%--						</tr>--%>
+<%--						<th colspan="8" style="text-align: left;padding-left: 5px;">--%>
+<%--							承担的省、部级以上本专业的临床教学、科研项目（近3年）--%>
+<%--						</th>--%>
+<%--						<tr>--%>
+<%--							<td colspan="8" style="padding-left: 0px;"><textarea name="departmentHeadForm.lc" >${departmentHeadForm.lc}</textarea></td>--%>
+<%--						</tr>--%>
+<%--						<th colspan="8" style="text-align: left;padding-left: 5px;">--%>
+<%--							参加住院医师规范化培训相关工作情况（包括标准制定、基地评估与考核等）--%>
+<%--						</th>--%>
+<%--						<tr>--%>
+<%--							<td colspan="8" style="padding-left: 0px;"><textarea name="departmentHeadForm.px" >${departmentHeadForm.px}</textarea></td>--%>
+<%--						</tr>--%>
 					</tbody>
 				</table>
 			</div>

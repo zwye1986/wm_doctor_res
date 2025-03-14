@@ -1,6 +1,8 @@
 package com.pinde.sci.ctrl.jsres;
 
 
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.sci.dao.GraduationDoctorTempMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
@@ -24,6 +26,7 @@ import com.pinde.core.model.ResDoctor;
 import com.pinde.core.model.ResJointOrg;
 import com.pinde.core.model.ResScore;
 import com.pinde.core.model.ResTestConfig;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
@@ -36,6 +39,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -78,6 +82,8 @@ public class JsResDoctorExamSignUpController extends GeneralController {
     private IResScoreBiz resScoreBiz;
     @Autowired
     private IJsResGraduationApplyBiz jsresGraduationApplyBiz;
+    @Autowired
+    private GraduationDoctorTempMapper graduationDoctorTempMapper;
     private static Logger logger = LoggerFactory.getLogger(JsResDoctorExamSignUpController.class);
 
 
@@ -87,6 +93,7 @@ public class JsResDoctorExamSignUpController extends GeneralController {
         model.addAttribute("user", user);
         ResDoctor doctor = resDoctorBiz.readDoctor(user.getUserFlow());
         model.addAttribute("doctor", doctor);
+        ResDoctorRecruit resDoctorRecruit = null;
         String currYear = DateUtil.getYear();
         model.addAttribute("currYear", currYear);
         String currDateTime = DateUtil.getCurrDateTime2();
@@ -108,85 +115,138 @@ public class JsResDoctorExamSignUpController extends GeneralController {
         List<JsresExamSignup> signups = doctorRecruitBiz.readDoctorExanSignUps(user.getUserFlow());
         model.addAttribute("signups", signups);
         //是否有补考报名的资格（在系统中有资格审核记录且学员为非合格人员才有资格）
-        String isAllowApply = com.pinde.core.common.GlobalConstant.FLAG_Y;
-        // 已结业学员 不允许补考报名 禅道bug：2648
-        if (doctor != null && "21".equals(doctor.getDoctorStatusId())) {
-            isAllowApply = com.pinde.core.common.GlobalConstant.FLAG_N;
+        String isAllowApply = GlobalConstant.FLAG_N;
+//        // 已结业学员 不允许补考报名 禅道bug：2648
+//        if (doctor != null && "21".equals(doctor.getDoctorStatusId())) {
+//            isAllowApply = com.pinde.core.common.GlobalConstant.FLAG_N;
+//        }
+//        // isAllowApply为N 不能参加补考，无需在做结业申请判断
+//        if (!com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(isAllowApply)) {
+//            com.pinde.core.model.ResDoctorRecruit recruit = new ResDoctorRecruit();
+//            recruit.setDoctorFlow(doctor.getDoctorFlow());
+//            recruit.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+//            List<com.pinde.core.model.ResDoctorRecruit> recruitList = jsResDoctorRecruitBiz.searchResDoctorRecruitList(recruit, "CREATE_TIME DESC");
+//            //在系统中是否有资格审核记录
+//            if (recruitList != null && recruitList.size() > 0) {
+//                ResDoctorRecruit resDoctorRecruit = recruitList.get(0);
+//                if (resDoctorRecruit != null) {
+//                    JsresGraduationApply apply = jsresGraduationApplyBiz.searchByRecruitFlow(resDoctorRecruit.getRecruitFlow(), "");
+//                    if (apply == null) {
+//                        // 2019级及以前助理全科学员走补考
+//                        if("2019".compareTo(doctor.getSessionNumber()) >= 0 && doctor.getTrainingSpeId().equals("50")){
+//                            isAllowApply = com.pinde.core.common.GlobalConstant.FLAG_Y;
+//                        }else{
+//                            isAllowApply = com.pinde.core.common.GlobalConstant.FLAG_N;
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//        // isAllowApply为N 不能参加补考，无需在做成绩判断
+//        if (!com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(isAllowApply)) {
+//            String isSkillQualifed = com.pinde.core.common.GlobalConstant.FLAG_N;
+//            String isTheoryQualifed = com.pinde.core.common.GlobalConstant.FLAG_N;
+//            String isSkill = com.pinde.core.common.GlobalConstant.FLAG_Y;
+//            String isTheory = com.pinde.core.common.GlobalConstant.FLAG_Y;
+//            String validYear = String.valueOf(Integer.valueOf(DateUtil.getYear()) - 3);
+//            List<ResScore> resScoreList = doctorRecruitBiz.selectAllScore(user.getUserFlow(), null);
+//            if (resScoreList != null && resScoreList.size() > 0) {
+//                //3年内的技能成绩集合
+//                List<ResScore> skillList = resScoreList.stream().filter(resScore -> "SkillScore".equals(resScore.getScoreTypeId()) && StringUtil.isNotBlank(resScore.getScorePhaseId()) && validYear.compareTo(resScore.getScorePhaseId()) < 0).collect(Collectors.toList());
+//                //3年内的理论成绩集合
+//                List<ResScore> theoryList = resScoreList.stream().filter(resScore -> "TheoryScore".equals(resScore.getScoreTypeId()) && StringUtil.isNotBlank(resScore.getScorePhaseId()) && validYear.compareTo(resScore.getScorePhaseId()) < 0).collect(Collectors.toList());
+//                if (skillList.size() > 0) {
+//                    for (ResScore resScore : skillList) {
+//                        if ("1".equals(String.valueOf(resScore.getSkillScore()))) {
+//                            //3年内的技能成绩有合格的
+//                            isSkillQualifed = com.pinde.core.common.GlobalConstant.FLAG_Y;
+//                            break;
+//                        }
+//                    }
+//                }else{
+//                    isSkill = com.pinde.core.common.GlobalConstant.FLAG_N;
+//                }
+//                // 如果技能考试没有合格记录 无需在判断理论成绩
+//                if (theoryList.size() > 0) {
+//                    if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(isSkillQualifed)) {
+//                        for (ResScore resScore : theoryList) {
+//                            if ("1".equals(String.valueOf(resScore.getTheoryScore()))) {
+//                                //3年内的理论成绩有合格的
+//                                isTheoryQualifed = com.pinde.core.common.GlobalConstant.FLAG_Y;
+//                                break;
+//                            }
+//                        }
+//                    }
+//                }else{
+//                    isTheory = com.pinde.core.common.GlobalConstant.FLAG_N;
+//                }
+//            }
+//            // 需求变更2018（不含）届以前学员 不做该判断  未参加过考核也可以补考
+//            if ("2018".compareTo(doctor.getSessionNumber()) <= 0 && com.pinde.core.common.GlobalConstant.FLAG_N.equals(isSkill) && com.pinde.core.common.GlobalConstant.FLAG_N.equals(isTheory)) {
+//                // 2019/2018/2017级助理全科全走补考报名
+//                if("2019".compareTo(doctor.getSessionNumber()) >= 0 && doctor.getTrainingSpeId().equals("50")){
+//                    isAllowApply = com.pinde.core.common.GlobalConstant.FLAG_Y;
+//                }else{
+//                    //从未参加过考核
+//                    isAllowApply = com.pinde.core.common.GlobalConstant.FLAG_N;
+//                }
+//            }
+//            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isSkillQualifed) && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isTheoryQualifed)) {
+//                //3年内理论成绩和技能成绩都合格
+//                isAllowApply = com.pinde.core.common.GlobalConstant.FLAG_N;
+//            }
+//        }
+        ResDoctorRecruit recruit = new ResDoctorRecruit();
+        recruit.setDoctorFlow(doctor.getDoctorFlow());
+        recruit.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        List<ResDoctorRecruit> recruitList = jsResDoctorRecruitBiz.searchResDoctorRecruitList(recruit, "CREATE_TIME DESC");
+        if (recruitList != null && recruitList.size() > 0) {
+            resDoctorRecruit = recruitList.get(0);
         }
-        // isAllowApply为N 不能参加补考，无需在做结业申请判断
-        if (!com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(isAllowApply)) {
-            com.pinde.core.model.ResDoctorRecruit recruit = new ResDoctorRecruit();
-            recruit.setDoctorFlow(doctor.getDoctorFlow());
-            recruit.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
-            List<com.pinde.core.model.ResDoctorRecruit> recruitList = jsResDoctorRecruitBiz.searchResDoctorRecruitList(recruit, "CREATE_TIME DESC");
-            //在系统中是否有资格审核记录
-            if (recruitList != null && recruitList.size() > 0) {
-                ResDoctorRecruit resDoctorRecruit = recruitList.get(0);
-                if (resDoctorRecruit != null) {
-                    JsresGraduationApply apply = jsresGraduationApplyBiz.searchByRecruitFlow(resDoctorRecruit.getRecruitFlow(), "");
-                    if (apply == null) {
-                        // 2019级及以前助理全科学员走补考
-                        if("2019".compareTo(doctor.getSessionNumber()) >= 0 && doctor.getTrainingSpeId().equals("50")){
-                            isAllowApply = com.pinde.core.common.GlobalConstant.FLAG_Y;
-                        }else{
-                            isAllowApply = com.pinde.core.common.GlobalConstant.FLAG_N;
-                        }
-                    }
-                }
+        boolean inStudy = true;
+        // 住院医师，在培并且年级在当前年-6跟-1之间
+        if (resDoctorRecruit == null || !"20".equals(resDoctorRecruit.getDoctorStatusId()) || !(resDoctorRecruit.getSessionNumber().compareTo(String.valueOf(Integer.parseInt(currYear) - 6)) >= 0 && resDoctorRecruit.getSessionNumber().compareTo(String.valueOf(Integer.parseInt(currYear) - 1)) <= 0)) {
+            inStudy = false;
+        }
+        // 助理全科，在培并且年级在当前年-5跟-2之间
+        boolean assiInStudy = true;
+        if (resDoctorRecruit == null || !"20".equals(resDoctorRecruit.getDoctorStatusId()) || !(resDoctorRecruit.getSessionNumber().compareTo(String.valueOf(Integer.parseInt(currYear) - 5)) >= 0 && resDoctorRecruit.getSessionNumber().compareTo(String.valueOf(Integer.parseInt(currYear) - 2)) <= 0)) {
+            assiInStudy = false;
+        }
+        // 学员本轮规培内，当前年-首次有成绩（即非“缺考”）的年份，小于3年
+        boolean hasFirstExamRecord = true;
+        String sessionNumber = resDoctorRecruit.getSessionNumber();
+        List<ResScore> resScoreList = doctorRecruitBiz.selectAllScore(user.getUserFlow(), null);
+        List<ResScore> scoreList = resScoreList.stream().filter(e -> ("SkillScore".equals(e.getScoreTypeId()) || "TheoryScore".equals(e.getScoreTypeId())) && ((e.getTheoryScore() != null && !"2".equals(e.getTheoryScore().toString())) || (e.getSkillScore() != null && !"2".equals(e.getSkillScore().toString()))) && (e.getSessionNumber() != null && sessionNumber.equals(e.getSessionNumber()))).collect(Collectors.toList());
+        for (ResScore resScore : scoreList) {
+            if (resScore.getScorePhaseId().compareTo(String.valueOf(Integer.parseInt(currYear) - 3)) <= 0) {
+                hasFirstExamRecord = false;
+                break;
             }
         }
-        // isAllowApply为N 不能参加补考，无需在做成绩判断
-        if (!com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(isAllowApply)) {
-            String isSkillQualifed = com.pinde.core.common.GlobalConstant.FLAG_N;
-            String isTheoryQualifed = com.pinde.core.common.GlobalConstant.FLAG_N;
-            String isSkill = com.pinde.core.common.GlobalConstant.FLAG_Y;
-            String isTheory = com.pinde.core.common.GlobalConstant.FLAG_Y;
-            String validYear = String.valueOf(Integer.valueOf(DateUtil.getYear()) - 3);
-            List<ResScore> resScoreList = doctorRecruitBiz.selectAllScore(user.getUserFlow(), null);
-            if (resScoreList != null && resScoreList.size() > 0) {
-                //3年内的技能成绩集合
-                List<ResScore> skillList = resScoreList.stream().filter(resScore -> "SkillScore".equals(resScore.getScoreTypeId()) && StringUtil.isNotBlank(resScore.getScorePhaseId()) && validYear.compareTo(resScore.getScorePhaseId()) < 0).collect(Collectors.toList());
-                //3年内的理论成绩集合
-                List<ResScore> theoryList = resScoreList.stream().filter(resScore -> "TheoryScore".equals(resScore.getScoreTypeId()) && StringUtil.isNotBlank(resScore.getScorePhaseId()) && validYear.compareTo(resScore.getScorePhaseId()) < 0).collect(Collectors.toList());
-                if (skillList.size() > 0) {
-                    for (ResScore resScore : skillList) {
-                        if ("1".equals(String.valueOf(resScore.getSkillScore()))) {
-                            //3年内的技能成绩有合格的
-                            isSkillQualifed = com.pinde.core.common.GlobalConstant.FLAG_Y;
-                            break;
+        // 特殊表中有确认补考记录优先级最高
+        GraduationDoctorTempExample graduationDoctorTempExample = new GraduationDoctorTempExample();
+        graduationDoctorTempExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andDoctorFlowEqualTo(user.getUserFlow()).andExamTypeEqualTo("reExam");
+        List<GraduationDoctorTemp> tempList = graduationDoctorTempMapper.selectByExample(graduationDoctorTempExample);
+        if (CollectionUtils.isNotEmpty(tempList) && resDoctorRecruit != null && "20".equals(resDoctorRecruit.getDoctorStatusId()) && inTime) {
+            isAllowApply = GlobalConstant.FLAG_Y;
+            model.addAttribute("isTempUser", GlobalConstant.FLAG_Y);
+        } else {
+            if (resDoctorRecruit != null && StringUtil.isNotBlank(resDoctorRecruit.getCatSpeId())) {
+                switch (resDoctorRecruit.getCatSpeId()){
+                    case "DoctorTrainingSpe" :
+                        if (inTime && inStudy && hasFirstExamRecord) {
+                            isAllowApply = GlobalConstant.FLAG_Y;
                         }
-                    }
-                }else{
-                    isSkill = com.pinde.core.common.GlobalConstant.FLAG_N;
-                }
-                // 如果技能考试没有合格记录 无需在判断理论成绩
-                if (theoryList.size() > 0) {
-                    if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(isSkillQualifed)) {
-                        for (ResScore resScore : theoryList) {
-                            if ("1".equals(String.valueOf(resScore.getTheoryScore()))) {
-                                //3年内的理论成绩有合格的
-                                isTheoryQualifed = com.pinde.core.common.GlobalConstant.FLAG_Y;
-                                break;
-                            }
+                        break;
+                    case "AssiGeneral" :
+                        if (inTime && assiInStudy && hasFirstExamRecord) {
+                            isAllowApply = GlobalConstant.FLAG_Y;
                         }
-                    }
-                }else{
-                    isTheory = com.pinde.core.common.GlobalConstant.FLAG_N;
+                        break;
+                    default:
+                        break;
                 }
-            }
-            // 需求变更2018（不含）届以前学员 不做该判断  未参加过考核也可以补考
-            if ("2018".compareTo(doctor.getSessionNumber()) <= 0 && com.pinde.core.common.GlobalConstant.FLAG_N.equals(isSkill) && com.pinde.core.common.GlobalConstant.FLAG_N.equals(isTheory)) {
-                // 2019/2018/2017级助理全科全走补考报名
-                if("2019".compareTo(doctor.getSessionNumber()) >= 0 && doctor.getTrainingSpeId().equals("50")){
-                    isAllowApply = com.pinde.core.common.GlobalConstant.FLAG_Y;
-                }else{
-                    //从未参加过考核
-                    isAllowApply = com.pinde.core.common.GlobalConstant.FLAG_N;
-                }
-            }
-            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isSkillQualifed) && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isTheoryQualifed)) {
-                //3年内理论成绩和技能成绩都合格
-                isAllowApply = com.pinde.core.common.GlobalConstant.FLAG_N;
             }
         }
         model.addAttribute("isAllowApply", isAllowApply);
@@ -260,6 +320,14 @@ public class JsResDoctorExamSignUpController extends GeneralController {
             model.addAttribute("scorelist", scorelist);
             ResDoctor doctor = resDoctorBiz.readDoctor(signup.getDoctorFlow());
             model.addAttribute("doctor", doctor);
+            // 是否在异常记录表中
+            GraduationDoctorTemp graduationDoctorTemp = jsresGraduationApplyBiz.getGraduationDoctorTemp(signup.getDoctorFlow());
+            // 默认不存在异常记录表
+            String tempDoctorFlag = GlobalConstant.FLAG_N;
+            if(graduationDoctorTemp != null){
+                tempDoctorFlag = GlobalConstant.FLAG_Y;
+            }
+            model.addAttribute("tempDoctorFlag", tempDoctorFlag);
         }
         List<JsresExamSignupLog> logs = doctorRecruitBiz.getAuditLogsBySignupFlow(signupFlow);
         model.addAttribute("logs", logs);
@@ -613,7 +681,7 @@ public class JsResDoctorExamSignUpController extends GeneralController {
     public String signList(Model model, String roleFlag,String typeId, Integer currentPage , HttpServletRequest request,
                            String signupYear, String orgFlow, String trainingTypeId,String trainingYears, String trainingSpeId, String datas[],
                            String sessionNumber,  String userName, String idNo, String auditStatusId, String cityId,String signUpTypeId,
-                           String testId,String jointOrgFlag,String tabTag, String joinOrgFlow,String isPostpone
+                           String testId,String jointOrgFlag,String tabTag, String joinOrgFlow,String isPostpone, String tempDoctorFlag
     ){
         SysUser currentUser = GlobalContext.getCurrentUser();
         //查询条件
@@ -642,18 +710,10 @@ public class JsResDoctorExamSignUpController extends GeneralController {
         } else if (com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
             SysUser sysuser = GlobalContext.getCurrentUser();
             SysOrg org = orgBiz.readSysOrg(sysuser.getOrgFlow());
-//            model.addAttribute("org", org);
             SysOrg sysorg = new SysOrg();
             sysorg.setOrgProvId(org.getOrgProvId());
             sysorg.setOrgCityId(org.getOrgCityId());
             param.put("org",sysorg);
-//            sysorg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
-//            List<SysOrg> orgs = orgBiz.searchOrg(sysorg);
-//            if (orgs != null) {
-//                for (SysOrg sysOrg : orgs) {
-//                    orgFlowList.add(sysOrg.getOrgFlow());
-//                }
-//            }
             List<ResTestConfig> chargeEffective = resTestConfigBiz.findChargeEffective(DateUtil.getCurrDateTime2());
             if (chargeEffective.size() > 0) {
                 if (DateUtil.getYear().equals(signupYear)) {
@@ -670,13 +730,6 @@ public class JsResDoctorExamSignUpController extends GeneralController {
                 sysorg.setOrgCityId(cityId);
             }
             param.put("org",sysorg);
-//            sysorg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
-//            List<SysOrg> orgs = orgBiz.searchOrg(sysorg);
-//            if (orgs != null) {
-//                for (SysOrg sysOrg : orgs) {
-//                    orgFlowList.add(sysOrg.getOrgFlow());
-//                }
-//            }
             List<ResTestConfig> globalEffective = resTestConfigBiz.findGlobalEffective(DateUtil.getCurrDateTime2());
             if (globalEffective.size() > 0) {
                 if (DateUtil.getYear().equals(signupYear)) {
@@ -685,113 +738,6 @@ public class JsResDoctorExamSignUpController extends GeneralController {
             }
         }
 
-//        List<String> jointOrgFlowList = new ArrayList<>();
-        //新增需求，市局（只有市局要加协同基地限制，详见禅道BUG3391）
-//        if (getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
-//            if (StringUtil.isBlank(orgFlow)) {
-//                SysOrg sysOrg = orgBiz.readSysOrg(currentUser.getOrgFlow());
-//                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
-//                    jointOrgFlowList.add(currentUser.getOrgFlow());
-//                    SysOrg searchOrg = new SysOrg();
-//                    searchOrg.setOrgProvId(sysOrg.getOrgProvId());
-//                    if (getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
-//                        searchOrg.setOrgCityId(sysOrg.getOrgCityId());
-//                    }
-//                    List<SysOrg> exitOrgs = orgBiz.searchOrg(searchOrg);
-//                    for (SysOrg g : exitOrgs) {
-//                        List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(g.getOrgFlow());
-//                        if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
-//                            for (ResJointOrg jointOrg : resJointOrgList) {
-//                                if (getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
-//                                    cityId = orgBiz.readSysOrg(jointOrg.getJointOrgFlow()).getOrgCityId();
-//                                    if (StringUtil.isNotBlank(cityId) && cityId.equals(sysOrg.getOrgCityId())) {
-//                                        jointOrgFlowList.add(jointOrg.getJointOrgFlow());
-//                                    }
-//                                } else {
-//                                    jointOrgFlowList.add(jointOrg.getJointOrgFlow());
-//                                }
-//                            }
-//                        }
-//                        jointOrgFlowList.add(g.getOrgFlow());
-//                    }
-//                }
-//            } else {
-//                jointOrgFlowList.add(orgFlow);
-//                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
-//                    List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(orgFlow);
-//                    if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
-//                        for (ResJointOrg jointOrg : resJointOrgList) {
-//                            jointOrgFlowList.add(jointOrg.getJointOrgFlow());
-//                        }
-//                    }
-//                }
-//            }
-//            orgFlowList.addAll(jointOrgFlowList);
-//        }
-//        if (getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)
-//                || getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL)) {
-//            if(StringUtil.isNotBlank(orgFlow)){
-//                jointOrgFlowList.add(orgFlow);
-//                List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(orgFlow);
-//                if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
-//                    for (ResJointOrg jointOrg : resJointOrgList) {
-//                        jointOrgFlowList.add(jointOrg.getJointOrgFlow());
-//                    }
-//                }
-//            }else{
-//                SysOrg sysOrg = orgBiz.readSysOrg(currentUser.getOrgFlow());
-//                jointOrgFlowList.add(currentUser.getOrgFlow());
-//                SysOrg searchOrg = new SysOrg();
-//                searchOrg.setOrgProvId(sysOrg.getOrgProvId());
-//                searchOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
-//                if(getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
-//                    searchOrg.setOrgCityId(sysOrg.getOrgCityId());
-//                }
-//                List<SysOrg> exitOrgs = orgBiz.searchOrg(searchOrg);
-//                for (SysOrg g : exitOrgs) {
-//                    List<SysOrg> resJointOrgList = orgBiz.searchJointOrgsByOrg(g.getOrgFlow());
-//                    if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
-//                        if(roleFlag.equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)){
-//                            jointOrgFlowList.add(g.getOrgFlow());
-//                        }else{
-//                            if(StringUtil.isNotBlank(cityId)){
-//                                if(cityId.equals(g.getOrgCityId())) {
-//                                    jointOrgFlowList.add(g.getOrgFlow());
-//                                }
-//                            }else {
-//                                jointOrgFlowList.add(g.getOrgFlow());
-//                            }
-//                        }
-////                        jointOrgFlowList.add(g.getOrgFlow());
-//                        for (SysOrg so : resJointOrgList) {
-//                            if (getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
-//                                cityId = so.getOrgCityId();
-//                                if (StringUtil.isNotBlank(cityId) && cityId.equals(so.getOrgCityId())) {
-//                                    jointOrgFlowList.add(so.getOrgFlow());
-//                                }
-//                            } else {
-//                                if(StringUtil.isNotBlank(cityId)){
-//                                    if(cityId.equals(so.getOrgCityId())) {
-//                                        jointOrgFlowList.add(so.getOrgFlow());
-//                                    }
-//                                }else {
-//                                    jointOrgFlowList.add(so.getOrgFlow());
-//                                }
-//                            }
-//                        }
-//                    }else{
-//                        if(StringUtil.isNotBlank(cityId)){
-//                            if(cityId.equals(g.getOrgCityId())) {
-//                                jointOrgFlowList.add(g.getOrgFlow());
-//                            }
-//                        }else {
-//                            jointOrgFlowList.add(g.getOrgFlow());
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        orgFlowList.addAll(jointOrgFlowList);
         // bug 市局账号 地区数据权限限制有误，与省厅查询到一样数据
         param.put("orgFlowList",orgFlowList);//培训基地list
         List<String>docTypeList=new ArrayList<String>();//人员类型
@@ -817,6 +763,7 @@ public class JsResDoctorExamSignUpController extends GeneralController {
         param.put("tabTag",tabTag);
         param.put("jointOrgFlow",joinOrgFlow);
         param.put("isPostpone",isPostpone);
+        param.put("tempDoctorFlag", tempDoctorFlag);
         SysUser sysuser=GlobalContext.getCurrentUser();
         List<String> speIds=getSpeIds(sysuser);
         if(speIds!=null && speIds.size() > 0)
@@ -825,6 +772,11 @@ public class JsResDoctorExamSignUpController extends GeneralController {
         }
         PageHelper.startPage(currentPage,getPageSize(request));
         List<Map<String,Object>> list=doctorRecruitBiz.queryExamSignUpList(param);
+        Set<String> doctorFlowSet = list.stream().map(kv -> kv.get("doctorFlow").toString()).collect(Collectors.toSet());
+        Map<String,List<ResRec>> nonComplianceRecordsMap= new HashMap<String, List<ResRec>>();
+        Map<String, List<ResRec>> doctorFlowMap = jsresGraduationApplyBiz.getNonComplianceRecords(new ArrayList<>(doctorFlowSet));
+        nonComplianceRecordsMap.putAll(doctorFlowMap);
+
         Map<String,String> trainMap = new HashMap<>();
         if (list.size() > 0) {
             for (Map<String, Object> stringObjectMap : list) {
@@ -899,6 +851,7 @@ public class JsResDoctorExamSignUpController extends GeneralController {
         model.addAttribute("trainMap", trainMap);
         model.addAttribute("typeId", typeId);
         model.addAttribute("list", list);
+        model.addAttribute("nonComplianceRecordsMap", nonComplianceRecordsMap);
         model.addAttribute("f", f);
         model.addAttribute("roleFlag", roleFlag);
         if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {

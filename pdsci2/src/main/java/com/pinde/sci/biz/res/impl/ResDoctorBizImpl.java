@@ -2320,20 +2320,20 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 				return null;
 			}
 
-			if (StringUtil.isNotBlank(scoreYear)) {
-				JsresGraduationApplyExample applyExample = new JsresGraduationApplyExample();
-                applyExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andApplyYearEqualTo(scoreYear).andRecruitFlowEqualTo(resDoctorRecruits.get(0).getRecruitFlow()).andAuditStatusIdEqualTo("GlobalPassed");
-				List<JsresGraduationApply> applyList = applyMapper.selectByExample(applyExample);
-
-				JsresExamSignupExample signupExample = new JsresExamSignupExample();
-                signupExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andSignupYearEqualTo(scoreYear).andDoctorFlowEqualTo(sysUser.getUserFlow()).andAuditStatusIdEqualTo("GlobalPassed");
-				List<JsresExamSignup> signupList = signupMapper.selectByExample(signupExample);
-
-				if (CollectionUtils.isEmpty(applyList) && CollectionUtils.isEmpty(signupList)) {
-					msg[0] += "导入文件第" + (rowNum + 1) + "行,该学员没有被审核通过的考试申请，请确认后提交！！</br>";
-					return null;
-				}
-			}
+//			if (StringUtil.isNotBlank(scoreYear)) {
+//				JsresGraduationApplyExample applyExample = new JsresGraduationApplyExample();
+//                applyExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andApplyYearEqualTo(scoreYear).andRecruitFlowEqualTo(resDoctorRecruits.get(0).getRecruitFlow()).andAuditStatusIdEqualTo("GlobalPassed");
+//				List<JsresGraduationApply> applyList = applyMapper.selectByExample(applyExample);
+//
+//				JsresExamSignupExample signupExample = new JsresExamSignupExample();
+//                signupExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andSignupYearEqualTo(scoreYear).andDoctorFlowEqualTo(sysUser.getUserFlow()).andAuditStatusIdEqualTo("GlobalPassed");
+//				List<JsresExamSignup> signupList = signupMapper.selectByExample(signupExample);
+//
+//				if (CollectionUtils.isEmpty(applyList) && CollectionUtils.isEmpty(signupList)) {
+//					msg[0] += "导入文件第" + (rowNum + 1) + "行,该学员没有被审核通过的考试申请，请确认后提交！！</br>";
+//					return null;
+//				}
+//			}
 		}
 		return  null;
 	}

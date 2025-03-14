@@ -14,6 +14,7 @@
     <jsp:param name="jquery_placeholder" value="true"/>
     <jsp:param name="jquery_iealert" value="false"/>
 </jsp:include>
+<%@include file="/jsp/common/common.jsp"%>
 <script type="text/javascript"
         src="<s:url value='/js/Scoll/Scorll2.js'/>?v=${applicationScope.sysCfgMap['sys_version']}"></script>
 <script type="text/javascript"
@@ -60,7 +61,7 @@
     };
 </script>
 <c:if test="${empty list}">
-    <div class="search_table" style="width: 100%;padding: 0px 0px">
+    <div class="search_table">
         <table border="0" cellpadding="0" cellspacing="0" class="grid">
             <tr>
                 <th>审核</th>
@@ -73,15 +74,16 @@
                 <th>考试编号</th>
                 <th>报考科目</th>
                 <th>培训起止时间</th>
+                <th>异常报考</th>
             </tr>
             <tr>
-                <td colspan="8">无记录！</td>
+                <td colspan="9">无记录！</td>
             </tr>
         </table>
     </div>
 </c:if>
 <c:if test="${not empty list}">
-    <div class="main_bd clearfix" style="width: 100%;padding: 0px 0px">
+    <div class="main_bd clearfix" style="padding: 0px 20px">
         <table id="dataTable" border="0" cellpadding="0" cellspacing="0" class="grid">
             <thead>
             <tr>
@@ -89,12 +91,14 @@
                 <c:if test="${param.tabTag ne 'SecondWait' and param.tabTag ne 'SecondWait2'}">
                     <th class="fixedBy">审核状态</th>
                 </c:if>
+                <th class="fixedBy">轮转数据是否合规</th>
                 <th class="fixedBy">姓名</th>
                 <th class="fixedBy">地市</th>
                 <th class="fixedBy">培训基地</th>
                 <th class="fixedBy">考试编号</th>
                 <th class="fixedBy">报考科目</th>
                 <th class="fixedBy">培训起止时间</th>
+                <th class="fixedBy">异常报考</th>
             </tr>
             </thead>
             <tbody>
@@ -137,6 +141,16 @@
                             </c:when>
                         </c:choose>
                     </c:if>
+                    <td style="min-width: 80px; max-width: 80px; " class="by">
+						<c:choose>
+                            <c:when test="${not empty nonComplianceRecordsMap[s.doctorFlow]}">
+                                <a onclick="showNonComplianceRecords('${s.doctorFlow}')">否</a>
+                            </c:when>
+                            <c:otherwise>
+                                是
+                            </c:otherwise>
+                        </c:choose>
+					</td>
                     <td class="by">${s.userName}</td>
                     <td class="by">${s.orgCityName}</td>
                     <td class="by">${s.orgName}</td>
@@ -146,6 +160,7 @@
                         <c:if test="${s.signupTypeId eq 'Skill'}">技能</c:if>
                     </td>
                     <td class="by">${trainMap[startDate]}&nbsp;~&nbsp;${trainMap[endTime]}</td>
+                    <td class="by">${s.tempDoctorFlag}</td>
                 </tr>
             </c:forEach>
             </tbody>

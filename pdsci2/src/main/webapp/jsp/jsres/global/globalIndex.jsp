@@ -622,7 +622,8 @@
         }
 
         function teachTrainMain() {
-            var url = "<s:url value='/jsres/statistic/searchTeachTrainMain'/>?roleFlag=global";
+            var url = "<s:url value='/jsres/statistic/baseInfoTeacher'/>";
+            <%--var url = "<s:url value='/jsres/statistic/searchTeachTrainMain'/>?roleFlag=global";--%>
             currentJboxLoadNoData("content", url, true);
         }
 
@@ -926,6 +927,26 @@
         function reductionTab() {
             var url = "<s:url value='/jsres/reduction/reductionTab?roleId=${GlobalConstant.USER_LIST_GLOBAL}'/>";
             currentJboxLoadNoData("content", url, true);
+        }
+
+        // 结业学员统计
+        function graduactionStatistics(){
+            jboxLoad("content", "<s:url value='/jsres/graduationStatistics/graduationDoctorStatisticsMain'/>?roleFlag=${GlobalConstant.USER_LIST_GLOBAL}&catSpeId=DoctorTrainingSpe", true);
+        }
+
+        // 结业学员统计-助理全科
+        function graduactionStatisticsAcc(){
+            jboxLoad("content", "<s:url value='/jsres/graduationStatistics/graduationDoctorStatisticsMain'/>?roleFlag=${GlobalConstant.USER_LIST_GLOBAL}&catSpeId=AssiGeneral", true);
+        }
+
+        // 应结业学员查询
+        function searchGraduactionDoctor(){
+            jboxLoad("content", "<s:url value='/jsres/graduationStatistics/searchGraduationDoctorList'/>?roleFlag=${GlobalConstant.USER_LIST_GLOBAL}&catSpeId=DoctorTrainingSpe", true);
+        }
+
+        // 应结业学员查询
+        function searchGraduactionDoctorAcc(){
+            jboxLoad("content", "<s:url value='/jsres/graduationStatistics/searchGraduationDoctorList'/>?roleFlag=${GlobalConstant.USER_LIST_GLOBAL}&catSpeId=AssiGeneral", true);
         }
     </script>
     <script type="text/javascript">
@@ -1350,6 +1371,8 @@
                             </dt>
                             <%--<dd class="menu_item"><a onclick="testConfig()">考试配置</a></dd>--%>
                             <%--<dd class="menu_item"><a onclick="testConfig()">结业考核配置</a></dd>--%>
+                            <dd class="menu_item"><a onclick="graduactionStatistics();">结业学员统计</a></dd>
+                            <dd class="menu_item"><a onclick="searchGraduactionDoctor();">应结业学员查询</a></dd>
                             <dd class="menu_item"><a onclick="asseWaitAudit();">结业考核资格审核</a></dd>
                             <dd class="menu_item"><a onclick="asseAuditList();">结业考核资格查询</a></dd>
                             <dd class="menu_item"><a onclick="testConfig()">结业考核配置</a></dd>
@@ -1359,7 +1382,7 @@
                             <dd class="menu_item"><a onclick="scoreManage()">结业成绩管理</a></dd>
                             <dd class="menu_item"><a onclick="doctorFileManage()">结业学员归档</a></dd>
                             <dd class="menu_item"><a onclick="certificateManage()">结业证书管理</a></dd>
-                            <dd class="menu_item"><a onclick="finishStudyReport()">结业学员统计</a></dd>
+<%--                            <dd class="menu_item"><a onclick="finishStudyReport()">结业学员统计</a></dd>--%>
 <%--                            <dd class="menu_item"><a onclick="examStatistics()">考试人员情况统计</a></dd>--%>
                             <%--<dd class="menu_item"><a onclick="signManage();">签名图片管理</a></dd>--%>
                             <%--<dd class="menu_item"><a onclick="certificateCreate();">证书生成管理</a></dd>--%>
@@ -1371,6 +1394,8 @@
                                  <i class="icon_menu menu_management_complete"></i>助理全科结业管理
                              </dt>
                              <%--<dd class="menu_item"><a onclick="testConfig()">考核配置</a></dd>--%>
+                             <dd class="menu_item"><a onclick="graduactionStatisticsAcc();">结业学员统计</a></dd>
+                             <dd class="menu_item"><a onclick="searchGraduactionDoctorAcc();">应结业学员查询</a></dd>
                              <dd class="menu_item"><a onclick="asseWaitAudit2();">结业考核资格审核</a></dd>
                              <dd class="menu_item"><a onclick="asseAuditList2();">结业考核资格查询</a></dd>
                              <dd class="menu_item"><a onclick="scoreManage2()">结业成绩管理</a></dd>

@@ -605,7 +605,7 @@ ORDER BY
         ) A
     </select>
     <!--(学员出科情况)查询住院医生所有学员出科信息yuh-->
-    <select id="findOutOfficeDoctorInfo" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.sch.SchArrangeResultExtMapper.docResultsMap">
+    <select id="findOutOfficeDoctorInfo" parameterType="java.util.Map" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultExtMapper.docResultsMap">
         SELECT
         U .USER_NAME AS user_name,
         dr.TRAINING_TYPE_NAME AS training_Type_name,
@@ -679,80 +679,6 @@ ORDER BY
         </if>
 		ORDER BY dr.session_number DESC, dr.org_flow, dr.spe_id, NLSSORT(u.USER_NAME, 'NLS_SORT = SCHINESE_PINYIN_M'), dr.doctor_flow, dr.CREATE_TIME DESC
 
-    </select>
-    <!--（教学活动统计）根据基地获取教学活动信息yuh-->
-    <select id="findActivityListyuh" resultMap="com.pinde.sci.dao.jsres.TeachingActivityInfoExtMapper.activityMap" parameterType="java.util.Map">
-        SELECT INFO.*, SU.USER_NAME, D.DEPT_NAME, RESULT.EVAL_SCORE, F.FILE_NAME
-,
- NVL (RESULT.SCAN_NUM, 0) AS SCAN_NUM,
- RESULT2.REGIEST_NUM
-		FROM TEACHING_ACTIVITY_INFO INFO
-		LEFT JOIN SYS_USER SU ON INFO.SPEAKER_FLOW = SU.USER_FLOW
-		LEFT JOIN SYS_DEPT D ON D.DEPT_FLOW = INFO.DEPT_FLOW
-		LEFT JOIN (
-			SELECT ACTIVITY_FLOW, To_char(ROUND(SUM(EVAL_SCORE) / COUNT(EVAL_SCORE))) AS EVAL_SCORE, COUNT(1) AS SCAN_NUM
-			FROM TEACHING_ACTIVITY_RESULT T
-			WHERE T.RECORD_STATUS = 'Y'
-				AND T.IS_SCAN = 'Y'
-				AND T.IS_SCAN2 = 'Y'
-        <if test='universityDoctorFlows!=null '>
-            and T.USER_FLOW in
-            <trim suffixOverrides=" OR T.USER_FLOW IN()">
-                <foreach collection="universityDoctorFlows" item="Id" index="index" open="(" close=")">
-                    <if test="index != 0">
-                        <choose>
-                            <when test="index % 1000 == 999">) OR T.USER_FLOW IN (</when>
-                            <otherwise>,</otherwise>
-                        </choose>
-                    </if>
-                    #{Id}
-                </foreach>
-            </trim>
-            <!--<foreach collection="universityDoctorFlows" open="(" separator="," close=")" item="item">#{item,jdbcType=VARCHAR}</foreach>-->
-        </if>
-			GROUP BY ACTIVITY_FLOW
-		) RESULT ON RESULT.ACTIVITY_FLOW = INFO.ACTIVITY_FLOW
-		LEFT JOIN (
-			SELECT ACTIVITY_FLOW, COUNT(1) AS REGIEST_NUM
-			FROM TEACHING_ACTIVITY_RESULT T
-			WHERE T.RECORD_STATUS = 'Y'
-				AND T.IS_REGIEST = 'Y'
-        <if test='universityDoctorFlows!=null '>
-            and T.USER_FLOW in
-            <trim suffixOverrides=" OR T.USER_FLOW IN()">
-                <foreach collection="universityDoctorFlows" item="Id" index="index" open="(" close=")">
-                    <if test="index != 0">
-                        <choose>
-                            <when test="index % 1000 == 999">) OR T.USER_FLOW IN (</when>
-                            <otherwise>,</otherwise>
-                        </choose>
-                    </if>
-                    #{Id}
-                </foreach>
-            </trim>
-            <!--<foreach collection="universityDoctorFlows" open="(" separator="," close=")" item="item">#{item,jdbcType=VARCHAR}</foreach>-->
-        </if>
-			GROUP BY ACTIVITY_FLOW
-		) RESULT2 ON RESULT2.ACTIVITY_FLOW = INFO.ACTIVITY_FLOW
-			LEFT JOIN PUB_FILE F ON INFO.FILE_FLOW = F.FILE_FLOW
-		AND F.RECORD_STATUS = 'Y'
-		WHERE INFO.RECORD_STATUS = 'Y'
-			AND SU.RECORD_STATUS = 'Y'
-			AND D.RECORD_STATUS = 'Y'
-        <if test='orgFlow!=null and orgFlow!=""'>
-			 AND INFO.ORG_FLOW = #{orgFlow}
-        </if>
-				AND INFO.DEPT_FLOW IN (SELECT DEPT_FLOW
-					FROM SYS_DEPT
-					WHERE 1=1
-        <if test='orgFlow!=null and orgFlow!=""'>
-					AND	ORG_FLOW = #{orgFlow}
-        </if>
-						AND RECORD_STATUS = 'Y')
-		AND activity_status = 'pass'<!--审核通过-->
-        AND INFO.IS_EFFECTIVE='Y' <!--管理员认可-->
-        and result.SCAN_NUM>0  <!--有效的-->
-		ORDER BY START_TIME DESC, END_TIME DESC, RESULT.EVAL_SCORE DESC
     </select>
     <select id="getScanTime1AndScanTime2" parameterType="java.lang.String" resultMap="com.pinde.core.common.sci.dao.TeachingActivityResultMapper.BaseResultMap" >
         select *

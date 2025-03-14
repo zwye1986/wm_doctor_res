@@ -72,6 +72,51 @@
         height: 30px;
     }
 
+    .statistics-row {
+        width: 96%;
+        margin-left: 20px;
+        display: flex;
+        align-items: center;
+        margin-top: 20px;
+        height: 60px;
+        position: relative;
+        mask-image: linear-gradient(
+                to right,
+                #000 60%,
+                rgba(0, 0, 0, 0.4) 100%
+        );
+        border-radius: 10px;
+    }
+
+    .row-doctor {
+        background-color: #e5efff;
+        border: 1px #d9e8ff solid;
+    }
+
+    .statistics-row-item {
+        height: 40px;
+        flex: 1;
+        padding: 0 25px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        border-right: 1px #d9d9d9 solid;
+        overflow: visible;
+    }
+
+    .statistics-row-item > div:first-child {
+        margin-bottom: 8px;
+    }
+
+    .statistics-row-num {
+        font-weight: 700;
+    }
+
+    .zl-blue {
+        color: #1da4fe;
+    }
+
 
 </style>
 <script type="text/javascript">
@@ -204,6 +249,11 @@
 
     function importUsers() {
         var url = "<s:url value='/jsres/manage/importUsers'/>";
+        jboxOpen(url, "用户导入", 700, 250);
+    }
+
+    function importTeacher() {
+        var url = "<s:url value='/jsres/manage/importTeacher'/>";
         jboxOpen(url, "师资导入", 700, 250);
     }
 
@@ -236,6 +286,43 @@
 <h2 class="underline">师资维护</h2>
 </div> -->
 <div class="main_bd" id="div_table_0">
+
+    <div class="statistics-row row-doctor">
+
+        <div class="statistics-row-item">
+            <div><span class="statistics-row-num zl-blue">${empty globalCountMap['all'] ? 0 : globalCountMap['all']}</span>人</div>
+            <div>用户总计</div>
+        </div>
+        <div class="statistics-row-item">
+            <div><span class="statistics-row-num zl-blue">${empty globalCountMap['teacher'] ? 0 : globalCountMap['teacher']}</span>人</div>
+            <div>带教老师</div>
+        </div>
+        <div class="statistics-row-item">
+            <div><span class="statistics-row-num zl-blue">${empty globalCountMap['head'] ? 0 : globalCountMap['head']}</span>人</div>
+            <div>科主任</div>
+        </div>
+        <div class="statistics-row-item">
+            <div><span class="statistics-row-num zl-blue">${empty globalCountMap['secretary'] ? 0 : globalCountMap['secretary']}</span>人</div>
+            <div>科秘</div>
+        </div>
+        <div class="statistics-row-item">
+            <div><span class="statistics-row-num zl-blue">${empty globalCountMap['teachingHead'] ? 0 : globalCountMap['teachingHead']}</span>人</div>
+            <div>教学主任</div>
+        </div>
+        <div class="statistics-row-item">
+            <div><span class="statistics-row-num zl-blue">${empty globalCountMap['teachingSecretary'] ? 0 : globalCountMap['teachingSecretary']}</span>人</div>
+            <div>教学秘书</div>
+        </div>
+        <div class="statistics-row-item">
+            <div><span class="statistics-row-num zl-blue">${empty globalCountMap['general'] ? 0 : globalCountMap['general']}</span>人</div>
+            <div>一般师资</div>
+        </div>
+        <div class="statistics-row-item">
+            <div><span class="statistics-row-num zl-blue">${empty globalCountMap['backbone'] ? 0 : globalCountMap['backbone']}</span>人</div>
+            <div>骨干师资</div>
+        </div>
+    </div>
+
     <div class="div_search">
         <form id="searchForm" action="<s:url value="/jsres/manage/teacherList" />" method="post">
             <input type="hidden" name="currentPage" id="currentPage" value="${param.currentPage}">
@@ -243,7 +330,7 @@
 
              <div class="form_search">
                  <div class="form_item">
-                    <div class="form_label">科室名称：</div>
+                    <div class="form_label">科室：</div>
                     <div class="form_content">
                         <input type="text" id="ksmc" name="deptName" value="${param.deptName}" class=" input" autocomplete="off"/>
                         <input id="ksmcFlow" name="deptFlow" value="${param.deptFlow}" hidden="hidden"/>
@@ -258,16 +345,16 @@
                         </div>
                     </div>
                 </div>
+                 <div class="form_item">
+                     <div class="form_label">用户名：</div>
+                     <div class="form_content">
+                         <input type="text" name="userCode" value="${param.userCode}" class="input"  />
+                     </div>
+                 </div>
                 <div class="form_item">
                     <div class="form_label">姓名：</div>
                     <div class="form_content">
                         <input type="text" name="userName" value="${param.userName}" class="input" />
-                    </div>
-                </div>
-                <div class="form_item">
-                    <div class="form_label">用户名：</div>
-                    <div class="form_content">
-                        <input type="text" name="userCode" value="${param.userCode}" class="input"  />
                     </div>
                 </div>
                 <div class="form_item">
@@ -276,6 +363,20 @@
                         <input type="text" name="userPhone" value="${param.userPhone}"  class="input"  />
                     </div>
                 </div>
+                <div class="form_item">
+                    <div class="form_label">师资级别：</div>
+                    <div class="form_content">
+                        <select name="teacherLevel"  id="teacherLevel" class="select">
+                            <option value="" >全部</option>
+                            <option value="blank" >无</option>
+                            <option value="一般师资" <c:if test='${param.teacherLevel=="一般师资"}'>selected</c:if>>一般师资</option>
+                            <option value="骨干师资" <c:if test='${param.teacherLevel=="骨干师资"}'>selected</c:if>>骨干师资</option>
+                        </select>
+                    </div>
+                </div>
+             </div>
+
+            <div class="form_search">
                 <div class="form_item">
                     <div class="form_label">用户状态：</div>
                     <div class="form_content">
@@ -287,14 +388,40 @@
                         </select>
                     </div>
                 </div>
-             </div>
+                <div class="form_item">
+                    <div class="form_label">角色：</div>
+                    <div class="form_content">
+                        <select multiple class="selectpicker" name="userRoleList" id="userRoleList" title="请选择角色">
+                            <c:if test="${!empty applicationScope.sysCfgMap['res_teacher_role_flow']}">
+                                <option value="${applicationScope.sysCfgMap['res_teacher_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_teacher_role_flow']]?sysRoleMap[sysCfgMap['res_teacher_role_flow']].roleName:'带教老师'}</option>
+                            </c:if>
+                            <c:if test="${!empty applicationScope.sysCfgMap['res_head_role_flow']}">
+                                <option value="${applicationScope.sysCfgMap['res_head_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_head_role_flow']]?sysRoleMap[sysCfgMap['res_head_role_flow']].roleName:'科主任'}</option>
+                            </c:if>
+                            <c:if test="${!empty applicationScope.sysCfgMap['res_secretary_role_flow']}">
+                                <option value="${applicationScope.sysCfgMap['res_secretary_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_secretary_role_flow']]?sysRoleMap[sysCfgMap['res_secretary_role_flow']].roleName:'科秘'}</option>
+                            </c:if>
+                            <c:if test="${!empty applicationScope.sysCfgMap['res_teaching_head_role_flow']}">
+                                <option value="${applicationScope.sysCfgMap['res_teaching_head_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_teaching_head_role_flow']]?sysRoleMap[sysCfgMap['res_teaching_head_role_flow']].roleName:'教学主任'}</option>
+                            </c:if>
+                            <c:if test="${!empty applicationScope.sysCfgMap['res_teaching_secretary_role_flow']}">
+                                <option value="${applicationScope.sysCfgMap['res_teaching_secretary_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_teaching_secretary_role_flow']]?sysRoleMap[sysCfgMap['res_teaching_secretary_role_flow']].roleName:'教学秘书'}</option>
+                            </c:if>
+                            <c:if test="${!empty applicationScope.sysCfgMap['res_hospitalLeader_role_flow']}">
+                                <option value="${applicationScope.sysCfgMap['res_hospitalLeader_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_hospitalLeader_role_flow']]?sysRoleMap[sysCfgMap['res_hospitalLeader_role_flow']].roleName:'评分专家'}</option>
+                            </c:if>
+                        </select>
+                    </div>
+                </div>
+            </div>
 
 
             <div style="margin-top: 15px;margin-bottom: 15px">
                 <input type="button" class="btn_green" onclick="toPage(1)" value="查&#12288;询">
                 <input type="button" class="btn_green" onclick="editUser('')" value="新&#12288;增">
-                <input type="button" class="btn_green" onclick="importUsers()" value="导&#12288;入">
-                <input type="button" class="btn_green" onclick="exportUser()" value="导&#12288;出">
+                <input type="button" class="btn_green" onclick="importUsers()" value="用户导入">
+                <input type="button" class="btn_green" onclick="exportUser()" value="用户导出">
+                <input type="button" class="btn_green" onclick="importTeacher()" value="师资导入">
             </div>
 
 

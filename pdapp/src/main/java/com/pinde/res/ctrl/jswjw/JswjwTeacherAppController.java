@@ -2217,6 +2217,7 @@ public class JswjwTeacherAppController{
 			int ryjy = 0; int rzyjdjy = 0; int cjbg = 0;
 			int ynbltl=0;	int wzbltl=0; int swbltl=0;
 			int bgdfx=0;	int jxsj=0;	int sjys=0;
+			int ckkh = 0;
 			List<String> recTypes=new ArrayList<String>();
 			recTypes.add(recTypeIdt);
 			List<ResRec> recs= jswjwTeacherBiz.searchRecByProcessWithBLOBs(recTypes,processFlow,operUser.getUserFlow());
@@ -2240,7 +2241,7 @@ public class JswjwTeacherAppController{
 					}else if(Rkjy.equals(text)){
 						rkjy++;
 					}else if(Ckks.equals(text)){
-//						ckkh++;
+						ckkh++;
 					}else if(Jnpx.equals(text)){
 						jnpx++;
 					}else if(Yph.equals(text)){
@@ -2302,7 +2303,7 @@ public class JswjwTeacherAppController{
 					}else if(Rkjy.equals(text)){
 						rkjy++;
 					}else if(Ckks.equals(text)){
-//						ckkh++;
+						ckkh++;
 					}else if(Jnpx.equals(text)){
 						jnpx++;
 					}else if(Yph.equals(text)){
@@ -2382,7 +2383,7 @@ public class JswjwTeacherAppController{
 			dataMap.put("xjk",String.valueOf(xjk));
 //			dataMap.put("swbltl",String.valueOf(swbltl));
 			dataMap.put("rkjy",String.valueOf(rkjy));
-//			dataMap.put("ckkh",String.valueOf(ckkh));
+			dataMap.put("ckkh",String.valueOf(ckkh));
 			dataMap.put("jnpx",String.valueOf(jnpx));
 			dataMap.put("yph",String.valueOf(yph));
 			dataMap.put("jxhz",String.valueOf(jxhz));

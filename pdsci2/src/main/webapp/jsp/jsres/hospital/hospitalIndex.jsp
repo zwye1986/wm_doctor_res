@@ -503,7 +503,7 @@
         }
 
         function cycleResults(data) {
-            var url = "<s:url value='/jsres/doctorRecruit/doctorRecruitResult'/>";
+            var url = "<s:url value='/jsres/doctorRecruit/doctorRecruitResult'/>?trainingTypeId=DoctorTrainingSpe";
             jboxStartLoading();
             jboxPost(url, data, function (resp) {
                 $("#content").html(resp);
@@ -1162,6 +1162,16 @@
         function showSelectMenu() {
             window.open("<s:url value='/jsres/manage/local?more=Y'/>", "_blank")
         }
+
+        // 结业学员统计
+        function graduactionStatistics(){
+            jboxLoad("content", "<s:url value='/jsres/graduationStatistics/graduationDoctorStatisticsMain'/>?roleFlag=${GlobalConstant.USER_LIST_LOCAL}&catSpeId=DoctorTrainingSpe", true);
+        }
+
+        // 应结业学员查询
+        function searchGraduactionDoctor(){
+            jboxLoad("content", "<s:url value='/jsres/graduationStatistics/searchGraduationDoctorList'/>?roleFlag=${GlobalConstant.USER_LIST_LOCAL}&catSpeId=DoctorTrainingSpe", true);
+        }
     </script>
     <style>
         .side-button {
@@ -1242,14 +1252,14 @@
                             <dd class="menu_item"><a href="javascript:hospitalSpeSelfAssessment();">专业基地自评</a></dd>
                         </dl>
                         <c:if test="${hospitalSupervisor eq 'Y'}" >
-                            <dl class="menu">
+                            <%--<dl class="menu">
                                 <dt class="menu_title">
                                     <i class="icon_menu menu_360check"></i>院级督导管理
                                 </dt>
                                 <dd class="menu_item"><a onclick="hospitalLeaderMain();">评审专家维护</a></dd>
                                 <dd class="menu_item"><a onclick="hospitalSubjectMain();">评审项目配置</a></dd>
                                 <dd class="menu_item"><a onclick="hospitalStatisticsMain();">评审结果汇总</a></dd>
-                            </dl>
+                            </dl>--%>
                         </c:if>
                         <dl class="menu">
                             <dt class="menu_title">
@@ -1449,6 +1459,8 @@
                             <dt class="menu_title">
                                 <i class="icon_menu menu_management_complete"></i>住院医师结业信息管理
                             </dt>
+                            <dd class="menu_item"><a onclick="graduactionStatistics();">结业学员统计</a></dd>
+                            <dd class="menu_item"><a onclick="searchGraduactionDoctor();">应结业学员查询</a></dd>
                             <%--<dd class="menu_item"><a &lt;%&ndash;href="javascript:asseGraduation();"&ndash;%&gt;onclick="asseGraduation()">考核资格审查</a></dd>--%>
                             <dd class="menu_item"><a onclick="asseWaitAudit();">结业考核资格审核</a></dd>
                             <dd class="menu_item"><a onclick="asseAuditList();">结业考核资格查询</a></dd>
@@ -1604,7 +1616,12 @@
                                 <ul>
                                     <li class="score_frame">
                                         <h1 style="background:#e7f5fc;">人员信息概况</h1>
-                                        <c:set var="currYear" value="${pdfn:getCurrYear()}"></c:set>
+                                        <c:if test="${pdfn:getCurrDate() ge (pdfn:getCurrYear().concat('-09-01'))}">
+                                            <c:set var="currYear" value="${pdfn:getCurrYear()}"></c:set>
+                                        </c:if>
+                                        <c:if test="${pdfn:getCurrDate() lt (pdfn:getCurrYear().concat('-09-01'))}">
+                                            <c:set var="currYear" value="${pdfn:getCurrYear() - 1}"></c:set>
+                                        </c:if>
                                         <div class="grid">
                                             <c:forEach step="1" begin="${currYear-2}" end="${currYear}" varStatus="num"
                                                        var="doctor">

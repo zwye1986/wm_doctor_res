@@ -2,6 +2,7 @@ package com.pinde.res.ctrl.jswjw;
 
 import com.alibaba.fastjson.JSON;
 import com.pinde.app.common.InitConfig;
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.form.UserResumeExtInfoForm;
 import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.*;
@@ -21,9 +22,11 @@ import com.pinde.res.biz.osca.IOscaAppBiz;
 import com.pinde.res.biz.stdp.*;
 import com.pinde.res.dao.jswjw.ext.JsResPowerCfgExtMapper;
 import com.pinde.res.dao.jswjw.ext.JsResUserBalckListExtMapper;
-import com.pinde.res.dao.jswjw.ext.TempMapper;
+import com.pinde.core.common.sci.dao.TempMapper;
 import com.pinde.sci.util.DateTimeUtil;
+import org.antlr.stringtemplate.StringTemplate;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.bouncycastle.util.encoders.Hex;
 import org.dom4j.Document;
@@ -33,6 +36,7 @@ import org.dom4j.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -63,6 +67,8 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping("/res/jswjw")
 public class JswjwAppController {
+    @Resource
+    private StringRedisTemplate stringRedisTemplate;
     private static Logger logger = LoggerFactory.getLogger(JswjwAppController.class);
 
     private static String regex = "^(?![a-zA-Z]+$)(?![A-Z0-9]+$)(?![A-Z\\W_.!@#$%^&*`~()-+=]+$)(?![a-z0-9]+$)(?![a-z\\W_.!@#$%^&*`~()-+=]+$)(?![0-9\\W_.!@#$%^&*`~()-+=]+$)[a-zA-Z0-9\\W_.!@#$%^&*`~()-+=]{8,20}$";
@@ -8112,7 +8118,7 @@ public class JswjwAppController {
 //                return "当前时间没有正在进行的考试！";
             }
 
-            int i = jswjwBiz.editGraduationApply2(jsresGraduationApply, recruitFlow, changeSpeId, recruit.getDoctorFlow(), applyYear, practicingMap, user);
+            int i = jswjwBiz.editGraduationApply2(jsresGraduationApply, recruitFlow, changeSpeId, recruit.getDoctorFlow(), applyYear, practicingMap, user, recruit.getRotationFlow(), "N");
             if (StringUtil.isNotEmpty(lawScore)) {
                 saveAsseScore(lawScore, "lawScore", recruitFlow, userFlow);
             }
@@ -8296,7 +8302,7 @@ public class JswjwAppController {
                 jsresGraduationApply.setAuditStatusName(com.pinde.core.common.enums.JsResAuditStatusEnum.WaitGlobalPass.getName());
             }
         }
-        int i = jswjwBiz.editGraduationApply2(jsresGraduationApply, recruitFlow, "", recruit.getDoctorFlow(), applyYear, practicingMap, user);
+        int i = jswjwBiz.editGraduationApply2(jsresGraduationApply, recruitFlow, "", recruit.getDoctorFlow(), applyYear, practicingMap, user, recruit.getRotationFlow(), "Y");
         if (StringUtil.isNotEmpty(lawScore)) {
             saveAsseScore(lawScore, "lawScore", recruitFlow, userFlow);
         }
@@ -8455,8 +8461,22 @@ public class JswjwAppController {
                         afterImgMap.put(rec.getSchRotationDeptFlow(), imagelist);
                     }
                 }
-                //完成比例与审核比例
-                List<JsresDoctorDeptDetail> details = jswjwBiz.deptDoctorAllWorkDetailByNow(recruit.getRecruitFlow(), doctorFlow, applyYear);
+
+                String exeMethodInRedis =  stringRedisTemplate.opsForValue().get(GlobalConstant.exeMethod);
+                if(StringUtils.isEmpty(exeMethodInRedis)) {
+                    exeMethodInRedis = ExeMethod.SQL.getValue();
+                }
+                List<JsresDoctorDeptDetail> details;
+                if(ExeMethod.JOB.getValue().equals(exeMethodInRedis)) {
+                    // 查询定时任务统计好的数据比例信息
+                    details = jswjwBiz.searchDeptDoctorAllWorkDetailList(recruit.getRotationFlow(), doctorFlow, applyYear);
+                }else if(ExeMethod.SQL.getValue().equals(exeMethodInRedis)){
+                    //完成比例与审核比例
+                    details = jswjwBiz.deptDoctorAllWorkDetailByNow(recruit.getRecruitFlow(), doctorFlow, applyYear, recruit.getRotationFlow());
+                }else {
+                    details = jswjwBiz.deptDoctorAllWorkDetailByNow_new(recruit.getRecruitFlow(), doctorFlow, applyYear, recruit.getRotationFlow());
+                }
+
                 if (details != null && details.size() > 0) {
                     int isShortY = 0;
                     int isShortN = 0;
@@ -8520,7 +8540,7 @@ public class JswjwAppController {
             model.addAttribute("allMonth", allMonth);
             if (jsresGraduationApply != null) {
                 //完成比例与审核比例
-                List<JsresDoctorDeptDetail> details = jswjwBiz.deptDoctorAllWorkDetailByNow(rotation.getRotationFlow(), doctorFlow, applyYear);
+                List<JsresDoctorDeptDetail> details = jswjwBiz.deptDoctorAllWorkDetail(rotation.getRotationFlow(), doctorFlow, applyYear);
                 if (details != null && details.size() > 0) {
                     for (JsresDoctorDeptDetail d : details) {
                         biMap.put(d.getSchStandardDeptFlow(), d);

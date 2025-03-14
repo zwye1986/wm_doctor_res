@@ -514,6 +514,8 @@ public interface IResRecBiz {
 
 	//查询护士评价学员的信息
 	List<Map<String,String>> searchNurseAssEvaluate(Map<String, Object> paramMap);
+
+	String batchAudit(String auditResult, String docFlow, String processFlow, String recType);
 }
 	
 	

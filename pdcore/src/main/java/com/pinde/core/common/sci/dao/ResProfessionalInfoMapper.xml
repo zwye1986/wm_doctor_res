@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.core.common.sci.dao.ResProfessionalInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.ResProfessionalInfo" >
+    <id column="PROFESSIONAL_FLOW" property="professionalFlow" jdbcType="VARCHAR" />
+    <result column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
+    <result column="PROFESSIONAL_TITLE_ID" property="professionalTitleId" jdbcType="VARCHAR" />
+    <result column="PROFESSIONAL_TITLE_NAME" property="professionalTitleName" jdbcType="VARCHAR" />
+    <result column="TECHNICAL_POSITION_ID" property="technicalPositionId" jdbcType="VARCHAR" />
+    <result column="TECHNICAL_POSITION_NAME" property="technicalPositionName" jdbcType="VARCHAR" />
+    <result column="TECHNICAL_POSITION_TIME" property="technicalPositionTime" jdbcType="VARCHAR" />
+    <result column="CLINICAL_TEACHING_TIME" property="clinicalTeachingTime" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    PROFESSIONAL_FLOW, USER_FLOW, PROFESSIONAL_TITLE_ID, PROFESSIONAL_TITLE_NAME, TECHNICAL_POSITION_ID, 
+    TECHNICAL_POSITION_NAME, TECHNICAL_POSITION_TIME, CLINICAL_TEACHING_TIME, RECORD_STATUS, 
+    CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.ResProfessionalInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.RES_PROFESSIONAL_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from PDSCI.RES_PROFESSIONAL_INFO
+    where PROFESSIONAL_FLOW = #{professionalFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.RES_PROFESSIONAL_INFO
+    where PROFESSIONAL_FLOW = #{professionalFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.ResProfessionalInfoExample" >
+    delete from PDSCI.RES_PROFESSIONAL_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.core.model.ResProfessionalInfo" >
+    insert into PDSCI.RES_PROFESSIONAL_INFO (PROFESSIONAL_FLOW, USER_FLOW, PROFESSIONAL_TITLE_ID, 
+      PROFESSIONAL_TITLE_NAME, TECHNICAL_POSITION_ID, 
+      TECHNICAL_POSITION_NAME, TECHNICAL_POSITION_TIME, 
+      CLINICAL_TEACHING_TIME, RECORD_STATUS, CREATE_TIME, 
+      CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
+      )
+    values (#{professionalFlow,jdbcType=VARCHAR}, #{userFlow,jdbcType=VARCHAR}, #{professionalTitleId,jdbcType=VARCHAR}, 
+      #{professionalTitleName,jdbcType=VARCHAR}, #{technicalPositionId,jdbcType=VARCHAR}, 
+      #{technicalPositionName,jdbcType=VARCHAR}, #{technicalPositionTime,jdbcType=VARCHAR}, 
+      #{clinicalTeachingTime,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+      #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.core.model.ResProfessionalInfo" >
+    insert into PDSCI.RES_PROFESSIONAL_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="professionalFlow != null" >
+        PROFESSIONAL_FLOW,
+      </if>
+      <if test="userFlow != null" >
+        USER_FLOW,
+      </if>
+      <if test="professionalTitleId != null" >
+        PROFESSIONAL_TITLE_ID,
+      </if>
+      <if test="professionalTitleName != null" >
+        PROFESSIONAL_TITLE_NAME,
+      </if>
+      <if test="technicalPositionId != null" >
+        TECHNICAL_POSITION_ID,
+      </if>
+      <if test="technicalPositionName != null" >
+        TECHNICAL_POSITION_NAME,
+      </if>
+      <if test="technicalPositionTime != null" >
+        TECHNICAL_POSITION_TIME,
+      </if>
+      <if test="clinicalTeachingTime != null" >
+        CLINICAL_TEACHING_TIME,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="professionalFlow != null" >
+        #{professionalFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="userFlow != null" >
+        #{userFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="professionalTitleId != null" >
+        #{professionalTitleId,jdbcType=VARCHAR},
+      </if>
+      <if test="professionalTitleName != null" >
+        #{professionalTitleName,jdbcType=VARCHAR},
+      </if>
+      <if test="technicalPositionId != null" >
+        #{technicalPositionId,jdbcType=VARCHAR},
+      </if>
+      <if test="technicalPositionName != null" >
+        #{technicalPositionName,jdbcType=VARCHAR},
+      </if>
+      <if test="technicalPositionTime != null" >
+        #{technicalPositionTime,jdbcType=VARCHAR},
+      </if>
+      <if test="clinicalTeachingTime != null" >
+        #{clinicalTeachingTime,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.core.model.ResProfessionalInfoExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.RES_PROFESSIONAL_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.RES_PROFESSIONAL_INFO
+    <set >
+      <if test="record.professionalFlow != null" >
+        PROFESSIONAL_FLOW = #{record.professionalFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userFlow != null" >
+        USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.professionalTitleId != null" >
+        PROFESSIONAL_TITLE_ID = #{record.professionalTitleId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.professionalTitleName != null" >
+        PROFESSIONAL_TITLE_NAME = #{record.professionalTitleName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.technicalPositionId != null" >
+        TECHNICAL_POSITION_ID = #{record.technicalPositionId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.technicalPositionName != null" >
+        TECHNICAL_POSITION_NAME = #{record.technicalPositionName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.technicalPositionTime != null" >
+        TECHNICAL_POSITION_TIME = #{record.technicalPositionTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.clinicalTeachingTime != null" >
+        CLINICAL_TEACHING_TIME = #{record.clinicalTeachingTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.RES_PROFESSIONAL_INFO
+    set PROFESSIONAL_FLOW = #{record.professionalFlow,jdbcType=VARCHAR},
+      USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
+      PROFESSIONAL_TITLE_ID = #{record.professionalTitleId,jdbcType=VARCHAR},
+      PROFESSIONAL_TITLE_NAME = #{record.professionalTitleName,jdbcType=VARCHAR},
+      TECHNICAL_POSITION_ID = #{record.technicalPositionId,jdbcType=VARCHAR},
+      TECHNICAL_POSITION_NAME = #{record.technicalPositionName,jdbcType=VARCHAR},
+      TECHNICAL_POSITION_TIME = #{record.technicalPositionTime,jdbcType=VARCHAR},
+      CLINICAL_TEACHING_TIME = #{record.clinicalTeachingTime,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResProfessionalInfo" >
+    update PDSCI.RES_PROFESSIONAL_INFO
+    <set >
+      <if test="userFlow != null" >
+        USER_FLOW = #{userFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="professionalTitleId != null" >
+        PROFESSIONAL_TITLE_ID = #{professionalTitleId,jdbcType=VARCHAR},
+      </if>
+      <if test="professionalTitleName != null" >
+        PROFESSIONAL_TITLE_NAME = #{professionalTitleName,jdbcType=VARCHAR},
+      </if>
+      <if test="technicalPositionId != null" >
+        TECHNICAL_POSITION_ID = #{technicalPositionId,jdbcType=VARCHAR},
+      </if>
+      <if test="technicalPositionName != null" >
+        TECHNICAL_POSITION_NAME = #{technicalPositionName,jdbcType=VARCHAR},
+      </if>
+      <if test="technicalPositionTime != null" >
+        TECHNICAL_POSITION_TIME = #{technicalPositionTime,jdbcType=VARCHAR},
+      </if>
+      <if test="clinicalTeachingTime != null" >
+        CLINICAL_TEACHING_TIME = #{clinicalTeachingTime,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PROFESSIONAL_FLOW = #{professionalFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResProfessionalInfo" >
+    update PDSCI.RES_PROFESSIONAL_INFO
+    set USER_FLOW = #{userFlow,jdbcType=VARCHAR},
+      PROFESSIONAL_TITLE_ID = #{professionalTitleId,jdbcType=VARCHAR},
+      PROFESSIONAL_TITLE_NAME = #{professionalTitleName,jdbcType=VARCHAR},
+      TECHNICAL_POSITION_ID = #{technicalPositionId,jdbcType=VARCHAR},
+      TECHNICAL_POSITION_NAME = #{technicalPositionName,jdbcType=VARCHAR},
+      TECHNICAL_POSITION_TIME = #{technicalPositionTime,jdbcType=VARCHAR},
+      CLINICAL_TEACHING_TIME = #{clinicalTeachingTime,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR}
+    where PROFESSIONAL_FLOW = #{professionalFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

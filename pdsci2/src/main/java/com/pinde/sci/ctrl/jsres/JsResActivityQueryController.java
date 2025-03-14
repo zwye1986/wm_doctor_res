@@ -1,7 +1,9 @@
 package com.pinde.sci.ctrl.jsres;
 
 
+import cn.hutool.core.io.FileUtil;
 import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Lists;
 import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.enums.ActivityTypeEnum;
 import com.pinde.core.common.sci.dao.TeachingActivitySpeakerMapper;
@@ -21,12 +23,12 @@ import com.pinde.sci.biz.sys.*;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.ss.usermodel.BorderStyle;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
-import org.apache.poi.ss.usermodel.VerticalAlignment;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.util.IOUtils;
 import org.dom4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,9 +39,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
 import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -51,6 +57,7 @@ import java.util.stream.Collectors;
  *
  *
  */
+@Slf4j
 @Controller
 @RequestMapping("/jsres/activityQuery")
 public class JsResActivityQueryController extends GeneralController {
@@ -226,7 +233,7 @@ public class JsResActivityQueryController extends GeneralController {
 		return "jsres/activity/activityQuery/list";
 	}
 	@RequestMapping(value="/exportList")
-	public void exportList(Model model, String activityName,String  roleFlag,String isEffective,
+	public void exportList(String activityName,String  roleFlag,String isEffective,
 					   String userName,String[] activityTypeId,String deptFlow,String[] deptName,String isNew,String isEval,
 					   String startTime,String endTime, String isUploadImg, HttpServletResponse response) throws Exception {
 		SysUser curUser=GlobalContext.getCurrentUser();
@@ -248,78 +255,177 @@ public class JsResActivityQueryController extends GeneralController {
 		param.put("userFlow",curUser.getUserFlow());
 		param.put("isEffective",isEffective);
 		param.put("isUploadImg",isUploadImg);
-		model.addAttribute("nowDate", DateUtil.getCurrDateTime("yyyy-MM-dd HH:mm"));
-		if("doctor".equals(roleFlag))
-		{
+		if("doctor".equals(roleFlag)) {
 
 			String orgFlow="";
 			ResDoctor doctor=doctorBiz.readDoctor(curUser.getUserFlow());
-			if(doctor!=null) {
+			if(doctor != null) {
 				if (StringUtil.isNotBlank(doctor.getSecondOrgFlow())) {
 					orgFlow = doctor.getSecondOrgFlow();
 				} else {
 					orgFlow = doctor.getOrgFlow();
 				}
 			}
-			param.put("orgFlow",doctor.getOrgFlow());
+			param.put("orgFlow",orgFlow);
 		}else {
 			param.put("orgFlow", curUser.getOrgFlow());
 		}
-//		PageHelper.startPage(currentPage, getPageSize(request));
-		List<SysUserRole> userRoleList = userRoleBiz.getByUserFlow(GlobalContext.getCurrentUser().getUserFlow()); //获取该用户下的所有角色信息
 		if("university".equals(roleFlag) && StringUtil.isNotEmpty(curUser.getSchool())){
 			param.put("school", curUser.getSchool());
 		}
-		List<Map<String,Object>> list=activityBiz.findActivityList3(param);
+		List<Map<String,Object>> list = activityBiz.findActivityList3(param);
+		//创建工作簿
+		HSSFWorkbook wb = new HSSFWorkbook();
+		//定义将用到的样式
+		HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
+		styleCenter.setAlignment(HorizontalAlignment.CENTER);
+		HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
+		styleLeft.setAlignment(HorizontalAlignment.LEFT);
+		styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
 
-		for (Map<String, Object> map : list) {
-			if (map.containsKey("IS_EFFECTIVE")) {
-                if (map.get("IS_EFFECTIVE").equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
-					map.put("effectiveName", "认可");
-                } else if (map.get("IS_EFFECTIVE").equals(com.pinde.core.common.GlobalConstant.FLAG_N)) {
-					map.put("effectiveName", "不认可");
-				} else {
-					map.put("effectiveName", "未操作");
-				}
-			}
-			map.put("HaveImg","否");
-			String imageUrl= (String) map.get("imageUrl");
-			if(StringUtil.isNotBlank(imageUrl))
-			{
-				Document document=DocumentHelper.parseText(imageUrl);
-				Element elem=document.getRootElement();
-				List<Element> ec = elem.elements("image");
-				if(ec!=null&&ec.size()>0)
-				{
-					map.put("HaveImg","是");
-				}
+		HSSFSheet sheet = wb.createSheet("sheet1");
+		//第一行
+		HSSFRow row = sheet.createRow(0);
+		String[] titles = new String[]{"活动名称","活动形式","活动地点","主讲人","用户名","实际主讲人","所在科室","活动开始时间","活动结束时间","报名人数","签到人数","评价","是否认可","是否有照片","是否有附件","附件上传时间",""};
+		HSSFCell cellTitle = null;
+		for (int i = 0; i < titles.length; i++) {
+			cellTitle = row.createCell(i);
+			cellTitle.setCellValue(titles[i]);
+			cellTitle.setCellStyle(styleCenter);
+			if(i == 0 || i == titles.length - 1){
+				sheet.setColumnWidth(i, titles.length * 506);
+			}else{
+				sheet.setColumnWidth(i, titles.length * 256);
 			}
 		}
+		HSSFPatriarch patriarch = sheet.createDrawingPatriarch();
+        BufferedImage bufferedImage = null;
+		ByteArrayOutputStream byteArrayOutputStream = null;
+		int rowNum = 1;
+		String[] dataList = null;
+		if(list != null && list.size() > 0){
+			List<String> activityList = new ArrayList<>();
+			for (Map<String, Object> map : list) {
+				activityList.add((String) map.get("activityFlow"));
+			}
+			List<PubFile> pubFileList = new ArrayList<>();
+			Lists.partition(activityList.stream().distinct().collect(Collectors.toList()), 1000).forEach(subList -> {
+				List<PubFile> tempList = fileBiz.findFileByTypeFlows("activity", subList);
+				if(CollectionUtils.isNotEmpty(tempList)) {
+					pubFileList.addAll(tempList);
+				}
+			});
+			Map<String, List<PubFile>> fileMap = pubFileList.stream().collect(Collectors.groupingBy(PubFile::getProductFlow));
+			for (Map<String, Object> map : list) {
+				if (map.containsKey("IS_EFFECTIVE")) {
+					if (map.get("IS_EFFECTIVE").equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
+						map.put("effectiveName", "认可");
+					} else if (map.get("IS_EFFECTIVE").equals(com.pinde.core.common.GlobalConstant.FLAG_N)) {
+						map.put("effectiveName", "不认可");
+					} else {
+						map.put("effectiveName", "未操作");
+					}
+				}
+				map.put("HaveImg","否");
+				List<Map<String, String>> imageList = null;
+				String imageUrl = (String) map.get("imageUrl");
+				if(StringUtil.isNotBlank(imageUrl)) {
+					Document document = DocumentHelper.parseText(imageUrl);
+					Element elem = document.getRootElement();
+					List<Element> ec = elem.elements("image");
+					if(ec != null && ec.size() > 0) {
+						map.put("HaveImg","是");
+					}
+					imageList = activityBiz.parseImageXml(elem.asXML());
+				}
 
-		model.addAttribute("list",list);
+				if(!"doctor".equals(roleFlag))
+				{
+					//查询附件
+//					List<PubFile> fileList = fileBiz.findFileByTypeFlow("activity", (String) map.get("activityFlow"));
+					List<PubFile> fileList = fileMap.get((String) map.get("activityFlow"));
+					map.put("fileFlag", (fileList != null && fileList.size() > 0 ? "是" : "否"));
+					if(CollectionUtils.isNotEmpty(fileList)){
+						map.put("uploadFileTime",fileList.stream().map(
+								file ->{
+									return DateUtil.transDate(file.getCreateTime(), "yyyy-MM-dd HH:mm:ss");
+								}
+						).collect(Collectors.joining(";")));
+					}
+				}
 
-		String []titles = new String[]{
-				"activityName:活动名称",
-				"activityTypeName:活动形式",
-				"activityAddress:活动地点",
-				"userName:主讲人",
-				"userCode:用户名",
-				"realitySpeaker:实际主讲人",
-				//"realitySpeakerUserCode:用户名",
-				"deptName:所在科室",
-				"startTime:活动开始时间",
-				"endTime:活动结束时间",
-				"regiestNum:报名人数",
-				"scanNum:签到人数",
-				//"signingNum:签到人数",
-				"evalScore:评价",
-				"effectiveName:是否认可",
-				"HaveImg:是否有照片"
-		};
-		String fileName = new String("教学活动信息.xls".getBytes(), "ISO-8859-1");
+				HSSFRow rowOne = sheet.createRow(rowNum);
+				dataList = new String[]{
+						(String)map.get("activityName"),
+						(String)map.get("activityTypeName"),
+						(String)map.get("activityAddress"),
+						(String)map.get("userName"),
+						(String)map.get("userCode"),
+						(String)map.get("realitySpeaker"),
+						(String)map.get("deptName"),
+						(String)map.get("startTime"),
+						(String)map.get("endTime"),
+						(String)map.get("regiestNum"),
+						(String)map.get("scanNum"),
+						(String)map.get("evalScore"),
+						(String)map.get("effectiveName"),
+						(String)map.get("HaveImg"),
+						(String)map.get("fileFlag"),
+						(String)map.get("uploadFileTime")
+				};
+				for (int j = 0; j < titles.length; j++) {
+					HSSFCell cellFirst = rowOne.createCell(j);
+					cellFirst.setCellStyle(styleLeft);
+					if(j != titles.length - 1){
+						cellFirst.setCellValue(dataList[j]);
+					}else {
+						try {
+							// 图片赋值
+							if (imageList != null && imageList.size() > 0) {
+								rowOne.setHeight((short) 1000);
+								// 计算边距
+								int mar = 10 + 10 + (imageList.size() - 1) * 10;
+								// 大致平均值,每个图片宽度
+								int ave = (1023 - mar) / imageList.size();
+								for (int i = 0; i < imageList.size(); i++) {
+									String imagePath = imageList.get(i).get("imageUrl");
+									if (StringUtil.isBlank(imagePath)) {
+										continue;
+									}
+									// 替换网络路径为物理路径
+									imagePath = imagePath.replace(InitConfig.getSysCfg("upload_base_url"), InitConfig.getSysCfg("upload_base_dir"));
+									File file = new File(imagePath);
+									if(!FileUtil.exist(imagePath)) continue;
+									bufferedImage = ImageIO.read(file);
+									if (bufferedImage == null) {
+										continue;
+									}
+									byteArrayOutputStream = new ByteArrayOutputStream();
+									ImageIO.write(bufferedImage, "png", byteArrayOutputStream);
+									HSSFClientAnchor hSSFClientAnchor = new HSSFClientAnchor(10 * (i + 1) + ave * i, 10,
+											(10 + ave) * (i + 1), 245, (short) j, rowNum, (short) j, rowNum);
+									patriarch.createPicture(hSSFClientAnchor,
+											wb.addPicture(byteArrayOutputStream.toByteArray(), wb.PICTURE_TYPE_JPEG));
+									byteArrayOutputStream.close();
+								}
+							}
+						} catch (Exception e) {
+							log.error("pictures export error",e);
+						} finally {
+							if(byteArrayOutputStream != null){
+								byteArrayOutputStream.close();
+							}
+						}
+					}
+				}
+				rowNum++;
+			}
+		}
+		String fileName = "教学活动信息.xls";
+		fileName = URLEncoder.encode(fileName, "UTF-8");
 		response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
 		response.setContentType("application/octet-stream;charset=UTF-8");
-		ExcleUtile.exportSimpleExcleByObjsWithWitdh(titles, list, response.getOutputStream());
+		wb.write(response.getOutputStream());
 	}
 
 	@RequestMapping(value="/activityDetail")

@@ -1,6 +1,11 @@
 package com.pinde.core.model;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+
+@TableName("RES_SCH_PROCESS_EXPRESS")
 public class ResSchProcessExpress implements java.io.Serializable {
+    @TableId
     private String recFlow;
 
     private String orgFlow;

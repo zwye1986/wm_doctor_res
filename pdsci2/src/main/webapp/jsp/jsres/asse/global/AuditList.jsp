@@ -14,6 +14,7 @@
 	<jsp:param name="jquery_placeholder" value="true"/>
 	<jsp:param name="jquery_iealert" value="false"/>
 </jsp:include>
+<%@include file="/jsp/common/common.jsp"%>
 <script type="text/javascript" src="<s:url value='/js/Scoll/Scorll2.js'/>?v=${applicationScope.sysCfgMap['sys_version']}"></script>
 <script type="text/javascript" src="<s:url value='/js/jquery-select/js/jquery.select.js'/>?v=${applicationScope.sysCfgMap['sys_version']}"></script>
 <script type="text/javascript">
@@ -188,10 +189,12 @@ function showApplyImg(imgUrl1,imgUrl2)
                 <th style="min-width: 170px; max-width: 170px; " >培训起止时间</th>
                 <th style="min-width: 100px; max-width: 100px; " >学历</th>
                 <th style="min-width: 150px; max-width: 150px; " >毕业证书编号</th>
-                <th style="min-width: 150px; max-width: 150px; " >报考资格材料</th>
+                <th style="min-width: 100px; max-width: 100px; " >报考资格材料</th>
                 <th style="min-width: 100px; max-width: 100px; " >报考资格材料编码</th>
                 <th style="min-width: 60px; max-width: 60px; " >培训专业</th>
                 <th style="min-width: 60px; max-width: 60px; " >执业范围</th>
+                <th style="min-width: 60px; max-width: 60px; ">异常报考</th>
+                <th style="min-width: 60px; max-width: 60px; ">轮转数据是否合规</th>
                 <c:if test="${param.tabTag eq 'FristWait' or param.tabTag eq 'FristWait2'}">
                     <th style="min-width: 60px; max-width: 60px; ">审核</th>
                 </c:if>
@@ -230,7 +233,7 @@ function showApplyImg(imgUrl1,imgUrl2)
                     </td>
                         <%-- 毕业证书编号 --%>
 
-                    <td style="min-width: 150px; max-width: 150px;" ><%-- 报考资格材料 --%>
+                    <td style="min-width: 100px; max-width: 100px;" ><%-- 报考资格材料 --%>
                         <%--<c:if test="${not empty doctor.qualificationMaterialName}">--%>
                         <c:if test="${not empty doctor.materialName}">
                             <%--<a href="javascript:void(0);"--%>
@@ -249,6 +252,17 @@ function showApplyImg(imgUrl1,imgUrl2)
                         <%-- 培训专业 --%>
                     <td style="min-width: 60px; max-width: 60px; " >${doctor.practicingScopeName}</td>
                         <%-- 执业范围 --%>
+                    <td style="min-width: 60px; max-width: 60px; " >${doctor.tempDoctorFlag}</td>
+                    <td style="min-width: 60px; max-width: 60px; " >
+                        <c:choose>
+                            <c:when test="${not empty nonComplianceRecordsMap[doctor.doctorFlow]}">
+                                <a onclick="showNonComplianceRecords('${doctor.doctorFlow}')">否</a>
+                            </c:when>
+                            <c:otherwise>
+                                是
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
                     <c:if test="${ f eq 'Y'}">
                         <td style="min-width: 60px; max-width: 60px; " >
                             <c:choose>
@@ -305,6 +319,7 @@ function showApplyImg(imgUrl1,imgUrl2)
                 <th>报考资格材料编码</th>
                 <th>培训专业</th>
                 <th>执业范围</th>
+                <th>异常报考</th>
                 <th>审核</th>
                 <c:if test="${param.tabTag ne 'FristWait' or param.tabTag ne 'FristWait2'}">
                     <th>审核状态</th>
